@@ -1,9 +1,17 @@
 <template>
-<div class="layout">
-  <Header></Header>
-  <slot />
+<div class="grid">
+  <Header class="header" />
+  <slot class="main" />
 </div>
 </template>
+
+<static-query>
+query {
+  metaData {
+    siteName
+  }
+}
+</static-query>
 
 <script>
 import Header from '~/components/Header.vue';
@@ -11,11 +19,16 @@ import Header from '~/components/Header.vue';
 export default {
   components: {
     Header
+  },
+  data: function() {
+    return {
+      grid: ''
+    }
   }
 }
 </script>
 
-<style>
+<style scoped>
 @import url('https://fonts.googleapis.com/css?family=Alfa+Slab+One|Fahkwang|Lustria|Maven+Pro|Montserrat|Questrial|Quicksand|Roboto|Sarabun|Source+Sans+Pro|Tajawal|Varela+Round|Volkhov');
 
 body {
@@ -36,7 +49,7 @@ body {
   margin: 0;
   padding: 0;
   line-height: 1.5;
-  background: white;
+  background: black;
 }
 
 h1 {
@@ -73,20 +86,15 @@ p {
   font-weight: 700;
 }
 
-.layout {
-  max-width: 760px;
-  margin: 0 auto;
-  padding-left: 20px;
-  padding-right: 20px;
-  background: white;
-}
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-  height: 80px;
+.grid {
+  max-width: 100vw;
+  display: grid;
+  background: rgba(0,120,240,0.25);
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: 100px auto;
+  grid-template-areas: 
+    "left header header header right"
+    "left main main main right";
 }
 
 .nav__link {
