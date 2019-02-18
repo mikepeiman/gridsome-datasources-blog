@@ -3,13 +3,14 @@
   <SidebarLeft />
   <SidebarRight />
   <div class="main">
-    <ul v-for="(post, index) in $page.allBlogPost.edges" :key="index">
+    GraphCMS data source
+    <!-- <ul v-for="(post, index) in $page.allBlogPost.edges" :key="index">
       <li class="post-container">
         <h2>{{ post.node.title }}</h2>
         <p class="post-date">{{ post.node.date }}</p>
         <p>{{ post.node.body }}</p>
       </li>
-    </ul>
+    </ul> -->
   </div>
 </Grid>
 </template>

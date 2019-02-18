@@ -44,6 +44,12 @@ module.exports = {
         apiKey: 'keyoLbEc7OzfEfj68',
         base: 'app0QClDCzUUtEYAk'
       }
+    },
+    {
+    use: '~/src/sources/swapi'
+    },
+    {
+      use: '~/src/sources/graphcms'
     }
   ]
 };

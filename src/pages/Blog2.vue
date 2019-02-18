@@ -3,11 +3,11 @@
   <SidebarLeft />
   <SidebarRight />
   <div class="main">
-    <ul v-for="(post, index) in $page.allBlogPost.edges" :key="index">
-      <li class="post-container">
-        <h2>{{ post.node.title }}</h2>
-        <p class="post-date">{{ post.node.date }}</p>
-        <p>{{ post.node.body }}</p>
+    <ul v-for="(item, index) in $page.allSWAPI.edges" :key="index">
+      <li class="item-container">
+        <h2>{{ item.node.name }}</h2>
+        <p class="item-date">{{ item.node.date }}</p>
+        <p>{{ item.node.starship_class }}</p>
       </li>
     </ul>
   </div>
@@ -16,17 +16,12 @@
 
 <page-query>
 {
-allBlogPost {
+allSWAPI {
   edges {
     node {
       id
-      title
-      excerpt
-      content
-      body
-      slug
-      path
-      date
+      name
+      starship_class
     }
   }
 }

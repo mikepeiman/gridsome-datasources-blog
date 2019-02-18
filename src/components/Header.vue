@@ -10,6 +10,9 @@
       <g-link class="nav__link" :to="{ name: 'contact' }">Contact</g-link>
       <g-link class="nav__link" :to="{ name: 'faker' }">Faker</g-link>
       <g-link class="nav__link" :to="{ name: 'blog' }">Blog</g-link>
+      <g-link class="nav__link" :to="{ name: 'blog2' }">Blog2</g-link>
+      <g-link class="nav__link" :to="{ name: 'airtable' }">Airtable</g-link>
+      <g-link class="nav__link" :to="{ name: 'graph' }">GraphCMS</g-link>
     </nav>
   </header>
   </div>

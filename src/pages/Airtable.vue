@@ -3,11 +3,11 @@
   <SidebarLeft />
   <SidebarRight />
   <div class="main">
-    <ul v-for="(post, index) in $page.allBlogPost.edges" :key="index">
-      <li class="post-container">
-        <h2>{{ post.node.title }}</h2>
-        <p class="post-date">{{ post.node.date }}</p>
-        <p>{{ post.node.body }}</p>
+    <ul v-for="(lesson, index) in $page.allProduct.edges" :key="index">
+      <li class="lesson-container">
+        <h2>{{ lesson.node.resort }}</h2>
+        <p class="lesson-price">${{ lesson.node.price }}</p>
+        <p>{{ lesson.node.url }}</p>
       </li>
     </ul>
   </div>
@@ -15,18 +15,18 @@
 </template>
 
 <page-query>
-{
-allBlogPost {
+{ allProduct 
+  {
   edges {
     node {
-      id
-      title
-      excerpt
-      content
-      body
-      slug
-      path
-      date
+      private
+      price
+      length
+      url
+      resort
+      pricePerHour {
+        specialValue
+      }
     }
   }
 }

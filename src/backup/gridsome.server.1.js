@@ -19,7 +19,6 @@ module.exports = function (api) {
 
     // console.log(data)
     for (const item of data) {
-      // console.log('blog1: ', item)
       let path = `/blog/${item.id}`
       contentType.addNode({
         id: item.id,
@@ -31,27 +30,4 @@ module.exports = function (api) {
       })
     }
   })
-  // api.loadSource(async store => {
-  //   // Use the Data store API here: https://gridsome.org/docs/data-store-api
-  //   const { data } = await axios.get('https://swapi.co/api/starships')
-
-  //   const contentType = store.addContentType({
-  //     typeName: 'SWAPI',
-  //     route: '/blog2/:slug'
-  //   })
-
-
-
-  //   // console.log(data.results)
-  //   for (const item of data.results) {
-  //     console.log('blog2: ', item.name, item.starship_class)
-  //     let path = `/blog2/${item.id}`
-  //     contentType.addNode({
-  //       // id: item.id,
-  //       name: item.name,
-  //       // path,
-  //       starship_class: item.starship_class
-  //     })
-  //   }
-  // })
 }
