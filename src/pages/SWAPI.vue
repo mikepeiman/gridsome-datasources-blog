@@ -3,18 +3,18 @@
   <SidebarLeft />
   <SidebarRight />
   <div class="main">
-    <ul v-for="(item, index) in $page.allSWAPI.edges" :key="index">
+    <h1>SWAPI</h1>
+    <!-- <ul v-for="(item, index) in $page.allSWAPI.edges.node" :key="index">
       <li class="item-container">
-        <h2>{{ item.node.name }}</h2>
-        <p class="item-date">{{ item.node.date }}</p>
-        <p>{{ item.node.starship_class }}</p>
+        <h2>{{ item.name }}</h2>
+        <p class="item-date">{{ item.date }}</p>
+        <p>{{ item.starship_class }}</p>
       </li>
-    </ul>
+    </ul> -->
   </div>
 </Grid>
-</template>
 
-<page-query>
+<!-- <page-query>
 {
 allSWAPI {
   edges {
@@ -26,7 +26,8 @@ allSWAPI {
   }
 }
 }
-</page-query>
+</page-query> -->
+</template>
 
 <script>
 import Grid from '~/layouts/Grid.vue';

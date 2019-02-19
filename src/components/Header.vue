@@ -7,12 +7,15 @@
     <nav class="nav">
       <g-link class="nav__link" :to="{ name: 'home' }">Home</g-link>
       <g-link class="nav__link" :to="{ name: 'about' }">About</g-link>
+      <!-- <g-link class="nav__link" :to="{ name: 'datasources' }">Data Sources</g-link> -->
       <g-link class="nav__link" :to="{ name: 'contact' }">Contact</g-link>
       <g-link class="nav__link" :to="{ name: 'faker' }">Faker</g-link>
-      <g-link class="nav__link" :to="{ name: 'blog' }">Blog</g-link>
-      <g-link class="nav__link" :to="{ name: 'blog2' }">Blog2</g-link>
+      <g-link class="nav__link" :to="{ name: 'placeholder' }">Placeholder</g-link>
+      <g-link class="nav__link" :to="{ name: 'swapi' }">SWAPI</g-link>
+      <g-link class="nav__link" :to="{ name: 'filesystem' }">Filesystem</g-link>
       <g-link class="nav__link" :to="{ name: 'airtable' }">Airtable</g-link>
       <g-link class="nav__link" :to="{ name: 'graph' }">GraphCMS</g-link>
+      <a class="nav__link" id="dropdownTest" href="#" @click="dropdownTest">Test Dropdown</a>
     </nav>
   </header>
   </div>
@@ -39,11 +42,18 @@ export default {
   mounted() {
     this.header = 'mounted header';
   },
+  methods: {
+    dropdownTest() {
+      console.log('dropdown test')
+    }
+  }
 }
 </script>
 
 <style scoped>
-
+.nav {
+  z-index: 100;
+}
 .header {
   /* max-width: 760px; */
   justify-self: center;
@@ -65,8 +75,25 @@ export default {
 } */
 
 .nav__link {
-  margin-left: 20px;
+  margin-left: 5px;
   text-decoration: none;
+  color: black;
+  border: 1px solid white;
+  background: #00ccff;
+  padding: 5px;
+  /* z-index: 100; */
+}
+.nav__link:visited {
+  color: black;
+}
+a:visited {
+  color: black;
+}
+a:hover {
+  color: red;
+}
+:visited {
+  color: blue;
 }
 
 .site-title {

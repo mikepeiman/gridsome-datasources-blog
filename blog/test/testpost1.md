@@ -2,9 +2,9 @@
 title: The Official Title
 date: 2019-02-10
 description: 'Something about awesomeness'
-excerpt: 'Th quick brown fox jumped over the lazy red dog'
+excerpt: 'The quick brown fox jumped over the lazy red dog'
 slug: 'blog-post-1'
-timeToRead: 15
+timeToRead: 150
 ---
 
 # This is a post title

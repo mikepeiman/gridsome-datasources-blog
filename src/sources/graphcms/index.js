@@ -4,16 +4,16 @@ module.exports = function (api) {
 
 api.loadSource(async store => {
   // Use the Data store API here: https://gridsome.org/docs/data-store-api
-  const { data } = await axios.get('https://api-uswest.graphcms.com/v1/cjry7p9c42zcv01i63qwszhh9/master')
+  const baseUrl = 'https://api-uswest.graphcms.com/v1/cjry7p9c42zcv01i63qwszhh9/master'
+  const articles = '{"query":"query {articles {title, body}}"}'
+  // const response = await axios.get(baseUrl+articles)
 
   const contentType = store.addContentType({
     typeName: 'GraphCMS',
     route: '/Graph/:slug'
   })
 
-
-
-  console.log(data)
+  // console.log(response)
   // let id = ''
   // data.results.forEach(item => {
   //   // console.log('item.name: ', item.name, 'item.url: ', item.url)
