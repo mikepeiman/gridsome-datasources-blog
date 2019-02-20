@@ -3,7 +3,7 @@
   <SidebarLeft />
   <SidebarRight />
   <div class="main">
-    <ul v-for="(lesson, index) in $page.allProduct.edges" :key="index">
+    <ul v-for="(lesson, index) in $page.allAirtable.edges" :key="index">
       <li class="lesson-container">
         <h2>{{ lesson.node.resort }}</h2>
         <p class="lesson-price">${{ lesson.node.price }}</p>
@@ -15,7 +15,7 @@
 </template>
 
 <page-query>
-{ allProduct 
+{ allAirtable 
   {
   edges {
     node {

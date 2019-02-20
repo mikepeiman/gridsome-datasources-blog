@@ -7,14 +7,14 @@
     <!-- <ul v-for="(item, index) in $page.allSWAPI.edges.node" :key="index">
       <li class="item-container">
         <h2>{{ item.name }}</h2>
-        <p class="item-date">{{ item.date }}</p>
         <p>{{ item.starship_class }}</p>
       </li>
     </ul> -->
   </div>
 </Grid>
+</template>
 
-<!-- <page-query>
+<page-query>
 {
 allSWAPI {
   edges {
@@ -26,8 +26,7 @@ allSWAPI {
   }
 }
 }
-</page-query> -->
-</template>
+</page-query> 
 
 <script>
 import Grid from '~/layouts/Grid.vue';

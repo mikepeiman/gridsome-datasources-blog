@@ -5,8 +5,8 @@ const Airtable = require('airtable');
         
         api.loadSource(async store => {
             const contentType = store.addContentType({
-                typeName: 'Product',
-                route: '/products/:slug',
+                typeName: 'Airtable',
+                route: '/airtable/:slug',
             });
             
             contentType.addSchemaField('price', ({ graphql }) => ({

@@ -6,8 +6,8 @@ api.loadSource(async store => {
   // Use the Data store API here: https://gridsome.org/docs/data-store-api
   const baseUrl = 'https://api-uswest.graphcms.com/v1/cjry7p9c42zcv01i63qwszhh9/master'
   const articles = '{"query":"query {articles {title, body}}"}'
-  // const response = await axios.get(baseUrl+articles)
-
+  // const response = await axios.get(baseUrl)
+  // console.log(response)
   const contentType = store.addContentType({
     typeName: 'GraphCMS',
     route: '/Graph/:slug'

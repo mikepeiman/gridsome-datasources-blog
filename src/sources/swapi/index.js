@@ -1,4 +1,6 @@
 const axios = require('axios');
+const { GraphQLSchema } = require('graphql');
+const { GraphQLObjectType } = require('graphql');
 
 module.exports = function (api) {
 
@@ -8,42 +10,75 @@ api.loadSource(async store => {
 
   const contentType = store.addContentType({
     typeName: 'SWAPI',
-    route: '/blog2/:slug'
+    route: '/swapi/:id',
   })
 
-  contentType.addSchemaField('name', ({ graphql }) => ({
-    type: graphql.GraphQLString,
-    resolve (node) {
-      return node.name
-    }
-  }))
+
+  let starships = []
+  data.results.forEach((item, index) => {
+    contentType.addSchemaField('name', ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve (node) {
+        console.log('addSchemaField name: node: ', node)
+        return item.name // node.content
+      }
+    }))
+    let pathArray = item.url.split('/')
+    id = pathArray[5]
+    console.log('SWAPI: ', id, item.name, item.starship_class)
+    console.log('JSON stringify name: ', JSON.stringify(item.name))
+    // name = 
+    // path = 
+    starship_class = item.starship_class
+    starships.push(item)
+    contentType.addNode({
+      id: id,
+      name: item.name,
+      content: item.name,
+      path: `/swapi/${id}`,
+      starship_class: item.starship_class
+    })
+  });
+  starships.forEach((item, index) => {
+    console.log('*****************************starships[name]: ', starships[index].name)
+
+
+  })
+    // console.log('*****************************item.name ', item.name)
+    
+
+
+
+ 
+
   contentType.addSchemaField('starship_class', ({ graphql }) => ({
     type: graphql.GraphQLString,
     resolve (node) {
-      return node.starship_class
+      // console.log('*****************************node.fields ', node.fields)
+      return node.fields.starship_class
     }
   }))
+  // console.log('starships:', starships)
 
-
-  // console.log(data.results)
-  let id = ''
-  data.results.forEach(item => {
-    // console.log('item.name: ', item.name, 'item.url: ', item.url)
-    let pathArray = item.url.split('/')
-    // console.log(pathArray)
-    id = pathArray[5]
-  // for (const item of data.results) {
-    console.log('blog2 (SWAPI): ', id, item.name)
-    let path = `/blog2/${id}`
-
-    contentType.addNode({
-      item: item,
-      // id: id,
-      name: item.name,
-      // path,
-      starshipClass: item.starship_class
+  const Starships = new GraphQLObjectType({
+    name: 'Starship',
+    description: 'A single starship',
+    fields: () => ({
+      name: {
+        type: GraphQLString,
+        description: 'The name of the starship',
+      },
+      starship_class: {
+        type: GraphQLString,
+        description: 'The class of the starship',
+      },
+      url: {
+        type: GraphQLString,
+        description: 'The url of the starship',
+      },
     })
-  });
+  })
+
 // }
 })
 }
