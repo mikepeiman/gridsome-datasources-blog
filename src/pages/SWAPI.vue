@@ -4,12 +4,12 @@
   <SidebarRight />
   <div class="main">
     <h1>SWAPI</h1>
-    <!-- <ul v-for="(item, index) in $page.allSWAPI.edges.node" :key="index">
+    <ul v-for="(item, index) in $page.allSWAPI.edges" :key="index">
       <li class="item-container">
-        <h2>{{ item.name }}</h2>
-        <p>{{ item.starship_class }}</p>
+        <h2>{{ item.node.name }}</h2>
+        <p>{{ item.node.starshipClass }}</p>
       </li>
-    </ul> -->
+    </ul>
   </div>
 </Grid>
 </template>
@@ -21,7 +21,7 @@ allSWAPI {
     node {
       id
       name
-      starship_class
+      starshipClass
     }
   }
 }
@@ -55,7 +55,7 @@ export default {
 
 .main {
   grid-area: main;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .grid-item {

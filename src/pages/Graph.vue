@@ -4,33 +4,31 @@
   <SidebarRight />
   <div class="main">
     GraphCMS data source
-    <!-- <ul v-for="(post, index) in $page.allBlogPost.edges" :key="index">
+    <ul v-for="(post, index) in $page.allGraphCMS.edges" :key="index">
       <li class="post-container">
         <h2>{{ post.node.title }}</h2>
         <p class="post-date">{{ post.node.date }}</p>
-        <p>{{ post.node.body }}</p>
+        <p>{{ post.node.content }}</p>
       </li>
-    </ul> -->
+    </ul>
   </div>
 </Grid>
 </template>
 
 <page-query>
 {
-allBlogPost {
-  edges {
-    node {
-      id
-      title
-      excerpt
-      content
-      body
-      slug
-      path
-      date
+  allGraphCMS {
+    edges {
+      node {
+        excerpt
+        content
+        title
+				content
+        id
+        date
+      }
     }
   }
-}
 }
 </page-query>
 
