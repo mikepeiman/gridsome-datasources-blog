@@ -18,7 +18,7 @@ const Airtable = require('airtable');
                 
             await base('Market Research').select().eachPage((records, fetchNextPage) => {
                 records.forEach((record) => {
-                  // console.log('record: ', record)
+                  // console.log('************   Airtable record: ', record)
                     const item = record._rawJson;
                     // console.log('record._rawJson: ',item)
                     
