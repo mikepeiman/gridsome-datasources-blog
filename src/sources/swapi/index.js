@@ -31,6 +31,7 @@ module.exports = function(api) {
 
     const { data } = await axios.get("https://swapi.co/api/starships");
     data.results.forEach((item, index) => {
+      // console.log('SWAPI item: ', item)
       let pathArray = item.url.split("/");
       id = pathArray[5];
       contentType.addNode({
@@ -42,7 +43,7 @@ module.exports = function(api) {
           url: item.url
         }
       });
-      console.log("contentType: ", contentType.collection.data[index].fields);
+      // console.log("contentType: ", contentType.collection.data[index].fields);
     });
   });
 };
