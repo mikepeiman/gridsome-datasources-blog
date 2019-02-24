@@ -6,8 +6,10 @@
     <ul v-for="(post, index) in $page.allGraphCMS.edges" :key="index">
       <li class="post-container">
         <h2 class="post-title">{{ post.node.title }}</h2>
-        <p class="post-date">{{ post.node.date }}</p>
-        <p class="post-body">{{ post.node.content }}</p>
+        <h3 class="post-subtitle">{{ post.node.subtitle }}</h3>
+        <img :src="post.node.imageUrl" width="100%">
+        <p class="post-date">{{ post.node.datePublished }}</p>
+        <p class="post-body">{{ post.node.body }}</p>
       </li>
     </ul>
   </div>
@@ -19,12 +21,11 @@
   allGraphCMS {
     edges {
       node {
-        excerpt
-        content
         title
-				content
-        id
-        date
+        subtitle
+        datePublished
+        imageUrl
+        body
       }
     }
   }
@@ -41,6 +42,17 @@ export default {
     Grid,
     SidebarLeft,
     SidebarRight
+  },
+  // data: function() {
+  //   const baseUrl = 'https://media.graphcms.com';
+  //   const imageSrc = '';
+  //   return {
+      
+  //     imageSrc: baseUrl + $page.imageSrc
+  //   }
+  // },
+  Created: function() {
+    console.log('Queries: ', page.node)
   }
 }
 </script>

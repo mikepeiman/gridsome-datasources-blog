@@ -34,7 +34,6 @@ export default {
 body {
   font-family:
     /* roboto body, Montserrat/Quicksand headings, Sarabun sub-headings, Volkhov titles, possible use of Alfa Slab on headings. Keep Lustria and Maven Pro. */
-
     Quicksand,
     "Segoe UI",
     Roboto,
@@ -42,7 +41,6 @@ body {
     -apple-system,
     system-ui,
     BlinkMacSystemFont,
-
     "Helvetica Neue",
     Arial,
     sans-serif;
