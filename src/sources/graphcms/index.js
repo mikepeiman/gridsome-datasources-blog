@@ -14,6 +14,7 @@ api.loadSource(async store => {
           articles {
             title 
             body
+            date
           }
         }
         `
@@ -29,7 +30,7 @@ api.loadSource(async store => {
       const pData = JSON.parse(sData)
       console.log('pData: ', pData)
       console.log('pData.data.articles: ', pData.data.articles)
-      console.log('pData.data.articles: ', pData.data.articles.title)
+      console.log('pData.data.articles.title: ', pData.data.articles.title)
       // const pArticles = JSON.stringify(pData.articles)
       // console.log('pArtices: ', pArticles)
 
@@ -38,7 +39,7 @@ api.loadSource(async store => {
       // }
 
       pData.data.articles.forEach(item => {
-        console.log('item: ', item)
+        // console.log('item: ', item)
         contentType.addNode({
           id: item.id,
           title: item.title,

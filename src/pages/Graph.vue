@@ -3,12 +3,11 @@
   <SidebarLeft />
   <SidebarRight />
   <div class="main">
-    GraphCMS data source
     <ul v-for="(post, index) in $page.allGraphCMS.edges" :key="index">
       <li class="post-container">
-        <h2>{{ post.node.title }}</h2>
+        <h2 class="post-title">{{ post.node.title }}</h2>
         <p class="post-date">{{ post.node.date }}</p>
-        <p>{{ post.node.content }}</p>
+        <p class="post-body">{{ post.node.content }}</p>
       </li>
     </ul>
   </div>
@@ -66,6 +65,10 @@ export default {
   text-align: center;
 }
 
+li {
+  list-style: none;
+}
+
 .item-author {
   /* min-height: 30px; */
   line-height: 1em;
@@ -74,7 +77,20 @@ export default {
   /* align-self: flex-start; */
   /* justify-self: center; */
 }
-
+.post-title {
+  font-size: 3em;
+  text-align: center;
+  font-family: 'Montserrat';
+}
+.post-date {
+  font-size: .9em;
+  text-align: center;
+  font-family: 'Montserrat';
+}
+.post-body {
+  line-height: 1.45em;
+  font-family: 'Roboto';
+}
 .item-img {
   max-width: 100px;
   height: auto;
