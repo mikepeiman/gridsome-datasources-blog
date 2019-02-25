@@ -7,8 +7,8 @@
 </template>
 
 <page-query>
-query BlogPost ($path: String!){
-  post: blogPost (path: $path){
+query Faker ($path: String!){
+  post: faker (path: $path){
     title
     body
     path

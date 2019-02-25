@@ -5,7 +5,9 @@
   <div class="main">
     <ul v-for="(post, index) in $page.allBlogPost.edges" :key="index">
       <li class="post-container">
-        <h2>{{ post.node.title }}</h2>
+        <router-link :to="post.node.path">
+          <h2>{{ post.node.title }}</h2>
+        </router-link>
         <p class="post-date">{{ post.node.date }}</p>
         <p>{{ post.node.body }}</p>
       </li>

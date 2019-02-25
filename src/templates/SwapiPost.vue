@@ -1,16 +1,16 @@
 <template>
   <Layout>
-    <h2>{{$page.post.title}}</h2>
-    <h3>{{$page.post.date}}</h3>
-    <p>{{$page.post.body}}</p>
+    <h2>{{$page.post.name}}</h2>
+    <h3>{{$page.post.starshipClass}}</h3>
+    <p>{{$page.post.date}}</p>
   </Layout>
 </template>
 
 <page-query>
-query BlogPost ($path: String!){
-  post: blogPost (path: $path){
-    title
-    body
+query SWAPI ($path: String!){
+  post: swapi (path: $path){
+    name
+    starshipClass
     path
     date
   }

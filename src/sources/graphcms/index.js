@@ -4,29 +4,29 @@ module.exports = function(api) {
   api.loadSource(async store => {
     // Use the Data store API here: https://gridsome.org/docs/data-store-api
     const contentType = store.addContentType({
-      typeName: "GraphCMS",
-      route: "/Graph/:slug"
+      typeName: 'GraphCMS',
+      route: '/graph/:slug'
     });
-    contentType.addSchemaField("body", ({ graphql }) => ({
+    contentType.addSchemaField('body', ({ graphql }) => ({
       type: graphql.GraphQLString,
       allowNull: false,
       resolve(node) {
         return node.fields.body;
       }
     }));
-    contentType.addSchemaField("subtitle", ({ graphql }) => ({
+    contentType.addSchemaField('subtitle', ({ graphql }) => ({
       type: graphql.GraphQLString,
       resolve(node) {
         return node.fields.subtitle;
       }
     }));
-    contentType.addSchemaField("imageUrl", ({ graphql }) => ({
+    contentType.addSchemaField('imageUrl', ({ graphql }) => ({
       type: graphql.GraphQLString,
       resolve(node) {
         return node.fields.imageUrl;
       }
     }));
-    contentType.addSchemaField("datePublished", ({ graphql }) => ({
+    contentType.addSchemaField('datePublished', ({ graphql }) => ({
       type: graphql.GraphQLString,
       resolve(node) {
         return node.fields.datePublished;
@@ -34,10 +34,10 @@ module.exports = function(api) {
     }));
 
     const baseUrl =
-      "https://api-uswest.graphcms.com/v1/cjry7p9c42zcv01i63qwszhh9/master";
+      'https://api-uswest.graphcms.com/v1/cjry7p9c42zcv01i63qwszhh9/master';
     axios({
       url: baseUrl,
-      method: "post",
+      method: 'post',
       data: {
         query: `
         query {
@@ -63,26 +63,28 @@ module.exports = function(api) {
         const pData = JSON.parse(sData);
 
         // console.log("Stringified result: ", sData);
-        console.log("Parsed JSON result: ", pData.data.articles);
+        // console.log("Parsed JSON result: ", pData.data.articles);
         const baseUrl = 'https://media.graphcms.com/';
 
         pData.data.articles.forEach(item => {
           console.log("Article title: ", item.title);
+          // console.log("Article path: ", item.path);
           console.log("Article subtitle: ", item.subtitle);
           console.log("Article date published: ", item.datePublished);
-          console.log("Article body (markdown): ", item.body.markdown);
+          // console.log("Article body (markdown): ", item.body.markdown);
           console.log("Article image handle: ", item.featuredImage.handle);
 
           
-
+          // let path = `/graph/${item.slug}`
           contentType.addNode({
             id: item.id,
-            datePublished: item.datePublished,
-            title: item.title,
-            subtitle: item.subtitle,
+            // path,
             fields: {
+              title: item.title, 
+              subtitle: item.subtitle,
               body: item.body.markdown,
-              imageUrl: baseUrl + item.featuredImage.handle
+              imageUrl: baseUrl + item.featuredImage.handle,
+              datePublished: item.datePublished,
             }
           });
         });
@@ -93,11 +95,3 @@ module.exports = function(api) {
   });
   // }
 };
-
-// articles {
-//   title
-//   subtitle
-//   body
-//   datePublished
-//   featuredImage
-// }

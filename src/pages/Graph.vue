@@ -5,9 +5,11 @@
   <div class="main">
     <ul v-for="(post, index) in $page.allGraphCMS.edges" :key="index">
       <li class="post-container">
-        <h2 class="post-title">{{ post.node.title }}</h2>
+        <router-link :to="post.node.path">
+          <h2 class="post-title">{{ post.node.title }}</h2>
+        </router-link>
         <h3 class="post-subtitle">{{ post.node.subtitle }}</h3>
-        <img :src="post.node.imageUrl" width="100%">
+        <img :src="post.node.imageUrl" width="95%">
         <p class="post-date">{{ post.node.datePublished }}</p>
         <p class="post-body">{{ post.node.body }}</p>
       </li>
@@ -26,6 +28,7 @@
         datePublished
         imageUrl
         body
+        path
       }
     }
   }
@@ -79,6 +82,11 @@ export default {
 
 li {
   list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: #252525;
 }
 
 .item-author {
