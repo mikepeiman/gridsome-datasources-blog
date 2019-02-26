@@ -14,6 +14,7 @@ module.exports = {
       use: "@gridsome/source-faker",
       options: {
         numNodes: 50,
+        route: "/faker/:slug"
       }
     },
     {

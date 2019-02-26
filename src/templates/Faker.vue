@@ -11,8 +11,8 @@ query Faker ($path: String!){
   post: faker (path: $path){
     title
     body
-    path
     date
+    slug
   }
 }
 </page-query>

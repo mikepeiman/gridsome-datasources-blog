@@ -5,8 +5,11 @@
   <div class="main">
     <div class="grid-main">
       <div class="grid-item" v-for="(item, index) in $page.allFaker.edges" :key="index">
+        <router-link :to="item.node.slug">
         <p class="item-author">{{item.node.author}}</p>
         <img class="item-img" :src="item.node.avatar.src" width="200">
+        </router-link>
+
         </div>
       </div>
   </div>
@@ -14,13 +17,14 @@
 </template>
 <page-query>
 {
-
 allFaker(perPage: 50, sortBy: "author", order: ASC ) {
     edges {
       node {
         author
         email
         avatar
+        path
+        slug
       }
     }
   }

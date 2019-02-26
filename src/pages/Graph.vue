@@ -50,11 +50,11 @@ export default {
   //   const baseUrl = 'https://media.graphcms.com';
   //   const imageSrc = '';
   //   return {
-      
+
   //     imageSrc: baseUrl + $page.imageSrc
   //   }
   // },
-  Created: function() {
+  Created: function () {
     console.log('Queries: ', page.node)
   }
 }
@@ -97,20 +97,24 @@ a {
   /* align-self: flex-start; */
   /* justify-self: center; */
 }
+
 .post-title {
   font-size: 3em;
   text-align: center;
   font-family: 'Montserrat';
 }
+
 .post-date {
   font-size: .9em;
   text-align: center;
   font-family: 'Montserrat';
 }
+
 .post-body {
   line-height: 1.45em;
   font-family: 'Roboto';
 }
+
 .item-img {
   max-width: 100px;
   height: auto;

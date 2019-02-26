@@ -5,8 +5,8 @@ const { GraphQLSchema, buildSchema, GraphQLObjectType } = require("graphql");
 module.exports = function(api) {
   api.loadSource(async store => {
     const contentType = store.addContentType({
-      typeName: "SWAPI",
-      route: "/swapi/:id"
+      typeName: 'SWAPI',
+      route: '/swapi/:id'
     });
 
     contentType.addSchemaField("name", ({ graphql }) => ({
@@ -28,21 +28,30 @@ module.exports = function(api) {
         return node.fields.url;
       }
     }));
+    contentType.addSchemaField("path", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.fields.path;
+      }
+    }));
 
     const { data } = await axios.get("https://swapi.co/api/starships");
     data.results.forEach((item, index) => {
-      // console.log('SWAPI item: ', item)
+      
       let pathArray = item.url.split("/");
       id = pathArray[5];
+      let path = `/swapi/` + id;
       contentType.addNode({
-        id: item.id,
         date: item.date,
         fields: {
+          id: id,
           name: item.name,
           starship_class: item.starship_class,
-          url: item.url
+          url: item.url,
+          path: path
         }
       });
+      console.log('SWAPI item name and path: ', item.name, path)
       // console.log("contentType: ", contentType.collection.data[index].fields);
     });
   });

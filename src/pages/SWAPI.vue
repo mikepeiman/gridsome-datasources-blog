@@ -5,10 +5,12 @@
   <div class="main">
     <h1>SWAPI</h1>
     <ul v-for="(item, index) in $page.allSWAPI.edges" :key="index">
-      <li class="item-container">
-        <h2>{{ item.node.name }}</h2>
-        <p>{{ item.node.starshipClass }}</p>
-      </li>
+      <router-link :to="item.node.path">
+        <li class="item-container">
+          <h2>{{ item.node.name }}</h2>
+          <p>{{ item.node.starshipClass }}</p>
+        </li>
+      </router-link>
     </ul>
   </div>
 </Grid>
@@ -22,6 +24,7 @@ allSWAPI {
       id
       name
       starshipClass
+      path
     }
   }
 }
@@ -29,9 +32,9 @@ allSWAPI {
 </page-query> 
 
 <script>
-import Grid from '~/layouts/Grid.vue';
-import SidebarLeft from '~/components/SidebarGalleryLeft.vue';
-import SidebarRight from '~/components/SidebarGalleryRight.vue';
+import Grid from "~/layouts/Grid.vue";
+import SidebarLeft from "~/components/SidebarGalleryLeft.vue";
+import SidebarRight from "~/components/SidebarGalleryRight.vue";
 
 export default {
   components: {
@@ -39,7 +42,7 @@ export default {
     SidebarLeft,
     SidebarRight
   }
-}
+};
 </script>
 
 <style scoped>
@@ -66,7 +69,7 @@ export default {
   /* min-height: 30px; */
   line-height: 1em;
   padding: 0;
-  margin: 1em 0 .5em 0;
+  margin: 1em 0 0.5em 0;
   /* align-self: flex-start; */
   /* justify-self: center; */
 }
