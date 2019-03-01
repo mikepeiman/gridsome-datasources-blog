@@ -13,8 +13,7 @@ module.exports = {
     {
       use: "@gridsome/source-faker",
       options: {
-        numNodes: 50,
-        route: "/faker/:slug"
+        numNodes: 50
       }
     },
     {
@@ -46,15 +45,15 @@ module.exports = {
         base: "app0QClDCzUUtEYAk"
       }
     },
-    {
-      use: "~/src/sources/swapi"
-    },
+    // {
+    //   // use: "~/src/sources/swapi",
+    // },
     {
       use: "~/src/sources/graphcms",
       // options: {
       //   typeName: 'GraphCMS',
       //   route: '/graph/:slug',
-      //   path: '~/src/templates/GraphPost.vue'
+      //   path: '~/src/templates/GraphCMS.vue'
       // }
     }
   ]

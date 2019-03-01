@@ -5,10 +5,10 @@
   <div class="main">
     <div class="grid-main">
       <div class="grid-item" v-for="(item, index) in $page.allFaker.edges" :key="index">
-        <router-link :to="item.node.slug">
+        <g-link :to="item.node.path">
         <p class="item-author">{{item.node.author}}</p>
         <img class="item-img" :src="item.node.avatar.src" width="200">
-        </router-link>
+        </g-link>
 
         </div>
       </div>

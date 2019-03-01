@@ -9,9 +9,9 @@
       <g-link class="nav__link" :to="{ name: 'about' }">About</g-link>
       <!-- <g-link class="nav__link" :to="{ name: 'datasources' }">Data Sources</g-link> -->
       <g-link class="nav__link" :to="{ name: 'contact' }">Contact</g-link>
-      <g-link class="nav__link" :to="{ name: 'faker' }">Faker</g-link>
+      <g-link class="nav__link" :to="{ name: 'fakerposts' }">Faker</g-link>
       <g-link class="nav__link" :to="{ name: 'placeholder' }">Placeholder</g-link>
-      <g-link class="nav__link" :to="{ name: 'swapi' }">SWAPI</g-link>
+      <g-link class="nav__link" :to="{ name: 'starwars' }">StarWars</g-link>
       <g-link class="nav__link" :to="{ name: 'filesystem' }">Filesystem</g-link>
       <g-link class="nav__link" :to="{ name: 'airtable' }">Airtable</g-link>
       <g-link class="nav__link" :to="{ name: 'graph' }">GraphCMS</g-link>

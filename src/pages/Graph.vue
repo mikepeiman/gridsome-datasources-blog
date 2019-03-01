@@ -5,9 +5,9 @@
   <div class="main">
     <ul v-for="(post, index) in $page.allGraphCMS.edges" :key="index">
       <li class="post-container">
-        <router-link :to="post.node.path">
+        <g-link :to="post.node.path">
           <h2 class="post-title">{{ post.node.title }}</h2>
-        </router-link>
+        </g-link>
         <h3 class="post-subtitle">{{ post.node.subtitle }}</h3>
         <img :src="post.node.imageUrl" width="95%">
         <p class="post-date">{{ post.node.datePublished }}</p>

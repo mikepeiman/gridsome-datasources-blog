@@ -1,5 +1,5 @@
 const axios = require("axios");
-const { GraphQLSchema, buildSchema, GraphQLObjectType } = require("graphql");
+// const { GraphQLSchema, buildSchema, GraphQLObjectType } = require("graphql");
 
 // Use the Data store API here: https://gridsome.org/docs/data-store-api
 module.exports = function(api) {
@@ -36,19 +36,19 @@ module.exports = function(api) {
     }));
 
     const { data } = await axios.get("https://swapi.co/api/starships");
-    data.results.forEach((item, index) => {
+    data.results.forEach(item => {
       
       let pathArray = item.url.split("/");
       id = pathArray[5];
-      let path = `/swapi/` + id;
+      let path = `/swapi/${id}`
       contentType.addNode({
         date: item.date,
+        path,
         fields: {
           id: id,
           name: item.name,
           starship_class: item.starship_class,
           url: item.url,
-          path: path
         }
       });
       console.log('SWAPI item name and path: ', item.name, path)

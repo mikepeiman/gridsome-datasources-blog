@@ -4,13 +4,13 @@
   <SidebarRight />
   <div class="main">
     <h1>SWAPI</h1>
-    <ul v-for="(item, index) in $page.allSWAPI.edges" :key="index">
-      <router-link :to="item.node.path">
+    <ul v-for="(item, index) in $page.allSWAPI.edges" :key="item.id">
+      <g-link :to="item.node.path">
         <li class="item-container">
           <h2>{{ item.node.name }}</h2>
           <p>{{ item.node.starshipClass }}</p>
         </li>
-      </router-link>
+      </g-link>
     </ul>
   </div>
 </Grid>
@@ -25,6 +25,7 @@ allSWAPI {
       name
       starshipClass
       path
+      slug
     }
   }
 }
