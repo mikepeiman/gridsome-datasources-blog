@@ -4,11 +4,13 @@
   <SidebarRight />
   <div class="main">
     <ul v-for="(lesson, index) in $page.allAirtable.edges" :key="index">
-      <li class="lesson-container">
-        <h2>{{ lesson.node.resort }}</h2>
-        <p class="lesson-price">${{ lesson.node.price }}</p>
-        <p>{{ lesson.node.url }}</p>
-      </li>
+<g-link :to="lesson.node.path">
+        <li class="lesson-container">
+          <h2>{{ lesson.node.resort }}</h2>
+          <p class="lesson-price">${{ lesson.node.price }}</p>
+          <p>{{ lesson.node.url }}</p>
+        </li>
+</g-link>
     </ul>
   </div>
 </Grid>
@@ -24,6 +26,7 @@
       length
       url
       resort
+      path
       pricePerHour {
         specialValue
       }
@@ -83,5 +86,14 @@ export default {
   background-size: contain;
   align-self: flex-end;
   justify-self: center;
+}
+
+li {
+  list-style: none;
+
+}
+a {
+  text-decoration: none;
+  line-height: 1em;
 }
 </style>

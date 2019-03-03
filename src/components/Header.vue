@@ -9,11 +9,11 @@
       <g-link class="nav__link" :to="{ name: 'about' }">About</g-link>
       <!-- <g-link class="nav__link" :to="{ name: 'datasources' }">Data Sources</g-link> -->
       <g-link class="nav__link" :to="{ name: 'contact' }">Contact</g-link>
-      <g-link class="nav__link" :to="{ name: 'fakerposts' }">Faker</g-link>
+      <g-link class="nav__link" :to="{ name: 'fakerPosts' }">Faker</g-link>
       <g-link class="nav__link" :to="{ name: 'placeholder' }">Placeholder</g-link>
       <g-link class="nav__link" :to="{ name: 'starwars' }">StarWars</g-link>
       <g-link class="nav__link" :to="{ name: 'filesystem' }">Filesystem</g-link>
-      <g-link class="nav__link" :to="{ name: 'airtable' }">Airtable</g-link>
+      <g-link class="nav__link" :to="{ name: 'airDb' }">Airtable</g-link>
       <g-link class="nav__link" :to="{ name: 'graph' }">GraphCMS</g-link>
       <a class="nav__link" id="dropdownTest" href="#" @click="dropdownTest">Test Dropdown</a>
     </nav>
