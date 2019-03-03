@@ -8,7 +8,7 @@
         <li class="lesson-container">
           <h2>{{ lesson.node.resort }}</h2>
           <p class="lesson-price">${{ lesson.node.price }}</p>
-          <p>{{ lesson.node.url }}</p>
+          <p>{{ lesson.node.private }}</p>
         </li>
 </g-link>
     </ul>

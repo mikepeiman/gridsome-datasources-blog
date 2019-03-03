@@ -5,10 +5,12 @@
   <div class="main">
     <ul v-for="(post, index) in $page.allPost.edges" :key="index">
       <li class="post-container">
+        <g-link :to="`/blog/${post.node.slug}`">
         <h2>{{ post.node.title }}</h2>
         <h3>{{ post.node.description }}</h3>
         <p class="post-date">{{ post.node.date }}</p>
         <p>{{ post.node.excerpt }}</p>
+        </g-link>
       </li>
     </ul>
   </div>
@@ -27,6 +29,7 @@ allPost {
       content
       timeToRead
       date
+      slug
     }
   }
 }

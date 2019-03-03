@@ -97,4 +97,13 @@ p {
 .site-title {
   text-decoration: none;
 }
+li {
+  list-style: none;
+  margin-bottom: 2em;
+  border-bottom: 3px solid #00ccff;
+}
+a {
+  text-decoration: none;
+  line-height: 1em;
+}
 </style>
