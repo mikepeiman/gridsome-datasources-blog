@@ -9,16 +9,21 @@
 
 <page-query>
 query Faker ($path: String!){
-  faker: post (path: $path){
+  post: faker (path: $path){
     title
-    body
     date
+    slug
+    id
+    path
   }
 }
 </page-query>
 
 <script>
 export default {
+  created: function() {
+    console.log(this.$page)
+  }
   // metaInfo() {
   //   return {
   //     title: this.$page.post.title
