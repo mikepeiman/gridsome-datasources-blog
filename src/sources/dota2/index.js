@@ -5,28 +5,21 @@ const rp = require('request-promise');
 
 let jsonframe = require('jsonframe-cheerio');
 const heroParse = require('./heroParse');
-// let $ = cheerio.load('https://dota2.gamepedia.com/Table_of_hero_attributes');
-// jsonframe($);
-// let herosList = $('.wikitable')
-// console.log('Heros List: ', herosList)
-// const { GraphQLSchema, buildSchema, GraphQLObjectType } = require("graphql");
+
 const heroesUrl = 'http://www.dota2.com/heroes/';
 // ************************
 
-heroParse('http://www.dota2.com/hero/earthshaker/')
+// heroParse('http://www.dota2.com/hero/earthshaker/')
 
 rp(heroesUrl)
 .then(html => {
-  // console.log('success! html table: ', $('.wikitable', html))
-  // console.log('******children of table: ', $('.wikitable > tbody > tr', html).length)
-  // console.log('******<tr>: ', $('.wikitable > tbody > tr', html))
-  let heroUrls = [];
+  let heroesList = [];
   const listLength = $('.heroIcons > a', html).length;
-  console.log('listLength: ', listLength)
+  // console.log('listLength: ', listLength)
   
   for (let i = 0; i < listLength; i++) {
     let heroUrl = $('.heroIcons > a', html)[i].attribs.href;
-    heroUrls.push(heroUrl)
+    
     let name = $('.heroIcons > a', html)[i].attribs.href.split('/')[4]
     let splitName = name.split('_')
     function titleCase(str) {
@@ -35,15 +28,24 @@ rp(heroesUrl)
       return newWord
     }).join(' ')
   }
-  // console.log('Our Hero: ', titleCase(splitName), heroUrl)
+  let heroName = titleCase(splitName)
+  heroesList.push({ name: heroName, url: heroUrl})
   }
-  // console.log('heroUrls: ', heroUrls)
-  return heroUrls
+  return Promise.all(
+    heroesList.map(function(hero) {
+      return heroParse(hero.name, hero.url);
+    })
+  );
+  // console.log('heroesList: ', heroesList)
+  // return heroesList
+})
+.then(heroes => {
+  console.log('from parseHeroes: ', heroes)
 })
 .catch(err => {
   console.log('error! ', err)
 })
-// let testUrl = heroUrls[0]
+// let testUrl = heroesList[0]
 // ************************
 
 
