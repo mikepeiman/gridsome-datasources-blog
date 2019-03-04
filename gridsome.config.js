@@ -50,11 +50,9 @@ module.exports = {
     },
     {
       use: "~/src/sources/graphcms",
-      // options: {
-      //   typeName: 'GraphCMS',
-      //   route: '/graph/:slug',
-      //   path: '~/src/templates/GraphCMS.vue'
-      // }
-    }
+    },
+    {
+      use: "~/src/sources/dota2",
+    },
   ]
 };

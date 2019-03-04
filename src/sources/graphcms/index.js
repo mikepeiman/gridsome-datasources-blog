@@ -67,12 +67,12 @@ module.exports = function(api) {
         const baseUrl = 'https://media.graphcms.com/';
 
         pData.data.articles.forEach(item => {
-          console.log("Article title: ", item.title);
-          // console.log("Article path: ", item.path);
-          console.log("Article subtitle: ", item.subtitle);
-          console.log("Article date published: ", item.datePublished);
-          // console.log("Article body (markdown): ", item.body.markdown);
-          console.log("Article image handle: ", item.featuredImage.handle);
+          // console.log("Article title: ", item.title);
+          // // console.log("Article path: ", item.path);
+          // console.log("Article subtitle: ", item.subtitle);
+          // console.log("Article date published: ", item.datePublished);
+          // // console.log("Article body (markdown): ", item.body.markdown);
+          // console.log("Article image handle: ", item.featuredImage.handle);
 
           
           // let path = `/graph/${item.slug}`

@@ -87,6 +87,8 @@ li {
 a {
   text-decoration: none;
   color: #252525;
+  line-height: 3.5em;
+  letter-spacing: -0.05ch;
 }
 
 .item-author {

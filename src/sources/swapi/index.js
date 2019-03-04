@@ -51,7 +51,7 @@ module.exports = function(api) {
           url: item.url,
         }
       });
-      console.log('SWAPI item name and path: ', item.name, path)
+      // console.log('SWAPI item name and path: ', item.name, path)
       // console.log("contentType: ", contentType.collection.data[index].fields);
     });
   });
