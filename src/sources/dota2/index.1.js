@@ -60,7 +60,6 @@ module.exports = function(api) {
     rp(heroesUrl)
       .then(html => {
         let heroesList = [];
-        
         const listLength = $(".heroIcons > a", html).length;
         console.log("heros list length: ", listLength);
 
@@ -90,17 +89,16 @@ module.exports = function(api) {
           });
         }
         // console.log('heroesList: ', heroesList)
-
         return Promise.all(
           heroesList.map(hero => {
             // console.log(`Promise calling heroParse with individual hero URL: ${hero.url}`)
             return heroParse(hero.num, hero.name, hero.url, hero.heroImgSrc);
           })
-        )
+        );
         // console.log('heroesList: ', heroesList)
         // return heroesList
       })
-      .then(async heroes => {
+      .then(heroes => {
         heroes.forEach(hero => {
           // console.log(`Inside final .then, heroes length: ${heroes.length}`)
           console.log(`Inside final .then, heroes.forEach: ${hero.num}: ${hero.name}`)

@@ -62,7 +62,8 @@ h6 {
   font-family:
     /* "Montserrat", */
     /* "Lustria",  */
-    "Sarabun"
+    "Sarabun";
+  line-height: 1em;
 }
 
 p {

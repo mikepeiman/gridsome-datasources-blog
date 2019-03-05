@@ -4,10 +4,13 @@
   <SidebarRight />
   <div class="main">
     <h1>DOTA2</h1>
+        <div class="grid-main">
+
     <ul v-for="(item, index) in $page.allDOTA2.edges" :key="item.id">
       <g-link :to="item.node.path">
-        <li class="item-container">
-          <h2>{{ item.node.name }}</h2>
+        <li class="item-container grid-item">
+          <img :Src="item.node.heroImgSrc" />
+          <h2>{{ item.node.num }}: {{ item.node.name }}</h2>
           <div v-for="ability in item.node.abilities">
             <p>{{ ability }}</p>
           </div>
@@ -15,17 +18,20 @@
       </g-link>
     </ul>
   </div>
+  </div>
 </Grid>
 </template>
 
 <page-query>
 {
-  allDOTA2 {
+  allDOTA2 (sortBy: "num", order: DESC, perPage: 120) {
     edges {
       node {
+        num
         name
         abilities
         path
+        heroImgSrc
       }
     }
   }
@@ -55,6 +61,7 @@ export default {
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: auto;
   grid-gap: 1ch;
+  line-height: 1.5em;
 }
 
 .main {
@@ -83,4 +90,5 @@ export default {
   align-self: flex-end;
   justify-self: center;
 }
+
 </style>

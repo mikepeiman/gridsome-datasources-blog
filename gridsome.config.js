@@ -53,6 +53,10 @@ module.exports = {
     },
     {
       use: "~/src/sources/dota2",
+      options: {
+        numNodes: 120,
+        perPage: 120
+      }
     },
   ]
 };

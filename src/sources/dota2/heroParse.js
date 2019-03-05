@@ -1,7 +1,7 @@
 const $ = require('cheerio');
 const rp = require('request-promise');
 
-const heroParse = function(name, url) {
+const heroParse = function(num, name, url, heroImgSrc) {
   return rp(url)
 .then(html => {
   let abilities = [];
@@ -11,7 +11,8 @@ const heroParse = function(name, url) {
     // console.log('Hero abilities: ', ability)
     abilities.push(ability)
   }
-  return { name: name, abilities: abilities }
+  console.log(`Inside of heroParse: num(${num}) name(${name})`)
+  return { num: num, name: name, abilities: abilities, heroImgSrc: heroImgSrc }
 })
 .catch(err => {
   console.log('error: ', err)
