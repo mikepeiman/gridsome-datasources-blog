@@ -1,4 +1,5 @@
 // const axios = require('axios');
+const { GraphQLSchema, GraphQLList, GraphQLString, buildSchema, GraphQLObjectType } = require("graphql");
 
 const $ = require('cheerio');
 const rp = require('request-promise');
@@ -10,6 +11,33 @@ const heroesUrl = 'http://www.dota2.com/heroes/';
 // ************************
 
 // heroParse('http://www.dota2.com/hero/earthshaker/')
+module.exports = function(api) {
+  api.loadSource(async store => {
+    const contentType = store.addContentType({
+      typeName: 'DOTA2',
+      route: '/dota2/:id'
+    });
+
+    contentType.addSchemaField("name", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      allowNull: false,
+      resolve(node) {
+        return node.fields.name;
+      }
+    }));
+    contentType.addSchemaField("url", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.fields.url;
+      }
+    }));
+    contentType.addSchemaField("abilities", ({ graphql }) => ({
+      type: graphql.GraphQLList(GraphQLString),
+      resolve(node) {
+        return node.fields.abilities;
+      }
+    }));
+
 
 rp(heroesUrl)
 .then(html => {
@@ -40,70 +68,29 @@ rp(heroesUrl)
   // return heroesList
 })
 .then(heroes => {
-  console.log('from parseHeroes: ', heroes)
+      heroes.forEach(hero => {
+      // console.log('HERO: ', hero)
+      // let pathArray = item.url.split("/");
+      // id = pathArray[5];
+      // let path = `/swapi/${id}`
+      contentType.addNode({
+        fields: {
+          name: hero.name,
+          abilities: hero.abilities
+        }
+      });
+      // console.log('SWAPI item name and path: ', item.name, path)
+      // console.log("contentType: ", contentType.collection.data[index].fields);
+    });  
 })
 .catch(err => {
   console.log('error! ', err)
 })
-// let testUrl = heroesList[0]
-// ************************
 
 
 
+    // console.log('data: ', data)
 
 
-// Use the Data store API here: https://gridsome.org/docs/data-store-api
-module.exports = function(api) {
-  api.loadSource(async store => {
-    const contentType = store.addContentType({
-      typeName: 'DOTA2',
-      route: '/dota2/:id'
-    });
-
-    contentType.addSchemaField("name", ({ graphql }) => ({
-      type: graphql.GraphQLString,
-      allowNull: false,
-      resolve(node) {
-        return node.fields.name;
-      }
-    }));
-    contentType.addSchemaField("url", ({ graphql }) => ({
-      type: graphql.GraphQLString,
-      resolve(node) {
-        return node.fields.url;
-      }
-    }));
-    contentType.addSchemaField("path", ({ graphql }) => ({
-      type: graphql.GraphQLString,
-      resolve(node) {
-        return node.fields.path;
-      }
-    }));
-
-    // const { data } = await axios.get("https://dota2.gamepedia.com/Table_of_hero_attributes");
-    // const sData = JSON.stringify(data)
-    // const pData = JSON.parse(sData)
-
-    // console.log('dota2 website data: ', data)
-    // console.log('dota2 website data stringified: ', sData)
-    // console.log('dota2 website data parsed: ', pData.querySelector(table))
-    // data.results.forEach(item => {
-    //   console.log(item)
-    //   let pathArray = item.url.split("/");
-    //   id = pathArray[5];
-    //   let path = `/swapi/${id}`
-    //   contentType.addNode({
-    //     date: item.date,
-    //     path,
-    //     fields: {
-    //       id: id,
-    //       name: item.name,
-    //       starship_class: item.starship_class,
-    //       url: item.url,
-    //     }
-    //   });
-    //   console.log('SWAPI item name and path: ', item.name, path)
-      // console.log("contentType: ", contentType.collection.data[index].fields);
-    // });  
   });
 };

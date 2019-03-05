@@ -12,6 +12,7 @@
       <g-link class="nav__link" :to="{ name: 'fakerPosts' }">Faker</g-link>
       <g-link class="nav__link" :to="{ name: 'placeholder' }">Placeholder</g-link>
       <g-link class="nav__link" :to="{ name: 'starwars' }">StarWars</g-link>
+      <g-link class="nav__link" :to="{ name: 'dota' }">DOTA2</g-link>
       <g-link class="nav__link" :to="{ name: 'filesystem' }">Filesystem</g-link>
       <g-link class="nav__link" :to="{ name: 'airDb' }">Airtable</g-link>
       <g-link class="nav__link" :to="{ name: 'graph' }">GraphCMS</g-link>

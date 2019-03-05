@@ -28,7 +28,5 @@ module.exports = function (api) {
         }
       })
     }
-  }),
-  console.log('after BlogPost loadsource')
-
+  })
 }
