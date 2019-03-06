@@ -62,7 +62,7 @@ module.exports = function(api) {
         let heroesList = [];
         
         const listLength = $(".heroIcons > a", html).length;
-        console.log("heros list length: ", listLength);
+        // console.log("heros list length: ", listLength);
 
         for (let i = 0; i < listLength; i++) {
           let heroUrl = $(".heroIcons > a", html)[i].attribs.href;
@@ -99,11 +99,11 @@ module.exports = function(api) {
         )
         // console.log('heroesList: ', heroesList)
         // return heroesList
+        // console.log(`heroes length: ${heroes.length}`)
       })
       .then(async heroes => {
         heroes.forEach(hero => {
-          // console.log(`Inside final .then, heroes length: ${heroes.length}`)
-          console.log(`Inside final .then, heroes.forEach: ${hero.num}: ${hero.name}`)
+          // console.log(`Inside final .then, heroes.forEach: ${hero.num}: ${hero.name}`)
           contentType.addNode({
             fields: {
               num: hero.num,

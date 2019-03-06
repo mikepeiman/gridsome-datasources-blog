@@ -89,6 +89,7 @@ a {
 nav {
   font-family: monospace;
   font-size: .9rem;
+  /* width: 760px; */
 }
 
 ul {
@@ -133,7 +134,7 @@ li:focus-within {
   background: rgba(255,155,55,0.25);
   cursor: pointer;
   border-bottom: 3px solid darkorange;
-  width: 17ch;
+  /* width: 17ch; */
 }
 
 li:focus-within a {

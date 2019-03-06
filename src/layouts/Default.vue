@@ -39,6 +39,7 @@ body {
   padding: 0;
   line-height: 1.5;
   background: white;
+  min-height: 100vh;
 }
 
 h1 {

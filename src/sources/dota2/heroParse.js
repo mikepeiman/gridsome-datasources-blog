@@ -11,7 +11,7 @@ const heroParse = function(num, name, url, heroImgSrc) {
     // console.log('Hero abilities: ', ability)
     abilities.push(ability)
   }
-  console.log(`Inside of heroParse: num(${num}) name(${name})`)
+  // console.log(`Inside of heroParse: num(${num}) name(${name})`)
   return { num: num, name: name, abilities: abilities, heroImgSrc: heroImgSrc }
 })
 .catch(err => {

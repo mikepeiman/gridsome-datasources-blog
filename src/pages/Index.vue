@@ -19,6 +19,15 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+body {
+  background: #252525;
+  /* background: url('./../assets/papers.co-ml28-space-earth-nature-interstellar-3840x2400-4k-wallpaper.jpg') no-repeat top center fixed; */
+  background-size: cover;
+  background-image: linear-gradient(rgba(37,37,37,1), rgba(0,161,255,0.5)), url('./../assets/papers.co-ml28-space-earth-nature-interstellar-3840x2400-4k-wallpaper.jpg');
+}
+.layout {
+  margin-top: 60px;
+}
 
 </style>
