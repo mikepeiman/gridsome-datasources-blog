@@ -1,9 +1,9 @@
 <template>
-<div>
+<div class="body-style">
   <Header></Header>
-  <div class="layout">
+
     <slot />
-  </div>
+
 </div>
 </template>
 
@@ -17,71 +17,11 @@ export default {
 }
 </script>
 
-<style>
-@import url('https://fonts.googleapis.com/css?family=Alfa+Slab+One|Fahkwang|Lustria|Maven+Pro|Montserrat|Questrial|Quicksand|Roboto|Sarabun|Source+Sans+Pro|Tajawal|Varela+Round|Volkhov');
-
-body {
-  font-family:
-    /* roboto body, Montserrat/Quicksand headings, Sarabun sub-headings, Volkhov titles, possible use of Alfa Slab on headings. Keep Lustria and Maven Pro. */
-
-    Quicksand,
-    "Segoe UI",
-    Roboto,
-    Montserrat,
-    -apple-system,
-    system-ui,
-    BlinkMacSystemFont,
-
-    "Helvetica Neue",
-    Arial,
-    sans-serif;
-  margin: 0;
-  padding: 0;
-  line-height: 1.5;
-  background: white;
-  min-height: 100vh;
+<style scoped>
+.body-style {
+  color: #252525;
 }
 
-h1 {
-  font-family:
-    "Lustria",
-    "Fahkwang",
-    "Segoe UI",
-    "Sarabun",
-    "Maven Pro",
-    "Lustria",
-    "Alfa Slab One",
-    "Volkhov",
-    "Montserrat",
-    "Source Sans Pro";
-  font-weight: 700;
-}
-
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family:
-    /* "Montserrat", */
-    /* "Lustria",  */
-    "Sarabun";
-  line-height: 1em;
-}
-
-p {
-  font-family: "Quicksand"
-}
-
-.bottom-line {
-  font-weight: 700;
-}
-
-.layout {
-  max-width: 760px;
-  margin: 0 auto;
-  background: white;
-}
 /* 
 .header {
   display: flex;
