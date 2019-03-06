@@ -49,6 +49,9 @@ module.exports = {
       use: "~/src/sources/swapi",
     },
     {
+      use: "~/src/sources/blogpost",
+    },
+    {
       use: "~/src/sources/graphcms",
     },
     {

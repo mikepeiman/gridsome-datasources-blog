@@ -1,7 +1,9 @@
 <template>
-<div class="grid">
+<div>
   <Header class="header" />
-  <slot class="main" />
+  <div class="grid">
+    <slot class="main" />
+  </div>
 </div>
 </template>
 
@@ -20,7 +22,7 @@ export default {
   components: {
     Header
   },
-  data: function() {
+  data: function () {
     return {
       grid: ''
     }
@@ -87,18 +89,19 @@ p {
 .grid {
   max-width: 100vw;
   display: grid;
-  background: rgba(0,120,240,0.25);
+  background: rgba(0, 120, 240, 0.25);
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: 100px auto;
-  grid-template-areas: 
+  grid-template-areas:
     "left header header header right"
     "left main main main right";
 }
 
+/* 
 .nav__link {
   margin-left: 20px;
   text-decoration: none;
-}
+} */
 
 .site-title {
   text-decoration: none;

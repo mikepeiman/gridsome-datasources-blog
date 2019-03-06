@@ -1,25 +1,28 @@
 <template>
-  <div>
-      <header :class="header">
-    <strong>
-        <g-link class="site-title" :to="{ name: 'home' }">{{ $static.metaData.siteName }}</g-link>
-      </strong>
-    <nav class="nav">
-      <g-link class="nav__link" :to="{ name: 'home' }">Home</g-link>
-      <g-link class="nav__link" :to="{ name: 'about' }">About</g-link>
-      <!-- <g-link class="nav__link" :to="{ name: 'datasources' }">Data Sources</g-link> -->
-      <g-link class="nav__link" :to="{ name: 'contact' }">Contact</g-link>
-      <g-link class="nav__link" :to="{ name: 'fakerPosts' }">Faker</g-link>
-      <g-link class="nav__link" :to="{ name: 'placeholder' }">Placeholder</g-link>
-      <g-link class="nav__link" :to="{ name: 'starwars' }">StarWars</g-link>
-      <g-link class="nav__link" :to="{ name: 'dota' }">DOTA2</g-link>
-      <g-link class="nav__link" :to="{ name: 'filesystem' }">Filesystem</g-link>
-      <g-link class="nav__link" :to="{ name: 'airDb' }">Airtable</g-link>
-      <g-link class="nav__link" :to="{ name: 'graph' }">GraphCMS</g-link>
-      <a class="nav__link" id="dropdownTest" href="#" @click="dropdownTest">Test Dropdown</a>
+  <header class="header">
+    <g-link id="site-logo" class="site-title" :to="{ name: 'home' }">
+      <g-image  alt="logo" src="../assets/LifeIQ.svg" width="60" />
+    </g-link>
+    
+    <nav role="navigation">
+      <ul class="nav-items">
+        <li @click="bigLink" @mouseover="mouseOver(2)" class="nav-link-container"><g-link class="nav__link" :to="{ name: 'home' }">Home</g-link></li>
+        <li @click="bigLink" @mouseover="mouseOver(3)"  class="nav-link-container"><g-link class="nav__link" :to="{ name: 'about' }">About</g-link></li>
+        <li @click="dataSourcesLink" class="nav-link-container"><g-link class="nav__link" :to="{ name: 'dataSources' }">Data Sources</g-link>
+          <ul class="dropdown" aria-label="submenu">
+            <li @click="bigLink" @mouseover="mouseOver(5)"  class="nav-link-container"><g-link class="nav__link" :to="{ name: 'fakerPosts' }">Faker</g-link></li>
+            <li @click="bigLink" @mouseover="mouseOver(6)"  class="nav-link-container"><g-link class="nav__link" :to="{ name: 'placeholder' }">Placeholder</g-link></li>
+            <li @click="bigLink" @mouseover="mouseOver(7)"  class="nav-link-container"><g-link class="nav__link" :to="{ name: 'starwars' }">StarWars</g-link></li>
+            <li @click="bigLink" @mouseover="mouseOver(8)"  class="nav-link-container"><g-link class="nav__link" :to="{ name: 'dota' }">DOTA2</g-link></li>
+            <li @click="bigLink" @mouseover="mouseOver(9)"  class="nav-link-container"><g-link class="nav__link" :to="{ name: 'filesystem' }">Filesystem</g-link></li>
+            <li @click="bigLink" @mouseover="mouseOver(10)"  class="nav-link-container"><g-link class="nav__link" :to="{ name: 'airDb' }">Airtable</g-link></li>
+            <li @click="bigLink" @mouseover="mouseOver(11)"  class="nav-link-container"><g-link class="nav__link" :to="{ name: 'graph' }">GraphCMS</g-link></li>
+          </ul>
+        </li>
+        <li @click="bigLink" @mouseover="mouseOver(12)"  class="nav-link-container"><g-link class="nav__link" :to="{ name: 'contact' }">Contact</g-link></li>
+      </ul>
     </nav>
   </header>
-  </div>
 </template>
 
 <static-query>
@@ -30,14 +33,14 @@ query {
 }
 </static-query>
 
-
-
 <script>
 export default {
   name: 'Header',
-  data: function() {
+  data: function () {
     return {
-      header: ''
+      activeLink: '',
+      dropdown: false,
+      e: ''
     }
   },
   mounted() {
@@ -46,58 +49,130 @@ export default {
   methods: {
     dropdownTest() {
       console.log('dropdown test')
+    },
+    bigLink() {
+      console.log(`Current activelink: ${this.activeLink}`);
+      this.$router.push(this.activeLink)
+    },
+        dataSourcesLink() {
+      this.$router.push("/data-sources");
+    },
+    mouseOver(x) {
+      console.log(Object.values(this.$refs)[x].$el.attributes.href.value);
+      this.activeLink = Object.values(this.$refs)[x].$el.attributes.href.value;
     }
-  }
+  },
+  computed: {
+
+  },
 }
 </script>
 
 <style scoped>
-.nav {
-  z-index: 100;
-}
 .header {
-  /* max-width: 760px; */
-  justify-self: center;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-  /* height: 80px; */
-  grid-area: header;
-  margin: 0.5em 2em;
+  flex-direction: row;
+  justify-content: center;
+  background: #252525;
+  padding: 0 5%;
+}
+a {
+  text-decoration: none;
+}
+
+#site-logo {
+  position: absolute;
+  /* top: 5px; */
+  left: 5%;
+}
+
+nav {
+  font-family: monospace;
+  font-size: .9rem;
+}
+
+ul {
+  /* background: darkorange; */
+  list-style: none;
+  margin: 0;
+}
+.nav-items {
+  display: flex;
+  padding-left: 0.5rem;
+  /* border-bottom: 3px solid #00ccff; */
+}
+
+.dropdown {
   width: 100%;
 }
-/* .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-  height: 80px;
-} */
 
-.nav__link {
-  margin-left: 5px;
+li {
+  color: #fff;
+  /* background: darkorange; */
+  display: block;
+  float: left;
+  padding: 1rem;
+  position: relative;
   text-decoration: none;
-  color: black;
-  border: 1px solid white;
-  background: #00ccff;
-  padding: 5px;
-  /* z-index: 100; */
-}
-.nav__link:visited {
-  color: black;
-}
-a:visited {
-  color: black;
-}
-a:hover {
-  color: red;
-}
-:visited {
-  color: blue;
+  transition-duration: 0.5s;
+  list-style: none;
+  margin-bottom: 0;
+  border-bottom: 3px solid #00a1ff;
+  width: 16ch;
+  height: 3ch;
+  text-align: center;
 }
 
-.site-title {
-  text-decoration: none;
+li a {
+  color: #fff;
+  white-space: nowrap;
+}
+
+li:hover,
+li:focus-within {
+  background: rgba(255,155,55,0.25);
+  cursor: pointer;
+  border-bottom: 3px solid darkorange;
+  width: 17ch;
+}
+
+li:focus-within a {
+  outline: none;
+}
+
+ul li ul {
+  background: #252525;
+  visibility: hidden;
+  opacity: 0;
+  /* min-width: 5rem; */
+  position: absolute;
+  transition: all 0.5s ease;
+  margin-top: 1rem;
+  left: 0;
+  top: 44px;
+  display: none;
+  padding: 0;
+}
+
+ul li:hover>ul,
+ul li:focus-within>ul,
+ul li ul:hover,
+ul li ul:focus {
+  visibility: visible;
+  opacity: 1;
+  display: block;
+}
+
+nav ul li ul li {
+  clear: both;
+  width: 84%;
+  text-align: left;
+  padding: 8%;
+}
+nav ul li ul li:hover {
+  clear: both;
+  /* width: 100%; */
+  text-align: left;
+  /* width: 12ch; */
 }
 </style>

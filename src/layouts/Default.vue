@@ -1,7 +1,9 @@
 <template>
-<div class="layout">
+<div>
   <Header></Header>
-  <slot />
+  <div class="layout">
+    <slot />
+  </div>
 </div>
 </template>
 
@@ -77,11 +79,9 @@ p {
 .layout {
   max-width: 760px;
   margin: 0 auto;
-  padding-left: 20px;
-  padding-right: 20px;
   background: white;
 }
-
+/* 
 .header {
   display: flex;
   justify-content: space-between;
@@ -93,16 +93,18 @@ p {
 .nav__link {
   margin-left: 20px;
   text-decoration: none;
-}
+} */
 
 .site-title {
   text-decoration: none;
 }
+
 li {
   list-style: none;
-  margin-bottom: 2em;
-  border-bottom: 3px solid #00ccff;
+  /* margin-bottom: 2em;
+  border-bottom: 3px solid #00ccff; */
 }
+
 a {
   text-decoration: none;
   line-height: 1em;
