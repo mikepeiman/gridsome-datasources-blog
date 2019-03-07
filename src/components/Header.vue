@@ -68,11 +68,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
-$primary-graphite: #252525;
-$primary-blue: #00A1FF;
-$primary-orange:#FF7800;
-$primary-green: #67DD00;
-$primary-purple: #4600CD;
+$primary-graphite: #252525; // rgba($primary-graphite,1)
+$primary-blue: #00A1FF; // rgba($primary-blue,1)
+$primary-orange:#FF7800; // rgba($primary-orange,1)
+$primary-green: #67DD00; // rgba($primary-green,1)
+$primary-purple: #4600CD; // rgba($primary-purple,1)
 
 .header {
   display: flex;
@@ -115,7 +115,7 @@ ul {
   width: 100%;
 }
 
-li {
+li.nav-link-container {
   color: #fff;
   /* background: darkorange; */
   display: block;
@@ -132,20 +132,20 @@ li {
   text-align: center;
 }
 
-li a {
+li.nav-link-container a {
   color: #fff;
   white-space: nowrap;
 }
 
-li:hover,
-li:focus-within {
-  background: rgba(255,155,55,0.25);
+li.nav-link-container:hover,
+li.nav-link-container:focus-within {
+  background: rgba($primary-green,0.25);
   cursor: pointer;
-  border-bottom: 1px solid darkorange;
+  border-bottom: 1px solid $primary-green;
   /* width: 17ch; */
 }
 
-li:focus-within a {
+li.nav-link-container:focus-within a {
   outline: none;
 }
 
@@ -161,6 +161,7 @@ ul li ul {
   top: 43px;
   display: none;
   padding: 0;
+  text-align: left;
 }
 
 ul li:hover>ul,
@@ -172,17 +173,26 @@ ul li ul:focus {
   display: block;
 }
 
-nav ul li ul li {
+.dropdown li {
   clear: both;
   width: 84%;
   text-align: left;
-  padding: 8%;
+  padding: 8% 8% 8% 8%;
+  transition: all .25s ease-in-out;
 }
-nav ul li ul li:hover {
+.dropdown li:hover {
   clear: both;
-  /* width: 100%; */
-  text-align: left;
+  width: 80%;
+  // text-align: center;
   /* width: 12ch; */
+  transition: all .25s ease-in-out;
+  // transform: translateX(2em);
+  padding: 8% 8% 8% 12%;
+  a{
+    // padding: 8% 8% 8% 12%;
+    
+    transition: all .25s ease-in-out;
+  }
 }
 
 .nav-items:first-child {

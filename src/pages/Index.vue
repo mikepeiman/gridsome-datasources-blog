@@ -4,7 +4,7 @@
     <div class="content">
       <h1 class="page-title">Curriculum For Life</h1>
       <h2 class="sub-title">It didn't come with an instruction manual, did it?</h2>
-      <p class="subtext">Fortunately, you don't have to go it alone. We exist in relationship, and we learn from each other. The wisest of us have passed along their learnings over thousands of years. Today, we can discover, collect, synthesize and integrate the wisdom of the ages and the best of modern science to guide us to a better way of life.</p>
+      <p class="subtext">Fortunately, you don't have to go it alone. We exist in relationship, and we learn from each other. The wisest of us have passed down their learnings over thousands of years. Today, we can discover, collect, synthesize and integrate the wisdom of the ages with the best of modern science to guide us - reliably and consistently - to a better way of life.</p>
     </div>
     <!-- {{ clicked }} -->
     <div class="bottom-line">
@@ -13,7 +13,7 @@
         <form action="">
           <input type="text" placeholder="Name" />
           <input type="text" placeholder="Email" />
-          <button>Oh Yeah, I'm In</button>
+          <button>I'm A Lifelong Learner!</button>
         </form>
       </div>
 
@@ -34,11 +34,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$primary-graphite: #252525;
-$primary-blue: #00A1FF;
-$primary-orange:#FF7800;
-$primary-green: #67DD00;
-$primary-purple: #4600CD;
+$primary-white: #ffffff; // rgba($primary-white,1)
+$primary-graphite: #252525; // rgba($primary-graphite,1)
+$primary-blue: #00A1FF; // rgba($primary-blue,1)
+$primary-orange:#FF7800; // rgba($primary-orange,1)
+$primary-green: #67DD00; // rgba($primary-green,1)
+$primary-purple: #5500FF; // rgba($primary-purple,1)
+
+$secondary-white: #eeeeee; // rgba($secondary-white,1)
+$secondary-graphite: #757575; // rgba($secondary-graphite,1)
+$secondary-blue: #00A1FF; // rgba($secondary-blue,1)
+$secondary-orange:#FF6400; // rgba($secondary-orange,1)
+$secondary-green: #50AB00; // rgba($secondary-green,1)
+$secondary-purple: #4600CD; // rgba($secondary-purple,1)
 
 .body-style {
   background: #252525;
@@ -52,7 +60,7 @@ $primary-purple: #4600CD;
   color: white;
   min-height: 100%;
   // background-image: linear-gradient(rgba($primary-graphite, 1), rgba($primary-purple, 0.25)), url('./../assets/papers.co-ml28-space-earth-nature-interstellar-3840x2400-4k-wallpaper.jpg');
-  background-size: cover;
+  // background-size: cover;
   // min-height: calc(92vh - 3px);
   // top: 58px;
   // position: absolute;
@@ -65,13 +73,23 @@ $primary-purple: #4600CD;
 
 .page-title {
   font-size: 4rem;
-  text-shadow: 0 0 2px #252525;
-  border-top: 3px solid white;
+  text-shadow: 0 0 2px $primary-graphite;
+  color: $primary-blue;
+  border-top: 3px solid $primary-blue;
+  ::after{
+    position: absolute; 
+    left: 0; 
+    bottom: 0; 
+    width: 100%; 
+    height: 10px; 
+    border-bottom: 10px solid #000; 
+    content: ""
+}
 }
 
 .sub-title {
   padding-bottom: 1rem;
-  border-bottom: 3px solid white;
+  border-bottom: 3px solid $primary-blue;
 }
 
 .subtext {
@@ -80,6 +98,9 @@ $primary-purple: #4600CD;
 }
 
 .bottom-line {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
   font-size: 1.25rem;
   background: rgba($primary-graphite, .75);
   font-weight: 400;
@@ -88,13 +109,14 @@ $primary-purple: #4600CD;
 }
 
 .bottom-line-inner {
-  padding: 10px 10%;
-  padding: .5rem 10% 1.5rem 10%;
+  // padding: 0 10% 10px 10%;
+  padding: 0rem 10% 1.5rem 10%;
   display: flex;
   flex-direction: column;
   align-items: center;
   p {
     margin-bottom: 10px;
+    color: $primary-green;
   }
 }
 
@@ -109,6 +131,11 @@ input {
   margin-left: 2ch;
   padding: 0 2ch;
 }
+input:hover,
+input:focus {
+  outline: $primary-green;
+  outline-color: $primary-white;
+}
 
 input::placeholder {
   padding-left: 2rem;
@@ -117,11 +144,11 @@ input::placeholder {
 button {
   margin-left: 1rem;
   display: inline-block;
-  border: none;
-  padding: .55rem 1.5rem;
+  border: 1px solid rgba($primary-white, .5);
+  padding: .42rem 1.5rem;
   text-decoration: none;
-  background: $primary-blue;
-  color: #ffffff;
+  background: $secondary-green;
+  color: $primary-white;
   font-family: sans-serif;
   font-size: 1rem;
   cursor: pointer;
@@ -134,8 +161,11 @@ button {
 
 button:hover,
 button:focus {
-  background: $primary-purple;
+  background: $primary-green;
+  border: 1px solid $primary-white;
   outline: none;
+  color: $primary-white;
+  transition: all .25s ease;
 }
 
 button:focus {
