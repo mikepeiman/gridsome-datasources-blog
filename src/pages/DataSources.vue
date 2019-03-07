@@ -2,6 +2,7 @@
 <Layout>
   <div id="datasources-layout">
     <div class="content">
+      <h1>Data Sources:</h1>
       <ul class="page-link-listing">
         <li class="nav-link-container"><g-link class="nav__link" :to="{ name: 'fakerPosts' }">Faker</g-link></li>
         <li class="nav-link-container"><g-link class="nav__link" :to="{ name: 'placeholder' }">Placeholder</g-link></li>
@@ -27,25 +28,31 @@ $primary-orange:#FF7800;
 $primary-green: #67DD00;
 $primary-purple: #4600CD;
 
-#datasources-layout {
-  background: none;
-  color: white;
-  min-height: 72vh;
-  background-image: linear-gradient(rgba($primary-graphite, 1), rgba($primary-purple, 0.25)), url('./../assets/papers.co-vd81-scifi-web-by-emilwidlund-pattern-abstract-art-3840x2400-4k-wallpaper.jpg');
-  background-position: center;
+.body-style {
+  background: #252525;
   background-size: cover;
-  min-height: 92vh;
-  top: 61px;
-  position: absolute;
+  background-image: linear-gradient(rgba(37,37,37,1), rgba(0,161,255,0.5)), url('./../assets/papers.co-ml28-space-earth-nature-interstellar-3840x2400-4k-wallpaper.jpg');
+  // height: 100%;
+}
+
+#contact-us-layout {
+  // background: none;
+  color: white;
+  min-height: 100%;
+  // background-image: linear-gradient(rgba($primary-graphite, 1), rgba($primary-purple, 0.25)), url('./../assets/papers.co-ml28-space-earth-nature-interstellar-3840x2400-4k-wallpaper.jpg');
+  background-size: cover;
+  // min-height: calc(92vh - 3px);
+  top: 58px;
+  // position: absolute;
   width: 100%;
 }
 
 .content {
-    margin: 20vh 5vw 0 28vw;
+  padding: 20vh 5vw 10% 28vw;
+  color: white;
 }
 
 .page-title {
-  color: white;
   font-size: 4rem;
   text-shadow: 0 0 2px #252525;
 }

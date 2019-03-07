@@ -68,13 +68,24 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+$primary-graphite: #252525;
+$primary-blue: #00A1FF;
+$primary-orange:#FF7800;
+$primary-green: #67DD00;
+$primary-purple: #4600CD;
+
 .header {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  background: #252525;
-  padding: 0 5%;
+  // background: rgba($primary-graphite, 0.95);
+  padding: 10px 5% 0 5%;
+  margin: 0;
+  position: fixed;
+  width: 100%;
+  height: 70px;
+  // border-bottom: 2px solid $primary-blue;
 }
 a {
   text-decoration: none;
@@ -89,7 +100,9 @@ a {
 nav {
   font-family: monospace;
   font-size: .9rem;
-  /* width: 760px; */
+  border-bottom: 1px solid $primary-blue;
+  // padding: 5px 0 0 0;
+  width: 760px; 
 }
 
 ul {
@@ -115,10 +128,10 @@ li {
   padding: 1rem;
   position: relative;
   text-decoration: none;
-  transition-duration: 0.5s;
+  transition-duration: 0.25s;
   list-style: none;
   margin-bottom: 0;
-  border-bottom: 3px solid #00a1ff;
+  border-bottom: 3px solid rgba(0,0,0,0);
   width: 16ch;
   height: 3ch;
   text-align: center;
@@ -133,7 +146,7 @@ li:hover,
 li:focus-within {
   background: rgba(255,155,55,0.25);
   cursor: pointer;
-  border-bottom: 3px solid darkorange;
+  border-bottom: 1px solid darkorange;
   /* width: 17ch; */
 }
 
@@ -147,10 +160,10 @@ ul li ul {
   opacity: 0;
   /* min-width: 5rem; */
   position: absolute;
-  transition: all 0.5s ease;
+  transition: all 0.25s ease;
   margin-top: 1rem;
   left: 0;
-  top: 44px;
+  top: 43px;
   display: none;
   padding: 0;
 }
@@ -175,5 +188,9 @@ nav ul li ul li:hover {
   /* width: 100%; */
   text-align: left;
   /* width: 12ch; */
+}
+
+.nav-items:first-child {
+  margin-left: -6px;
 }
 </style>

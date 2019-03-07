@@ -1,10 +1,8 @@
 <template>
-<div class="body-style">
-  <Header></Header>
-
+  <div class="body-style">
+    <Header></Header>
     <slot />
-
-</div>
+  </div>
 </template>
 
 <script>
