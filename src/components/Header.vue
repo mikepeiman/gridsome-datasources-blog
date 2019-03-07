@@ -40,7 +40,6 @@ export default {
     return {
       activeLink: '',
       dropdown: false,
-      e: ''
     }
   },
   mounted() {
@@ -79,13 +78,11 @@ $primary-purple: #4600CD;
   display: flex;
   flex-direction: row;
   justify-content: center;
-  // background: rgba($primary-graphite, 0.95);
   padding: 10px 5% 0 5%;
   margin: 0;
   position: fixed;
   width: 100%;
-  height: 70px;
-  // border-bottom: 2px solid $primary-blue;
+  // height: 70px;
 }
 a {
   text-decoration: none;
@@ -93,15 +90,13 @@ a {
 
 #site-logo {
   position: absolute;
-  /* top: 5px; */
   left: 5%;
 }
 
 nav {
   font-family: monospace;
   font-size: .9rem;
-  border-bottom: 1px solid $primary-blue;
-  // padding: 5px 0 0 0;
+  // border-bottom: 3px solid $primary-blue;
   width: 760px; 
 }
 
