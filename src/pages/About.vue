@@ -3,7 +3,8 @@
   <div id="about-us-layout" class="site-container">
     <div class="content">
       <h1 class="page-title">About Us</h1>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint ratione iste porro vero facere! Facere veniam at saepe, quam error deleniti officiis alias eum. Deleniti adipisci optio totam qui magnam!</p>
+      <p id="textToCopy">Building a better world for all, through the power of transformational education, the development of virtuous character, and the unflagging pursuit of excellence.</p>
+      <button @click="copyOnClick">Copy</button>
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati impedit totam voluptas quas repellendus modi, nam rem sequi tempora! Voluptate suscipit magnam aspernatur, et nesciunt dicta soluta. Fugit laboriosam harum laborum, ratione distinctio, omnis natus quo corporis vero inventore optio nulla debitis quasi consequatur accusamus eligendi reprehenderit accusantium quos rem quam, cum consectetur ad velit error. Quaerat repellat quos rerum eligendi aspernatur facilis magni asperiores in vel atque at nobis sunt quae sed, voluptate, quibusdam quo reiciendis consectetur necessitatibus sapiente officiis temporibus. Obcaecati libero magni officiis quaerat aut quod soluta, maiores ad asperiores rem sit commodi quo. Atque excepturi possimus sequi numquam aperiam minima commodi consectetur eius ut voluptates in consequatur repudiandae ea cum sint delectus quasi rem non corrupti error provident, modi quo.</p>
     </div>
   </div>
@@ -12,10 +13,27 @@
 </template>
 
 <script>
-export default {}
+export default {
+  methods: {
+    copyOnClick(e) {
+      {
+        // var t = window.getSelection().getRangeAt(0); 
+        let current = Document.activeElement
+        let textToCopy = document.querySelector('#textToCopy').innerText
+        console.log(`text to copy: ${textToCopy}`)
+        // console.log(`This is window.getSelection().getRangeAt(0): ${t}`)
+        console.log(`active element: ${current}`)
+        console.log(`click target: ${e.target}`)
+        // var selObj = window.getSelection();
+        alert(textToCopy);
+        // e.preventDefault(), e.stopPropagation(), e.clipboardData.setData("text/plain", t.toString()), e.clipboardData.setData("text/html", t.toString())
+      }
+    }
+  }
+}
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 $primary-graphite: #252525;
 $primary-blue: #00A1FF;
 $primary-orange:#FF7800;
@@ -45,7 +63,7 @@ $primary-purple: #4600CD;
 
 .page-title {
   font-size: 4rem;
-    margin: 0;
+  margin: 0;
   text-shadow: 0 0 2px #252525;
 }
 </style>
