@@ -17,16 +17,14 @@ export default {
   methods: {
     copyOnClick(e) {
       {
-        // var t = window.getSelection().getRangeAt(0); 
-        let current = Document.activeElement
-        let textToCopy = document.querySelector('#textToCopy').innerText
-        console.log(`text to copy: ${textToCopy}`)
-        // console.log(`This is window.getSelection().getRangeAt(0): ${t}`)
-        console.log(`active element: ${current}`)
-        console.log(`click target: ${e.target}`)
+        let t = document.querySelector('#textToCopy').innerText
         // var selObj = window.getSelection();
-        alert(textToCopy);
-        // e.preventDefault(), e.stopPropagation(), e.clipboardData.setData("text/plain", t.toString()), e.clipboardData.setData("text/html", t.toString())
+        // alert(selObj);
+        navigator.clipboard.writeText(t).then(function () {
+          console.log(`Async: Copying to clipboard was successful! Copied: ${t}`);
+        }, function (err) {
+          console.error('Async: Could not copy text: ', err);
+        });
       }
     }
   }
