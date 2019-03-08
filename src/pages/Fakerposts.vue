@@ -56,7 +56,7 @@ export default {
   display: grid;
   grid-template-columns: 1fr 2fr 2em 7fr 1fr;
   grid-template-areas: ". . . . ."". main-content main-content main-content .";
-  grid-template-rows: 184px auto 1fr;
+  grid-template-rows: minmax(100px, 1fr) auto 1fr;
 }
 
 #contact-us-layout {

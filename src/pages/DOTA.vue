@@ -107,7 +107,7 @@ export default {
   height: 10px;
   width: 18px;
   // border-radius: 0 0 3px 0;
-  border: 1px solid $primary-green;
+  border: 1px solid rgba($primary-blue, 0.5);
   left: 1px;
   background: $primary-graphite;
   z-index: -1;
@@ -124,8 +124,8 @@ export default {
   min-width: calc(50px-.4em);
   width: calc(100% -5px);
   // margin-right: 1em;
-  height: 14px;
-  height: auto;
+  height: 30px;
+  // height: auto;
   // width: 100%;
   // border-radius: 0 0 3px 0;
   border: 1px solid black;
@@ -133,21 +133,25 @@ export default {
   z-index: -2;
 }
 .hero-name {
-  font-size: 1em;
+  font-size: 1.4em;
   padding: 0 0 .5em 0;
-  margin: 3px 0 0 -6px;
+  margin: 3px 0 0 0;
   line-height: 1em;
-  color: $primary-blue;
+  color: $primary-white;
+  z-index: 10;
+  font-weight: 400;
+  font-family: "Source Sans Pro",'Montserrat';
 }
 .hero-image {
-  padding: 0 0 5px 0;
-  border-bottom: 1px solid $primary-green;
+  // padding: 0 0 5px 0;
+  border-bottom: 1px solid $secondary-blue;
 }
 .single-ability {
   font-size: 0.5em;
   // font-family: monospace;
   text-align: left;
   line-height: 1em;
+  color: $primary-blue;
   ::before {
     content: '-';
     color: white;
