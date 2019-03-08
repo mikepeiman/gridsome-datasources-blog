@@ -1,6 +1,6 @@
 <template>
 <Layout>
-  <div id="homepage-layout">
+  <div id="homepage-layout" class="site-container">
     <div class="content">
       <h1 class="page-title">Curriculum For Life</h1>
       <h2 class="sub-title">It didn't come with an instruction manual, did it?</h2>
@@ -48,11 +48,15 @@ $secondary-orange:#FF6400; // rgba($secondary-orange,1)
 $secondary-green: #50AB00; // rgba($secondary-green,1)
 $secondary-purple: #4600CD; // rgba($secondary-purple,1)
 
-.body-style {
+.site-container {
   background: #252525;
   background-size: cover;
   background-image: linear-gradient(rgba($primary-graphite, 1), rgba($primary-blue, 0.5)), url('./../assets/papers.co-ml28-space-earth-nature-interstellar-3840x2400-4k-wallpaper.jpg');
-  height: 100vh;
+  height: calc(100vh - 70px);
+  display: grid;
+ grid-template-columns: 1fr 2fr 2em 8fr;
+ grid-template-areas: ". . . ." ". cta . main-content";
+ grid-template-rows: 1fr auto 1fr;
 }
 
 #homepage-layout {
@@ -68,11 +72,13 @@ $secondary-purple: #4600CD; // rgba($secondary-purple,1)
 }
 
 .content {
-  padding: 20vh 5vw 5% 28vw;
+  grid-area: main-content;
+  // padding: 20vh 5vw 5% 28vw;
 }
 
 .page-title {
   font-size: 4rem;
+  margin: 0;
   text-shadow: 0 0 2px $primary-graphite;
   color: $primary-blue;
   border-top: 3px solid $primary-blue;
@@ -98,14 +104,17 @@ $secondary-purple: #4600CD; // rgba($secondary-purple,1)
 }
 
 .bottom-line {
-  position: absolute;
-  width: 100%;
+  // position: absolute;
+  grid-area: cta;
+  padding: 0 1em;
+  margin: 0 1em;
   bottom: 0;
   font-size: 1.25rem;
   background: rgba($primary-graphite, .75);
   font-weight: 400;
   border-top: 3px solid $primary-blue;
   border-bottom: 3px solid $primary-blue;
+  height: 320px;
 }
 
 .bottom-line-inner {
@@ -128,8 +137,9 @@ form {
 
 input {
   height: 2rem;
-  margin-left: 2ch;
-  padding: 0 2ch;
+  margin: 0.5em 1em;
+  padding: 0 1em;
+  border-radius: 5px;
 }
 input:hover,
 input:focus {
@@ -142,7 +152,8 @@ input::placeholder {
 }
 
 button {
-  margin-left: 1rem;
+  margin: 1em;
+  border-radius: 5px;
   display: inline-block;
   border: 1px solid rgba($primary-white, .5);
   padding: .42rem 1.5rem;

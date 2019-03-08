@@ -1,44 +1,57 @@
 <template>
-<header class="header">
+<header id="header">
   <g-link id="site-logo" class="site-title" :to="{ name: 'home' }">
     <g-image alt="logo" src="../assets/LifeIQ.svg" width="60" />
   </g-link>
-
-  <nav role="navigation">
+  <div id="nav-filler">
+    <div class="nav-filler-bar"></div>
+    <div class="nav-filler-bar"></div>
+    <div class="nav-filler-bar"></div>
+    <div class="nav-filler-bar"></div>
+    <div class="nav-filler-bar"></div>
+    <div class="nav-filler-bar"></div>
+    <div class="nav-filler-bar"></div>
+    <div class="nav-filler-bar"></div>
+    <div class="nav-filler-bar"></div>
+    <div class="nav-filler-bar"></div>
+    <div class="nav-filler-bar"></div>
+    <div class="nav-filler-bar"></div>
+  </div>
+  <nav id="topnav" role="navigation">
     <ul class="nav-items">
-      <li @click="mainLink(2)" @mouseover="mouseOver(2)" class="nav-link-container">
+      <li @click="mainLink(2)" class="nav-link-container">
         <g-link class="nav__link" :to="{ name: 'home' }">Home</g-link>
       </li>
-      <li @click="mainLink(3)" @mouseover="mouseOver(3)" class="nav-link-container">
+      <li @click="mainLink(3)" class="nav-link-container">
         <g-link class="nav__link" :to="{ name: 'about' }">About</g-link>
       </li>
-      <li @click="mainLink(4)" @mouseover="mouseOver(4)" class="nav-link-container">
+      <li @click="mainLink(4)" class="nav-link-container">
         <g-link class="nav__link" :to="{ name: 'dataSources' }">Data Sources</g-link>
         <ul class="dropdown" aria-label="submenu">
-          <li @click="subLink(5)" @mouseover="mouseOver(5)" class="nav-link-container">
+          <li @click="subLink(5)" class="nav-link-container">
             <g-link class="nav__link" :to="{ name: 'fakerPosts' }">Faker</g-link>
           </li>
-          <li @click="subLink(6)" @mouseover="mouseOver(6)" class="nav-link-container">
+          <li @click="subLink(6)" class="nav-link-container">
             <g-link class="nav__link" :to="{ name: 'placeholder' }">Placeholder</g-link>
           </li>
-          <li @click="subLink(7)" @mouseover="mouseOver(7)" class="nav-link-container">
+          <li @click="subLink(7)" class="nav-link-container">
             <g-link class="nav__link" :to="{ name: 'starwars' }">StarWars</g-link>
           </li>
-          <li @click="subLink(8)" @mouseover="mouseOver(8)" class="nav-link-container">
+          <li @click="subLink(8)" class="nav-link-container">
             <g-link class="nav__link" :to="{ name: 'dota' }">DOTA2</g-link>
           </li>
-          <li @click="subLink(9)" @mouseover="mouseOver(9)" class="nav-link-container">
+          <li @click="subLink(9)" class="nav-link-container">
             <g-link class="nav__link" :to="{ name: 'filesystem' }">Filesystem</g-link>
           </li>
-          <li @click="subLink(10)" @mouseover="mouseOver(10)" class="nav-link-container">
+          <li @click="subLink(10)" class="nav-link-container">
             <g-link class="nav__link" :to="{ name: 'airDb' }">Airtable</g-link>
           </li>
-          <li @click="subLink(11)" @mouseover="mouseOver(11)" class="nav-link-container">
+          <li @click="subLink(11)" class="nav-link-container">
             <g-link class="nav__link" :to="{ name: 'graph' }">GraphCMS</g-link>
           </li>
         </ul>
       </li>
-      <li @click="mainLink(12)" @mouseover="mouseOver(12)" class="nav-link-container">
+      <li @click="mainLink(12)" class="nav-link-container">
         <g-link class="nav__link" :to="{ name: 'contact' }">Contact</g-link>
       </li>
     </ul>
@@ -64,9 +77,6 @@ export default {
       submenuActive: false,
       linkSet: []
     }
-  },
-  mounted() {
-    this.header = 'mounted header';
   },
   methods: {
     dropdownTest() {
@@ -99,25 +109,6 @@ export default {
       console.log(`subLINK - Current activelink: ${this.activeLink}, current click: ${link}, linkSet: ${this.linkSet}`);
       this.$router.push(this.activeLink);
 
-    },
-    dataSourcesLink() {
-      console.log(`Current activelink: ${this.activeLink}`);
-      this.$router.push("/data-sources");
-    },
-    mouseOver(x) {
-      // let el = Object.values(this.$refs)[x].$el;
-      // let elClass = el.parentElement.parentElement.attributes.class.value
-      // let link = el.attributes.href.value
-      // this.linkSet.push(link)
-      // let i = this.linkSet.length;
-      // // console.log('Current mouseOver link: ', link)
-      // // console.log('Current mouseOver link $el grandparent: ', elClass)
-      // this.lastActiveLink = this.activeLink;
-      // this.activeLink = link;
-      // if(elClass.includes("drop")) {
-      //   // console.log(`This list item,** ${this.linkSet[i-1]} ** is a child of dropdown`)
-      //   this.activeLink = this.linkSet[i-1];
-      // }
     }
   },
   computed: {
@@ -133,14 +124,16 @@ $primary-orange:#FF7800; // rgba($primary-orange,1)
 $primary-green: #67DD00; // rgba($primary-green,1)
 $primary-purple: #4600CD; // rgba($primary-purple,1)
 
-.header {
-  display: flex;
-  flex-direction: row;
+#header {
+  display: grid;
+  grid-template-columns: 1fr 2fr 2em 8fr;
+  grid-template-areas: "logo nav-filler . topnav";
   justify-content: center;
-  padding: 10px 5% 0 5%;
+  padding: 0;
   margin: 0;
   position: fixed;
   width: 100%;
+  // border-left: 3px solid blue;
   // height: 70px;
 }
 
@@ -149,17 +142,58 @@ a {
 }
 
 #site-logo {
-  position: absolute;
-  left: 5%;
+  // position: absolute;
+  justify-self: center;
+  padding-top: 5px;
+  // top: 6px;
+}
+
+#nav-filler {
+  // border-left: 3px solid $primary-orange;
+  // border-right: 3px solid $primary-purple;
+  margin: 0 1em;
+  grid-area: nav-filler;
+  display: grid;
+  grid-template-columns: repeat(12,1fr)
+}
+.nav-filler-bar {
+  background: $primary-green;
+}
+
+/************************
+nth-child mixin
+************************/
+
+// $max-count is the maximum amount of colors you'll want
+// $color-frequency is how intense you want the color change to be. Lower # = more intense changes
+@mixin colors($max-count, $color-frequency){
+  $color: 460/$max-count;
+  
+  @for $i from 1 through $max-count {
+    &:nth-child(#{$max-count}n + #{$i}) {
+      // Modify 's' and 'l' percentages to match color scheme you want
+      background: hsla(($i - 1)*($color / $color-frequency), 80%, 20%, 50%);
+    }
+  }
+}
+/************************
+nth-child mixin
+********/
+
+#nav-filler > .nav-filler-bar {
+  @include colors(12,3);
 }
 
 nav {
   font-family: monospace;
   font-size: .9rem;
+  padding-top: 5px;
   // border-bottom: 3px solid $primary-blue;
-  width: 760px;
+  // width: 760px;
 }
-
+.nav-items:first-child {
+      // border-left: 3px solid $primary-blue;
+    }
 ul {
   /* background: darkorange; */
   list-style: none;
@@ -256,9 +290,5 @@ ul li ul:focus {
 
     transition: all .25s ease-in-out;
   }
-}
-
-.nav-items:first-child {
-  margin-left: -6px;
 }
 </style>

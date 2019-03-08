@@ -1,6 +1,6 @@
 <template>
 <Layout>
-  <div id="contact-us-layout">
+  <div id="contact-us-layout" class="site-container">
     <div class="content">
       <h1 class="page-title">Contact Us</h1>
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint ratione iste porro vero facere! Facere veniam at saepe, quam error deleniti officiis alias eum. Deleniti adipisci optio totam qui magnam!</p>
@@ -22,7 +22,7 @@ $primary-orange:#FF7800;
 $primary-green: #67DD00;
 $primary-purple: #4600CD;
 
-.body-style {
+.site-container {
   background: #252525;
   background-size: cover;
   background-image: linear-gradient(rgba(37,37,37,1), rgba(0,161,255,0.5)), url('./../assets/papers.co-ml28-space-earth-nature-interstellar-3840x2400-4k-wallpaper.jpg');
@@ -42,7 +42,8 @@ $primary-purple: #4600CD;
 }
 
 .content {
-  padding: 20vh 5vw 10% 28vw;
+  // padding: 20vh 5vw 10% 28vw;
+  grid-area: main-content;
 }
 
 .page-title {

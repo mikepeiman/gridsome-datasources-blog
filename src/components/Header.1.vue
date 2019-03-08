@@ -41,7 +41,7 @@ export default {
     }
   },
   mounted() {
-    this.header = 'mounted header';
+    this#header = 'mounted header';
   },
   methods: {
     dropdownTest() {
@@ -55,7 +55,7 @@ export default {
 .nav {
   z-index: 100;
 }
-.header {
+#header {
   /* max-width: 760px; */
   justify-self: center;
   display: flex;
@@ -67,7 +67,7 @@ export default {
   margin: 0.5em 2em;
   width: 100%;
 }
-/* .header {
+/* #header {
   display: flex;
   justify-content: space-between;
   align-items: center;

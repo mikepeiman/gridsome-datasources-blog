@@ -1,6 +1,6 @@
 <template>
 <Layout>
-  <div id="datasources-layout">
+  <div id="datasources-layout" class="site-container">
     <div class="content">
       <h1>Data Sources:</h1>
       <ul class="page-link-listing">
@@ -28,7 +28,7 @@ $primary-orange:#FF7800;
 $primary-green: #67DD00;
 $primary-purple: #4600CD;
 
-.body-style {
+.site-container {
   background: #252525;
   max-height: 100vh;
   background-size: cover;
@@ -49,7 +49,8 @@ $primary-purple: #4600CD;
 }
 
 .content {
-  padding: 20vh 5vw 10% 28vw;
+  // padding: 20vh 5vw 10% 28vw;
+  grid-area: main-content;
   color: white;
 }
 

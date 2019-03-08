@@ -27,11 +27,25 @@ body {
   color: #252525;
 }
 
-.header {
-  /* position: fixed; */
-  /* top: 0; */
-  /* width: 100vw; */
-  height: 8vh;
+#app {
+  display: grid;
+  grid-template-rows: 70px auto;
+  grid-template-areas: "site-header" "site-container";
+}
+#header {
+  grid-area: site-header;
+}
+#site-logo {
+  grid-area: logo;
+}
+#topnav {
+  grid-area: topnav;
+}
+.site-container {
+  grid-area: site-container;
+  display: grid;
+  grid-template-columns: 1fr 2fr 2em 8fr;
+  grid-template-areas: ". . . main-content";
 }
 
 h1 {

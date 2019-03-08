@@ -1,5 +1,5 @@
 <template>
-  <div class="body-style">
+  <div>
     <Header></Header>
     <slot />
   </div>
@@ -16,12 +16,12 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.body-style {
+.site-container {
   color: #252525;
 }
 
 /* 
-.header {
+#header {
   display: flex;
   justify-content: space-between;
   align-items: center;
