@@ -1,20 +1,21 @@
 <template>
-<Grid>
-  <SidebarLeft />
-  <SidebarRight />
-  <div class="main">
-    <div class="grid-main">
-      <div class="grid-item" v-for="(item, index) in $page.allFaker.edges" :key="index">
-        <g-link :to="item.node.path">
-        <p class="item-author">{{item.node.author}}</p>
-        <img class="item-img" :src="item.node.avatar.src" width="200">
+<Layout>
+  <div class="site-container">
+    <div class="content">
+      <h1 class="site-title">Faker Data Source</h1>
+      <div class="grid-main">
+        <div class="grid-item" v-for="(item, index) in $page.allFaker.edges" :key="index">
+          <g-link :to="item.node.path">
+            <p class="item-author">{{item.node.author}}</p>
+            <img class="item-img" :src="item.node.avatar.src" width="200">
         </g-link>
-
         </div>
       </div>
+    </div>
   </div>
-</Grid>
+</Layout>
 </template>
+
 <page-query>
 {
 allFaker(perPage: 50, sortBy: "author", order: ASC ) {
@@ -46,35 +47,60 @@ export default {
 </script>
 
 <style scoped>
-.grid-main {
-  max-width: 100vw;
+
+.site-container {
+  background: #252525;
+  background-size: cover;
+  background-image: linear-gradient(rgba($primary-graphite, 1), rgba($primary-blue, 0.5)), url('./../assets/papers.co-ml28-space-earth-nature-interstellar-3840x2400-4k-wallpaper.jpg');
+  height: calc(100vh - 70px);
   display: grid;
-  background: rgba(0, 120, 240, 0.25);
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: 1fr 2fr 2em 7fr 1fr;
+  grid-template-areas: ". . . . ."". main-content main-content main-content .";
+  grid-template-rows: 184px auto 1fr;
+}
+
+#contact-us-layout {
+  color: white;
+  min-height: 100%;
+  width: 100%;
+}
+
+.content {
+  grid-area: main-content;
+  color: white;
+}
+
+.grid-main {
+  /* max-width: 100vw; */
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
   grid-template-rows: auto;
+  grid-template-areas: "";
   grid-gap: 1ch;
 }
+
 .main {
   grid-area: main;
 }
 
 .grid-item {
   text-align: center;
+  color: white;
 }
+
 .item-author {
-  /* min-height: 30px; */
   line-height: 1em;
   padding: 0;
   margin: 1em 0 .5em 0;
-    /* align-self: flex-start; */
-    /* justify-self: center; */
+  color: white;
 }
+
 .item-img {
   max-width: 100px;
   height: auto;
   top: 0;
-    background-size: contain;
-    align-self: flex-end;
-    justify-self: center;
+  background-size: contain;
+  align-self: flex-end;
+  justify-self: center;
 }
 </style>

@@ -25,7 +25,7 @@
 
 <script>
 export default {
-  data: function() {
+  data: function () {
     return {
       clicked: true
     }
@@ -54,26 +54,19 @@ $secondary-purple: #4600CD; // rgba($secondary-purple,1)
   background-image: linear-gradient(rgba($primary-graphite, 1), rgba($primary-blue, 0.5)), url('./../assets/papers.co-ml28-space-earth-nature-interstellar-3840x2400-4k-wallpaper.jpg');
   height: calc(100vh - 70px);
   display: grid;
- grid-template-columns: 1fr 2fr 2em 8fr;
- grid-template-areas: ". . . ." ". cta . main-content";
- grid-template-rows: 1fr auto 1fr;
+  grid-template-columns: 1fr 2fr 2em 8fr;
+  grid-template-areas: ". . . ."". cta . main-content";
+  grid-template-rows: minmax(184px, 1fr) auto 1fr;
 }
 
 #homepage-layout {
-  // background: none;
   color: white;
   min-height: 100%;
-  // background-image: linear-gradient(rgba($primary-graphite, 1), rgba($primary-purple, 0.25)), url('./../assets/papers.co-ml28-space-earth-nature-interstellar-3840x2400-4k-wallpaper.jpg');
-  // background-size: cover;
-  // min-height: calc(92vh - 3px);
-  // top: 58px;
-  // position: absolute;
   width: 100%;
 }
 
 .content {
   grid-area: main-content;
-  // padding: 20vh 5vw 5% 28vw;
 }
 
 .page-title {
@@ -82,15 +75,16 @@ $secondary-purple: #4600CD; // rgba($secondary-purple,1)
   text-shadow: 0 0 2px $primary-graphite;
   color: $primary-blue;
   border-top: 3px solid $primary-blue;
-  ::after{
-    position: absolute; 
-    left: 0; 
-    bottom: 0; 
-    width: 100%; 
-    height: 10px; 
-    border-bottom: 10px solid #000; 
+
+  ::after {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 10px;
+    border-bottom: 10px solid #000;
     content: ""
-}
+  }
 }
 
 .sub-title {
@@ -123,6 +117,7 @@ $secondary-purple: #4600CD; // rgba($secondary-purple,1)
   display: flex;
   flex-direction: column;
   align-items: center;
+
   p {
     margin-bottom: 10px;
     color: $primary-green;
@@ -141,6 +136,7 @@ input {
   padding: 0 1em;
   border-radius: 5px;
 }
+
 input:hover,
 input:focus {
   outline: $primary-green;
