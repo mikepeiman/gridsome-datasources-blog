@@ -30,6 +30,7 @@ $primary-purple: #4600CD;
 
 .body-style {
   background: #252525;
+  max-height: 100vh;
   background-size: cover;
   background-image: linear-gradient(rgba(37,37,37,1), rgba(0,161,255,0.5)), url('./../assets/papers.co-ml28-space-earth-nature-interstellar-3840x2400-4k-wallpaper.jpg');
   // height: 100%;
