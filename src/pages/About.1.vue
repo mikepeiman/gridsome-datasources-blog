@@ -8,12 +8,14 @@
       <div class="about-us-image"></div>
       <!-- <img src="../assets/papers.co-mi90-life-begins-leaf-waterdrop-nature-3840x2400-4k-wallpaper.jpg" alt="Images of Mike Peiman and scenic shots"> -->
     </div>
+
     <div class="content">
       <h1 class="page-title">About Us</h1>
       <p id="textToCopy">Building a better world for all, through the power of transformational education, the development of virtuous character, and the unflagging pursuit of excellence.</p>
       <!-- <button @click="copyOnClick">Copy</button> -->
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati impedit totam voluptas quas repellendus modi, nam rem sequi tempora! Voluptate suscipit magnam aspernatur, et nesciunt dicta soluta. Fugit laboriosam harum laborum, ratione distinctio, omnis natus quo corporis vero inventore optio nulla debitis quasi consequatur accusamus eligendi reprehenderit accusantium quos rem quam, cum consectetur ad velit error. </p>
     </div>
+
   </div>
 
 </Layout>
@@ -65,19 +67,21 @@ $primary-purple: #4600CD;
 
 .about-us-images {
   grid-area: cta;
+  margin-left: 1em;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   grid-template-rows: 1fr 1fr;
   grid-gap: 1ch;
-  margin: 1.4em 0 1.25em 0;
 }
-
 .about-us-image {
-  background-image: linear-gradient(rgba($primary-white, .25), rgba($primary-purple, 0.25)), url('./../assets/papers.co-mi90-life-begins-leaf-waterdrop-nature-3840x2400-4k-wallpaper.jpg');
-  background-size: cover;
+      background-image: linear-gradient(rgba($primary-white, .25), rgba($primary-purple, 0.25)), url('./../assets/papers.co-mi90-life-begins-leaf-waterdrop-nature-3840x2400-4k-wallpaper.jpg');
+        background-size: cover;
   background-position: center;
 }
 
+.empty {
+  width: 100px;
+}
 .content {
   grid-area: main-content;
   margin: 0 20vw 0 0;
