@@ -34,19 +34,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$primary-white: #ffffff; // rgba($primary-white,1)
-$primary-graphite: #252525; // rgba($primary-graphite,1)
-$primary-blue: #00A1FF; // rgba($primary-blue,1)
-$primary-orange:#FF7800; // rgba($primary-orange,1)
-$primary-green: #67DD00; // rgba($primary-green,1)
-$primary-purple: #5500FF; // rgba($primary-purple,1)
-
-$secondary-white: #eeeeee; // rgba($secondary-white,1)
-$secondary-graphite: #757575; // rgba($secondary-graphite,1)
-$secondary-blue: #00A1FF; // rgba($secondary-blue,1)
-$secondary-orange:#FF6400; // rgba($secondary-orange,1)
-$secondary-green: #50AB00; // rgba($secondary-green,1)
-$secondary-purple: #4600CD; // rgba($secondary-purple,1)
+@import "./../assets/colors.scss";
 
 .site-container {
   background: #252525;

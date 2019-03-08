@@ -3,7 +3,7 @@
   <g-link id="site-logo" class="site-title" :to="{ name: 'home' }">
     <g-image alt="logo" src="../assets/LifeIQ.svg" width="60" />
   </g-link>
-  <div id="nav-filler">
+  <!-- <div id="nav-filler">
     <div class="nav-filler-bar"></div>
     <div class="nav-filler-bar"></div>
     <div class="nav-filler-bar"></div>
@@ -16,7 +16,7 @@
     <div class="nav-filler-bar"></div>
     <div class="nav-filler-bar"></div>
     <div class="nav-filler-bar"></div>
-  </div>
+  </div> -->
   <nav id="topnav" role="navigation">
     <ul class="nav-items">
       <li @click="mainLink(2)" class="nav-link-container">

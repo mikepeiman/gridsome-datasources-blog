@@ -39,12 +39,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$primary-white: #fff;
-$primary-graphite: #252525;
-$primary-blue: #00A1FF;
-$primary-orange:#FF7800;
-$primary-green: #67DD00;
-$primary-purple: #4600CD;
+@import "./../assets/colors.scss";
 
 .site-container {
   background: #252525;
@@ -52,9 +47,9 @@ $primary-purple: #4600CD;
   background-image: linear-gradient(rgba($primary-graphite, 1), rgba($primary-blue, 0.5)), url('./../assets/papers.co-ml28-space-earth-nature-interstellar-3840x2400-4k-wallpaper.jpg');
   height: calc(100vh - 70px);
   display: grid;
-  grid-template-columns: 1fr 2fr 2em 8fr;
+  grid-template-columns: 1fr 2fr 2em 6fr 2fr;
   grid-template-areas: ". . . ."". cta . main-content";
-  grid-template-rows: minmax(184px, 1fr) auto 1fr;
+  grid-template-rows: minmax(100px, 1fr) 5fr 1fr;
 }
 
 #about-us-layout {

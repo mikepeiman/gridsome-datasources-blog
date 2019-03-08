@@ -46,6 +46,10 @@ body {
   display: grid;
   grid-template-columns: 1fr 2fr 2em 8fr;
   grid-template-areas: ". . . main-content";
+  grid-template-rows: minmax(184px, 1fr) auto 1fr;
+}
+.content {
+  min-height: 45vh;
 }
 .page-title {
   margin: 0;
