@@ -4,13 +4,27 @@
     <div class="content">
       <h1 class="page-title">Data Sources:</h1>
       <ul class="page-link-listing">
-        <li class="nav-link-container"><g-link class="nav__link" :to="{ name: 'fakerPosts' }">Faker</g-link></li>
-        <li class="nav-link-container"><g-link class="nav__link" :to="{ name: 'placeholder' }">Placeholder</g-link></li>
-        <li class="nav-link-container"><g-link class="nav__link" :to="{ name: 'starwars' }">StarWars</g-link></li>
-        <li class="nav-link-container"><g-link class="nav__link" :to="{ name: 'dota' }">DOTA2</g-link></li>
-        <li class="nav-link-container"><g-link class="nav__link" :to="{ name: 'filesystem' }">Filesystem</g-link></li>
-        <li class="nav-link-container"><g-link class="nav__link" :to="{ name: 'airDb' }">Airtable</g-link></li>
-        <li class="nav-link-container"><g-link class="nav__link" :to="{ name: 'graph' }">GraphCMS</g-link></li>
+        <li @click="mainLink" class="nav-link-container">
+          <g-link class="nav__link" :to="{ name: 'fakerPosts' }">Faker</g-link>
+        </li>
+        <li class="nav-link-container">
+          <g-link class="nav__link" :to="{ name: 'placeholder' }">Placeholder</g-link>
+        </li>
+        <li class="nav-link-container">
+          <g-link class="nav__link" :to="{ name: 'starwars' }">StarWars</g-link>
+        </li>
+        <li class="nav-link-container">
+          <g-link class="nav__link" :to="{ name: 'dota' }">DOTA2</g-link>
+        </li>
+        <li class="nav-link-container">
+          <g-link class="nav__link" :to="{ name: 'filesystem' }">Filesystem</g-link>
+        </li>
+        <li class="nav-link-container">
+          <g-link class="nav__link" :to="{ name: 'airDb' }">Airtable</g-link>
+        </li>
+        <li class="nav-link-container">
+          <g-link class="nav__link" :to="{ name: 'graph' }">GraphCMS</g-link>
+        </li>
       </ul>
     </div>
   </div>
@@ -18,10 +32,28 @@
 </template>
 
 <script>
-export default {}
+export default {
+  methods: {
+    mainLink(x) {
+      // let el = Object.values(this.$refs)[x].$el;
+      
+      let link = x.currentTarget.children[0].attributes.href.value;
+      console.log(`x event: ${link}`);
+      
+      // console.log(`Object.values: ${Object.values}`)
+      // let elClass = el.parentElement.parentElement.attributes.class.value
+      // let link = el.attributes.href.value
+      // this.linkSet.push(link)
+      // let i = this.linkSet.length;
+      // this.activeLink = link;
+      // console.log(`MAINLINK - Current activelink: ${this.activeLink}, current click: ${link}, linkSet: ${this.linkSet}`);
+      this.$router.push(link);
+    }
+  }
+}
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 @import "./../assets/colors.scss";
 
 .site-container {
@@ -55,25 +87,28 @@ export default {}
 #datasources-layout .page-link-listing li {
   padding: 0.5em;
   margin-bottom: .5em;
-  border-bottom: 3px solid rgba(0,0,0,0);
+  border-bottom: 3px solid rgba(0, 0, 0, 0);
   width: 50%;
   background: rgba($primary-graphite, .75);
 }
+
 #datasources-layout .page-link-listing {
   a {
     text-transform: uppercase;
   }
+
   a:visited {
     color: $primary-white;
   }
+
   li:hover {
     color: $primary-green;
     background: #252525;
     background: rgba(white, 0.15);
   }
 }
+
 .page-link-listing li a {
   color: white;
 }
-
 </style>

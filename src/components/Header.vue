@@ -99,7 +99,6 @@ export default {
       this.linkSet = []
     },
     subLink(x) {
-
       let el = Object.values(this.$refs)[x].$el;
       let elClass = el.parentElement.parentElement.attributes.class.value
       let link = el.attributes.href.value
@@ -203,7 +202,6 @@ ul {
 .nav-items {
   display: flex;
   padding-left: 0.5rem;
-  /* border-bottom: 3px solid #00ccff; */
 }
 
 .dropdown {
@@ -225,6 +223,9 @@ li.nav-link-container {
   width: 16ch;
   height: 3ch;
   text-align: center;
+}
+.nav-link-container {
+  z-index: 10;
 }
 
 li.nav-link-container a {
