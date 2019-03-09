@@ -10,12 +10,12 @@
             <g-link class="post-link" :to="post.node.path">
               <div class="post-thumbnail-wrapper">
                 <h2 class="post-title">{{ post.node.title }}</h2>
-                <h3 class="post-subtitle">{{ post.node.subtitle }}</h3>
-                <p class="post-date">{{ post.node.datePublished }}</p>
+                <h3 class="post-subtitle">{{ post.node.subtitle }}</h3>           
                 <img class="post-thumbnail" :src="post.node.imageUrl" />
               </div>
             </g-link>
             <div class="post-body">
+              <p class="post-date">Published: {{ formatDate(post.node.datePublished) }}</p>
               <p>{{ post.node.body }}</p>
             </div>
           </div>
@@ -44,6 +44,7 @@
 </page-query>
 
 <script>
+import moment from 'moment';
 import DSLayout from '~/layouts/DSLayout.vue';
 import DSSideBar from '~/components/DSSideBar.vue';
 
@@ -51,6 +52,18 @@ export default {
   components: {
     DSLayout,
     DSSideBar,
+  },
+  data: function() {
+    return {
+      date: moment(),
+      formatedDate: ''
+    }
+  },
+  methods: {
+    formatDate(x) {
+      console.log(`moment date: ${moment(x).format('MMMM Do, YYYY')}`)
+      return moment(x).format('MMMM Do, YYYY');
+    }
   }
 }
 </script>
@@ -100,7 +113,6 @@ export default {
 }
 
 .posts-container .post-thumbnail-wrapper:hover {
-
   .post-title,
   .post-subtitle {
     color: $primary-blue;
@@ -126,7 +138,8 @@ export default {
   font-size: .8em;
   margin-bottom: .5em;
   color: rgba($primary-white, .5);
-  border-bottom: 1px solid $primary-green;
+  border-bottom: 1px solid rgba($primary-white, .5);
+  // background: rgba($primary-blue, 0.25);
 }
 
 .post-hero {
@@ -149,10 +162,6 @@ export default {
   line-height: 1.5em;
   margin: 0;
   padding: 0 0 1em 0;
-}
-
-.post-date {
-  position: absolute;
 }
 
 .post-thumbnail {
