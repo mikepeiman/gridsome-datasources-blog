@@ -1,31 +1,33 @@
 <template>
 <div id="datasources-sidebar">
-  <h1 class="page-title">Data Sources</h1>
-    <div class="content">
-      <ul class="page-link-listing">
-        <li @click="mainLink" class="nav-link-container">
-          <g-link class="nav__link" :to="{ name: 'fakerPosts' }">Faker</g-link>
-        </li>
-        <li @click="mainLink" class="nav-link-container">
-          <g-link class="nav__link" :to="{ name: 'placeholder' }">Placeholder</g-link>
-        </li>
-        <li @click="mainLink" class="nav-link-container">
-          <g-link class="nav__link" :to="{ name: 'starwars' }">StarWars</g-link>
-        </li>
-        <li @click="mainLink" class="nav-link-container">
-          <g-link class="nav__link" :to="{ name: 'dota' }">DOTA2</g-link>
-        </li>
-        <li @click="mainLink" class="nav-link-container">
-          <g-link class="nav__link" :to="{ name: 'filesystem' }">Filesystem</g-link>
-        </li>
-        <li @click="mainLink" class="nav-link-container">
-          <g-link class="nav__link" :to="{ name: 'airDb' }">Airtable</g-link>
-        </li>
-        <li @click="mainLink" class="nav-link-container">
-          <g-link class="nav__link" :to="{ name: 'graph' }">GraphCMS</g-link>
-        </li>
-      </ul>
-    </div>
+  <g-link class="nav__link" :to="{ name: 'dataSources' }">
+    <h1 class="page-title">Data Sources</h1>
+  </g-link>
+  <div class="content">
+    <ul class="page-link-listing">
+      <li @click="mainLink(1)" class="nav-link-container">
+        <g-link class="nav__link" :to="{ name: 'fakerPosts' }">Faker</g-link>
+      </li>
+      <li @click="mainLink(2)" class="nav-link-container">
+        <g-link class="nav__link" :to="{ name: 'placeholder' }">Placeholder</g-link>
+      </li>
+      <li @click="mainLink(3)" class="nav-link-container">
+        <g-link class="nav__link" :to="{ name: 'starwars' }">StarWars</g-link>
+      </li>
+      <li @click="mainLink(4)" class="nav-link-container">
+        <g-link class="nav__link" :to="{ name: 'dota' }">DOTA2</g-link>
+      </li>
+      <li @click="mainLink(5)" class="nav-link-container">
+        <g-link class="nav__link" :to="{ name: 'filesystem' }">Filesystem</g-link>
+      </li>
+      <li @click="mainLink(6)" class="nav-link-container">
+        <g-link class="nav__link" :to="{ name: 'airDb' }">Airtable</g-link>
+      </li>
+      <li @click="mainLink(7)" class="nav-link-container">
+        <g-link class="nav__link" :to="{ name: 'graph' }">GraphCMS</g-link>
+      </li>
+    </ul>
+  </div>
 </div>
 </template>
 
@@ -42,8 +44,27 @@ export default {
   name: 'DSSideBar',
   data: function () {
     return {
+      linkSet: [],
+      activeLink: ''
     }
   },
+  methods: {
+        mainLink(x) {
+      let el = Object.values(this.$refs)[x].$el;
+      let elClass = el.parentElement.parentElement.attributes.class.value
+      let link = el.attributes.href.value
+      this.linkSet.push(link)
+      let i = this.linkSet.length;
+      this.activeLink = link;
+      console.log(`MAINLINK - Current activelink: ${this.activeLink}, current click: ${link}, linkSet: ${this.linkSet}`);
+      if (this.linkSet.length !== 1) {
+        this.$router.push(this.linkSet[0]);
+      } else {
+        this.$router.push(this.activeLink);
+      }
+      this.linkSet = []
+    },
+  }
 }
 </script>
 
@@ -56,6 +77,7 @@ $primary-purple: #4600CD; // rgba($primary-purple,1)
 
 #datasources-sidebar {
   grid-area: sidenav;
+
   h1 {
     color: white;
   }
@@ -70,7 +92,7 @@ $primary-purple: #4600CD; // rgba($primary-purple,1)
 
 li.nav-link-container {
   color: #fff;
-  background: rgba($primary-blue, .25); 
+  background: rgba($primary-blue, .25);
   display: block;
   float: left;
   padding: 1rem;
@@ -84,9 +106,11 @@ li.nav-link-container {
   height: 3ch;
   text-align: left;
 }
+
 .nav__link {
-    text-decoration: none;
+  text-decoration: none;
 }
+
 .nav-link-container {
   z-index: 10;
 }
@@ -98,12 +122,13 @@ li.nav-link-container a {
 
 li.nav-link-container:hover,
 li.nav-link-container:focus-within,
- {
+  {
   background: rgba($primary-green, 0.5);
   cursor: pointer;
   border-bottom: 1px solid $primary-green;
   /* width: 17ch; */
 }
+
 li#DataSources {
   background: rgba($primary-green, 0.25);
   cursor: pointer;

@@ -12,7 +12,7 @@
         <g-link class="nav__link" :to="{ name: 'about' }">About</g-link>
       </li>
       <li @click="mainLink(4)" id="DataSources" class="nav-link-container">
-        <g-link  class="nav__link" :to="{ name: 'dataSources' }" focus>Data Sources</g-link>
+        <g-link class="nav__link" :to="{ name: 'dataSources' }" focus>Data Sources</g-link>
       </li>
       <li @click="mainLink(12)" class="nav-link-container">
         <g-link class="nav__link" :to="{ name: 'contact' }">Contact</g-link>
@@ -58,7 +58,6 @@ export default {
       } else {
         this.$router.push(this.activeLink);
       }
-
       this.linkSet = []
     },
     subLink(x) {
@@ -106,8 +105,9 @@ a {
   margin: 0 1em;
   grid-area: nav-filler;
   display: grid;
-  grid-template-columns: repeat(12,1fr)
+  grid-template-columns: repeat(12, 1fr)
 }
+
 .nav-filler-bar {
   background: $primary-green;
 }
@@ -120,7 +120,7 @@ a {
 // // $color-frequency is how intense you want the color change to be. Lower # = more intense changes
 // @mixin colors($max-count, $color-frequency){
 //   $color: 460/$max-count;
-  
+
 //   @for $i from 1 through $max-count {
 //     &:nth-child(#{$max-count}n + #{$i}) {
 //       // Modify 's' and 'l' percentages to match color scheme you want
@@ -172,6 +172,7 @@ li.nav-link-container {
   height: 3ch;
   text-align: center;
 }
+
 .nav-link-container {
   z-index: 10;
 }
@@ -183,11 +184,12 @@ li.nav-link-container a {
 
 li.nav-link-container:hover,
 li.nav-link-container:focus-within,
- {
+  {
   background: rgba($primary-green, 0.25);
   cursor: pointer;
   border-bottom: 1px solid $primary-green;
 }
+
 li#DataSources {
   background: rgba($primary-orange, 0.25);
   cursor: pointer;
@@ -234,6 +236,7 @@ ul li ul:focus {
   width: 80%;
   transition: all .25s ease-in-out;
   padding: 8% 8% 8% 12%;
+
   a {
     transition: all .25s ease-in-out;
   }
