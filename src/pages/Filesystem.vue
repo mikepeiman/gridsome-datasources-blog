@@ -4,20 +4,21 @@
     <DSSideBar />
     <div class="content">
       <h1 class="page-title">File System (markdown)</h1>
-    <ul v-for="(post, index) in $page.allPost.edges" :key="index">
-      <li class="post-container">
-        <g-link :to="`/blog/${post.node.slug}`">
-        <h2>{{ post.node.title }}</h2>
-        <h3>{{ post.node.description }}</h3>
-        <p class="post-date">{{ post.node.date }}</p>
-        <p>{{ post.node.excerpt }}</p>
-        </g-link>
-      </li>
-    </ul>
+      <ul class="posts-container">
+        <li class="single-post" v-for="(post, index) in $page.allPost.edges" :key="index">
+          <g-link :to="post.node.path">
+            <h2 class="post-title">{{ post.node.title }}</h2>
+            <p class="post-date">{{ post.node.date }}</p>
+            <p class="post-excerpt">{{ post.node.excerpt }}</p>
+          </g-link>
+        </li>
+      </ul>
     </div>
   </div>
 </DSLayout>
 </template>
+
+
 
 <page-query>
 {
@@ -50,13 +51,11 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 @import "./../assets/colors.scss";
 
 .site-container {
   background: #252525;
-  // background-size: cover;
-  // background-image: linear-gradient(rgba($primary-graphite, 1), rgba($primary-blue, 0.5)), url('./../assets/papers.co-ml28-space-earth-nature-interstellar-3840x2400-4k-wallpaper.jpg');
   height: calc(100vh - 70px);
 }
 
@@ -65,15 +64,64 @@ export default {
   min-height: 100%;
   width: 100%;
 }
+
 .page-title {
-  // margin: .5em;
   line-height: 1.5em;
   border-bottom: 3px solid $primary-blue;
   margin-bottom: 1em;
 }
+
 .content {
   grid-area: main-content;
   color: white;
+}
+
+.posts-container {
+  padding: 0;
+  margin: 0;
+  margin-bottom: 1em;
+}
+
+.single-post {
+  margin-bottom: 2em;
+}
+
+.posts-container li {
+  padding-left: 0em;
+  transition: .25s all ease-in-out;
+}
+
+.posts-container li:hover {
+  .post-title {
+    padding-left: 1em;
+    transition: .25s all ease-in-out;
+  }
+}
+
+.single-post a {
+  color: white;
+  font-weight: 300;
+  line-height: 1.25em;
+}
+
+.single-post p {
+  margin: 0;
+}
+
+.single-post .post-title {
+  margin: 0;
+}
+
+.single-post .post-date {
+  font-size: .8em;
+  margin-bottom: .5em;
+  color: rgba($primary-white,.5);
+  border-bottom: 1px solid $primary-green;
+}
+
+.post-title {
+  color: rgba($primary-green, .75);
+  text-transform: capitalize;
 }
 
 .grid-main {

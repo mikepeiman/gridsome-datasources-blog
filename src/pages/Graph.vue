@@ -1,19 +1,27 @@
 <template>
 <DSLayout>
-  <SidebarLeft />
-  <SidebarRight />
-  <div class="main">
-    <ul v-for="(post, index) in $page.allGraphCMS.edges" :key="index">
-      <li class="post-container">
-        <g-link :to="post.node.path">
-          <h2 class="post-title">{{ post.node.title }}</h2>
-        </g-link>
-        <h3 class="post-subtitle">{{ post.node.subtitle }}</h3>
-        <img :src="post.node.imageUrl" width="95%">
-        <p class="post-date">{{ post.node.datePublished }}</p>
-        <p class="post-body">{{ post.node.body }}</p>
-      </li>
-    </ul>
+  <div class="site-container">
+    <DSSideBar />
+    <div class="content">
+      <h1 class="page-title">GraphCMS</h1>
+      <ul class="posts-container">
+        <li class="single-post" v-for="(post, index) in $page.allGraphCMS.edges" :key="index">
+          <div class="post-hero">
+            <g-link class="post-link" :to="post.node.path">
+              <div class="post-thumbnail-wrapper">
+                <h2 class="post-title">{{ post.node.title }}</h2>
+                <h3 class="post-subtitle">{{ post.node.subtitle }}</h3>
+                <p class="post-date">{{ post.node.datePublished }}</p>
+                <img class="post-thumbnail" :src="post.node.imageUrl" />
+              </div>
+            </g-link>
+            <div class="post-body">
+              <p>{{ post.node.body }}</p>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
   </div>
 </DSLayout>
 </template>
@@ -37,83 +45,143 @@
 
 <script>
 import DSLayout from '~/layouts/DSLayout.vue';
-import SidebarLeft from '~/components/SidebarGalleryLeft.vue';
-import SidebarRight from '~/components/SidebarGalleryRight.vue';
+import DSSideBar from '~/components/DSSideBar.vue';
 
 export default {
   components: {
-    DSLayout,    SidebarLeft,
-    SidebarRight
-  },
-  // data: function() {
-  //   const baseUrl = 'https://media.graphcms.com';
-  //   const imageSrc = '';
-  //   return {
-
-  //     imageSrc: baseUrl + $page.imageSrc
-  //   }
-  // },
-  Created: function () {
-    console.log('Queries: ', page.node)
+    DSLayout,
+    DSSideBar,
   }
 }
 </script>
 
-<style scoped>
-.grid-main {
-  max-width: 100vw;
+<style lang="scss" scoped>
+@import "./../assets/colors.scss";
 
+.site-container {
+  background: #252525;
+  height: calc(100vh - 70px);
+}
+
+#contact-us-layout {
+  color: white;
+  min-height: 100%;
+  width: 100%;
+}
+
+.page-title {
+  line-height: 1.5em;
+  border-bottom: 3px solid $primary-blue;
+  margin-bottom: 1em;
+}
+
+.content {
+  grid-area: main-content;
+  color: white;
+}
+
+.posts-container {
+  padding: 0;
+  margin: 0;
+  margin-bottom: 1em;
+}
+
+.single-post {
+  margin-bottom: 2em;
+}
+
+.posts-container .post-thumbnail-wrapper {
+
+  .post-title,
+  .post-subtitle {
+    color: white;
+    transition: .25s all ease-in-out;
+  }
+}
+
+.posts-container .post-thumbnail-wrapper:hover {
+
+  .post-title,
+  .post-subtitle {
+    color: $primary-blue;
+    transition: .25s all ease-in-out;
+  }
+}
+
+.single-post a {
+  color: white;
+  font-weight: 300;
+  line-height: 1.25em;
+}
+
+.single-post p {
+  margin: 0;
+}
+
+.single-post .post-title {
+  margin: 0;
+}
+
+.single-post .post-date {
+  font-size: .8em;
+  margin-bottom: .5em;
+  color: rgba($primary-white, .5);
+  border-bottom: 1px solid $primary-green;
+}
+
+.post-hero {
   display: grid;
-  background: rgba(0, 120, 240, 0.25);
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: 1fr 1fr;
+  padding-right: 1em;
+  border-top: 3px solid $primary-blue;
+  padding-top: 1em;
+}
+
+.post-thumbnail-wrapper {}
+
+.post-title {
+  color: white;
+  text-transform: capitalize;
+  font-size: 2em;
+}
+
+.post-subtitle {
+  line-height: 1.5em;
+  margin: 0;
+  padding: 0 0 1em 0;
+}
+
+.post-date {
+  position: absolute;
+}
+
+.post-thumbnail {
+  width: 90%;
+}
+
+.grid-main {
+  /* max-width: 100vw; */
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
   grid-template-rows: auto;
+  grid-template-areas: "";
   grid-gap: 1ch;
 }
 
 .main {
   grid-area: main;
-  height: 100vh;
 }
 
 .grid-item {
   text-align: center;
-}
-
-li {
-  list-style: none;
-}
-
-a {
-  text-decoration: none;
-  color: #252525;
-  line-height: 3.5em;
-  letter-spacing: -0.05ch;
+  color: white;
 }
 
 .item-author {
-  /* min-height: 30px; */
   line-height: 1em;
   padding: 0;
   margin: 1em 0 .5em 0;
-  /* align-self: flex-start; */
-  /* justify-self: center; */
-}
-
-.post-title {
-  font-size: 3em;
-  text-align: center;
-  font-family: 'Montserrat';
-}
-
-.post-date {
-  font-size: .9em;
-  text-align: center;
-  font-family: 'Montserrat';
-}
-
-.post-body {
-  line-height: 1.45em;
-  font-family: 'Roboto';
+  color: white;
 }
 
 .item-img {

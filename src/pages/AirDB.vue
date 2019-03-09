@@ -1,17 +1,19 @@
 <template>
 <DSLayout>
-  <SidebarLeft />
-  <SidebarRight />
-  <div class="main">
-    <ul v-for="(lesson, index) in $page.allAirtable.edges" :key="index">
-<g-link :to="lesson.node.path">
-        <li class="lesson-container">
-          <h2>{{ lesson.node.resort }}</h2>
+  <div class="site-container">
+    <DSSideBar />
+    <div class="content">
+      <h1 class="page-title">Airtable</h1>
+      <ul class="posts-container">
+        <li class="single-post" v-for="(lesson, index) in $page.allAirtable.edges" :key="index">
+          <g-link :to="lesson.node.path">
+          <h2 class="post-title">{{ lesson.node.resort }}</h2>
           <p class="lesson-price">${{ lesson.node.price }}</p>
           <p>{{ lesson.node.private }}</p>
+          </g-link>
         </li>
-</g-link>
-    </ul>
+      </ul>
+    </div>
   </div>
 </DSLayout>
 </template>
@@ -38,44 +40,113 @@
 
 <script>
 import DSLayout from '~/layouts/DSLayout.vue';
-import SidebarLeft from '~/components/SidebarGalleryLeft.vue';
-import SidebarRight from '~/components/SidebarGalleryRight.vue';
+import DSSideBar from '~/components/DSSideBar.vue';
 
 export default {
   components: {
-    DSLayout,    SidebarLeft,
-    SidebarRight
+    DSLayout,
+    DSSideBar,  
   }
 }
 </script>
 
-<style scoped>
-.grid-main {
-  max-width: 100vw;
+<style lang="scss" scoped>
+@import "./../assets/colors.scss";
 
+.site-container {
+  background: #252525;
+  height: calc(100vh - 70px);
+}
+
+#contact-us-layout {
+  color: white;
+  min-height: 100%;
+  width: 100%;
+}
+
+.page-title {
+  line-height: 1.5em;
+  border-bottom: 3px solid $primary-blue;
+  margin-bottom: 1em;
+}
+
+.content {
+  grid-area: main-content;
+  color: white;
+}
+
+.posts-container {
+  padding: 0;
+  margin: 0;
+  margin-bottom: 1em;
+}
+
+.single-post {
+  margin-bottom: 2em;
+}
+
+.posts-container li {
+  padding-left: 0em;
+  transition: .25s all ease-in-out;
+}
+
+.posts-container li:hover {
+  .post-title {
+    padding-left: 1em;
+    transition: .25s all ease-in-out;
+  }
+}
+
+.single-post a {
+  color: white;
+  font-weight: 300;
+  line-height: 1.25em;
+}
+
+.single-post p {
+  margin: 0;
+}
+
+.single-post .post-title {
+  margin: 0;
+}
+
+.single-post .post-date,
+.single-post .lesson-price {
+  font-size: .8em;
+  margin-bottom: .5em;
+  color: rgba($primary-white,.5);
+  border-bottom: 1px solid $primary-green;
+}
+
+.post-title {
+  color: rgba($primary-green, .75);
+  text-transform: capitalize;
+}
+
+.grid-main {
+  /* max-width: 100vw; */
   display: grid;
-  background: rgba(0, 120, 240, 0.25);
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(7, 1fr);
   grid-template-rows: auto;
+  grid-template-areas: "";
   grid-gap: 1ch;
 }
 
 .main {
   grid-area: main;
-  height: 100vh;
 }
 
 .grid-item {
   text-align: center;
+  color: white;
 }
 
 .item-author {
-  /* min-height: 30px; */
   line-height: 1em;
   padding: 0;
   margin: 1em 0 .5em 0;
-  /* align-self: flex-start; */
-  /* justify-self: center; */
+  color: white;
 }
 
 .item-img {
@@ -85,14 +156,5 @@ export default {
   background-size: contain;
   align-self: flex-end;
   justify-self: center;
-}
-
-li {
-  list-style: none;
-
-}
-a {
-  text-decoration: none;
-  line-height: 1em;
 }
 </style>

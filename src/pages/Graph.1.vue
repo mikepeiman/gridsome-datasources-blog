@@ -7,11 +7,11 @@
       <li class="post-container">
         <g-link :to="post.node.path">
           <h2 class="post-title">{{ post.node.title }}</h2>
-        </g-link>
         <h3 class="post-subtitle">{{ post.node.subtitle }}</h3>
         <img :src="post.node.imageUrl" width="95%">
         <p class="post-date">{{ post.node.datePublished }}</p>
         <p class="post-body">{{ post.node.body }}</p>
+        </g-link>
       </li>
     </ul>
   </div>

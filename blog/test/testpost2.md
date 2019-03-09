@@ -1,8 +1,7 @@
 ---
-title: The Second Title
-date: 2019-02-10
+title: "The Second Title"
+date: "2019-02-11"
 description: 'Awesome Number Two'
-excerpt: 'This is hungry work'
 slug: 'blog-post-2'
 timeToRead: 5
 ---
