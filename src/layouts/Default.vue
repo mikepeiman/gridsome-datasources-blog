@@ -20,21 +20,7 @@ export default {
   color: #252525;
 }
 
-/* 
-#header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-  height: 80px;
-}
-
-.nav__link {
-  margin-left: 20px;
-  text-decoration: none;
-} */
-
-.site-title {
+.page-title {
   text-decoration: none;
 }
 

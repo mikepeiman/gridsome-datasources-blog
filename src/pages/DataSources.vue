@@ -7,22 +7,22 @@
         <li @click="mainLink" class="nav-link-container">
           <g-link class="nav__link" :to="{ name: 'fakerPosts' }">Faker</g-link>
         </li>
-        <li class="nav-link-container">
+        <li @click="mainLink" class="nav-link-container">
           <g-link class="nav__link" :to="{ name: 'placeholder' }">Placeholder</g-link>
         </li>
-        <li class="nav-link-container">
+        <li @click="mainLink" class="nav-link-container">
           <g-link class="nav__link" :to="{ name: 'starwars' }">StarWars</g-link>
         </li>
-        <li class="nav-link-container">
+        <li @click="mainLink" class="nav-link-container">
           <g-link class="nav__link" :to="{ name: 'dota' }">DOTA2</g-link>
         </li>
-        <li class="nav-link-container">
+        <li @click="mainLink" class="nav-link-container">
           <g-link class="nav__link" :to="{ name: 'filesystem' }">Filesystem</g-link>
         </li>
-        <li class="nav-link-container">
+        <li @click="mainLink" class="nav-link-container">
           <g-link class="nav__link" :to="{ name: 'airDb' }">Airtable</g-link>
         </li>
-        <li class="nav-link-container">
+        <li @click="mainLink" class="nav-link-container">
           <g-link class="nav__link" :to="{ name: 'graph' }">GraphCMS</g-link>
         </li>
       </ul>
@@ -35,19 +35,7 @@
 export default {
   methods: {
     mainLink(x) {
-      // let el = Object.values(this.$refs)[x].$el;
-      
-      let link = x.currentTarget.children[0].attributes.href.value;
-      console.log(`x event: ${link}`);
-      
-      // console.log(`Object.values: ${Object.values}`)
-      // let elClass = el.parentElement.parentElement.attributes.class.value
-      // let link = el.attributes.href.value
-      // this.linkSet.push(link)
-      // let i = this.linkSet.length;
-      // this.activeLink = link;
-      // console.log(`MAINLINK - Current activelink: ${this.activeLink}, current click: ${link}, linkSet: ${this.linkSet}`);
-      this.$router.push(link);
+      this.$router.push(x.currentTarget.children[0].attributes.href.value);
     }
   }
 }

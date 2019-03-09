@@ -1,8 +1,9 @@
 <template>
-<Layout>
+<DSLayout id="ds-faker">
   <div class="site-container">
+    <DSSideBar />
     <div class="content">
-      <h1 class="site-title">Faker Data Source</h1>
+      <h1 class="page-title">Faker</h1>
       <div class="grid-main">
         <div class="grid-item" v-for="(item, index) in $page.allFaker.edges" :key="index">
           <g-link :to="item.node.path">
@@ -13,7 +14,7 @@
       </div>
     </div>
   </div>
-</Layout>
+</DSLayout>
 </template>
 
 <page-query>
@@ -33,38 +34,30 @@ allFaker(perPage: 50, sortBy: "author", order: ASC ) {
 </page-query>
 
 <script>
-import Grid from '~/layouts/Grid.vue';
-import SidebarLeft from '~/components/SidebarGalleryLeft.vue';
-import SidebarRight from '~/components/SidebarGalleryRight.vue';
+import DSLayout from '~/layouts/DSLayout.vue';
+import DSSideBar from '~/components/DSSideBar.vue';
 
 export default {
   components: {
-    Grid,
-    SidebarLeft,
-    SidebarRight
+    DSLayout,
+    DSSideBar,  
   }
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "./../assets/colors.scss";
 
 .site-container {
   background: #252525;
-  background-size: cover;
-  background-image: linear-gradient(rgba($primary-graphite, 1), rgba($primary-blue, 0.5)), url('./../assets/papers.co-ml28-space-earth-nature-interstellar-3840x2400-4k-wallpaper.jpg');
   height: calc(100vh - 70px);
-  display: grid;
-  grid-template-columns: 1fr 2fr 2em 7fr 1fr;
-  grid-template-areas: ". . . . ."". main-content main-content main-content .";
-  grid-template-rows: minmax(100px, 1fr) auto 1fr;
 }
 
-#contact-us-layout {
-  color: white;
-  min-height: 100%;
-  width: 100%;
+.page-title {
+  line-height: 1.5em;
+  border-bottom: 3px solid $primary-blue;
+  margin-bottom: 1em;
 }
-
 .content {
   grid-area: main-content;
   color: white;

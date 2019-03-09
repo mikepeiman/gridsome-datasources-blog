@@ -1,8 +1,9 @@
 <template>
-<Grid>
-  <SidebarLeft />
-  <SidebarRight />
-  <div class="main">
+<DSLayout>
+  <div class="site-container">
+    <DSSideBar />
+    <div class="content">
+      <h1 class="page-title">File System (markdown)</h1>
     <ul v-for="(post, index) in $page.allPost.edges" :key="index">
       <li class="post-container">
         <g-link :to="`/blog/${post.node.slug}`">
@@ -13,8 +14,9 @@
         </g-link>
       </li>
     </ul>
+    </div>
   </div>
-</Grid>
+</DSLayout>
 </template>
 
 <page-query>
@@ -37,46 +39,66 @@ allPost {
 </page-query>
 
 <script>
-import Grid from '~/layouts/Grid.vue';
-import SidebarLeft from '~/components/SidebarGalleryLeft.vue';
-import SidebarRight from '~/components/SidebarGalleryRight.vue';
+import DSLayout from '~/layouts/DSLayout.vue';
+import DSSideBar from '~/components/DSSideBar.vue';
 
 export default {
   components: {
-    Grid,
-    SidebarLeft,
-    SidebarRight
+    DSLayout,
+    DSSideBar,  
   }
 }
 </script>
 
-<style scoped>
-.grid-main {
-  max-width: 100vw;
+<style scoped lang="scss">
+@import "./../assets/colors.scss";
 
+.site-container {
+  background: #252525;
+  // background-size: cover;
+  // background-image: linear-gradient(rgba($primary-graphite, 1), rgba($primary-blue, 0.5)), url('./../assets/papers.co-ml28-space-earth-nature-interstellar-3840x2400-4k-wallpaper.jpg');
+  height: calc(100vh - 70px);
+}
+
+#contact-us-layout {
+  color: white;
+  min-height: 100%;
+  width: 100%;
+}
+.page-title {
+  // margin: .5em;
+  line-height: 1.5em;
+  border-bottom: 3px solid $primary-blue;
+  margin-bottom: 1em;
+}
+.content {
+  grid-area: main-content;
+  color: white;
+}
+
+.grid-main {
+  /* max-width: 100vw; */
   display: grid;
-  background: rgba(0, 120, 240, 0.25);
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(7, 1fr);
   grid-template-rows: auto;
+  grid-template-areas: "";
   grid-gap: 1ch;
 }
 
 .main {
   grid-area: main;
-  height: 100vh;
 }
 
 .grid-item {
   text-align: center;
+  color: white;
 }
 
 .item-author {
-  /* min-height: 30px; */
   line-height: 1em;
   padding: 0;
   margin: 1em 0 .5em 0;
-  /* align-self: flex-start; */
-  /* justify-self: center; */
+  color: white;
 }
 
 .item-img {

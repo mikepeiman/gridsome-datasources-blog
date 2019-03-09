@@ -1,30 +1,28 @@
 <template>
-<Layout>
-  <!-- <SidebarLeft />
-  <SidebarRight /> -->
-  <div class="main">
-    <h1>DOTA2</h1>
-        <div class="grid-main">
-
-    <ul class="hero-list" v-for="(item, index) in $page.allDOTA2.edges" :key="item.id">
-      <g-link :to="item.node.path">
-        <li class="item-container grid-item">
-                    <div class="hero-number">{{ item.node.num }}</div>
-          <div class="hero-number-bg">
-            <h2 class="hero-name">{{ item.node.name }}</h2>
-          </div>
-
-          <img class="hero-image" :Src="item.node.heroImgSrc" />
-          
-          <div  class="abilities-list" v-for="ability in item.node.abilities">
-            <p class="single-ability">{{ ability }}</p>
-          </div>
-        </li>
-      </g-link>
-    </ul>
+<DSLayout>
+  <div class="site-container">
+    <DSSideBar />
+    <div class="content">
+      <h1 class="page-title">DOTA2 Heroes</h1>
+      <div class="grid-main">
+        <ul class="hero-list" v-for="(item, index) in $page.allDOTA2.edges" :key="item.id">
+          <g-link :to="item.node.path">
+            <li class="item-container grid-item">
+              <div class="hero-number">{{ item.node.num }}</div>
+              <div class="hero-number-bg">
+                <h2 class="hero-name">{{ item.node.name }}</h2>
+              </div>
+              <img class="hero-image" :Src="item.node.heroImgSrc" />
+              <div class="abilities-list" v-for="ability in item.node.abilities">
+                <p class="single-ability">{{ ability }}</p>
+              </div>
+            </li>
+          </g-link>
+        </ul>
+      </div>
+    </div>
   </div>
-  </div>
-</Layout>
+</DSLayout>
 </template>
 
 <page-query>
@@ -44,31 +42,48 @@
 </page-query> 
 
 <script>
-import Grid from "~/layouts/Grid.vue";
-import SidebarLeft from "~/components/SidebarGalleryLeft.vue";
-import SidebarRight from "~/components/SidebarGalleryRight.vue";
+import DSLayout from '~/layouts/DSLayout.vue';
+import DSSideBar from '~/components/DSSideBar.vue';
 
 export default {
   components: {
-    Grid,
-    SidebarLeft,
-    SidebarRight
+    DSLayout,
+    DSSideBar,  
   }
-};
+}
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 @import "./../assets/colors.scss";
 
+.site-container {
+  background: #252525;
+  height: calc(100vh - 70px);
+    grid-template-columns: 1fr 1fr 5fr 1fr;
+  grid-template-rows: 100px 1fr;
+  grid-template-areas:
+    ". . . ."
+    "sidenav . main-content .";
+}
+.page-title {
+  line-height: 1.5em;
+  border-bottom: 3px solid $primary-blue;
+  // margin-bottom: -1em;
+}
+.content {
+  grid-area: main-content;
+  color: white;
+}
+
 .grid-main {
-  max-width: 84vw;
-  margin-right: 8vw;
+  // max-width: 84vw;
+  // margin-right: 8vw;
   display: grid;
-  // background: rgba(0, 120, 240, 0.25);
   grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
   grid-template-rows: auto;
   grid-gap: 5px;
   line-height: 1em;
+
   ul li {
     padding: 0;
   }
@@ -84,10 +99,12 @@ export default {
   padding: 0;
   margin: 0 0 1em 0;
 }
+
 .hero-list {
   padding: 0;
   margin: 0;
 }
+
 .hero-image {
   width: 50px;
   min-width: 50px;
@@ -97,65 +114,59 @@ export default {
   margin: 0;
   // justify-self: left;
 }
+
 .hero-number {
   font-size: .5em;
   font-weight: 300;
   margin: 0;
   padding: 0 0 5px 0;
   position: relative;
-  top: 0px;
+  top: 21px;
+  left: 5px;
   height: 10px;
   width: 18px;
-  // border-radius: 0 0 3px 0;
   border: 1px solid rgba($primary-blue, 0.5);
-  left: 1px;
   background: $primary-graphite;
-  z-index: -1;
+  z-index: 2;
   color: rgba($primary-white, .5);
 }
+
 .hero-number-bg {
   font-size: .5em;
   font-weight: 300;
   margin: 0;
   padding: 0px 3px;
   position: relative;
-  // top: 14px;
   background: $primary-graphite;
   min-width: calc(50px-.4em);
   width: calc(100% -5px);
-  // margin-right: 1em;
   height: 30px;
-  // height: auto;
-  // width: 100%;
-  // border-radius: 0 0 3px 0;
   border: 1px solid black;
   left: 0px;
-  z-index: -2;
+  z-index: 1;
 }
+
 .hero-name {
   font-size: 1.4em;
   padding: 0 0 .5em 0;
-  margin: 3px 0 0 0;
+  margin: 3px 0 0 26px;
   line-height: 1em;
   color: $primary-white;
   z-index: 10;
   font-weight: 400;
-  font-family: "Source Sans Pro",'Montserrat';
+  font-family: "Source Sans Pro", 'Montserrat';
+  text-align: left;
 }
+
 .hero-image {
-  // padding: 0 0 5px 0;
   border-bottom: 1px solid $secondary-blue;
 }
+
 .single-ability {
   font-size: 0.5em;
-  // font-family: monospace;
   text-align: left;
   line-height: 1em;
   color: $primary-blue;
-  ::before {
-    content: '-';
-    color: white;
-  }
 }
 
 .item-img {
@@ -166,5 +177,4 @@ export default {
   align-self: flex-end;
   justify-self: center;
 }
-
 </style>
