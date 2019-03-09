@@ -8,8 +8,10 @@
         <li class="single-post" v-for="(post, index) in $page.allPost.edges" :key="index">
           <g-link :to="post.node.path">
             <h2 class="post-title">{{ post.node.title }}</h2>
-            <p class="post-date">{{ post.node.date }}</p>
+            <p class="post-date">Published: {{ formatDate(post.node.date) }}</p>
             <p class="post-excerpt">{{ post.node.excerpt }}</p>
+            <p class="post-description">{{ post.node.description }}</p>
+            <!-- <p class="post-body">{{ post.node.body }}</p> -->
           </g-link>
         </li>
       </ul>
@@ -17,8 +19,6 @@
   </div>
 </DSLayout>
 </template>
-
-
 
 <page-query>
 {
@@ -33,6 +33,7 @@ allPost {
       timeToRead
       date
       slug
+      path
     }
   }
 }
@@ -40,6 +41,7 @@ allPost {
 </page-query>
 
 <script>
+import moment from 'moment';
 import DSLayout from '~/layouts/DSLayout.vue';
 import DSSideBar from '~/components/DSSideBar.vue';
 
@@ -47,6 +49,12 @@ export default {
   components: {
     DSLayout,
     DSSideBar,  
+  },
+    methods: {
+    formatDate(x) {
+      console.log(`moment date: ${moment(x).format('MMMM Do, YYYY')}`)
+      return moment(x).format('MMMM Do, YYYY');
+    }
   }
 }
 </script>
