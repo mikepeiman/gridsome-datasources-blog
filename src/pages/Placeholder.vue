@@ -85,15 +85,46 @@ export default {
   margin-bottom: 2em;
 }
 
+// .single-post:hover {
+//     .post-title::before {
+//     content: '>';
+//     font-size: 1.5em;
+//     // position: relative;
+//     // top: 50px;
+//     // left: 0;
+//     color: white;
+//     font-weight: bold;
+//     margin: 0;
+//     padding-right: 1em;
+//     transition: all .25s ease-in-out;
+//   }
+// }
+
+.post-body {
+  color: rgba($primary-white, .5);
+}
+
+.post-title {
+  color: rgba($primary-blue, .75);
+  text-transform: capitalize;
+}
+
 .posts-container li {
-  padding-left: 0em;
-  transition: .25s all ease-in-out;
+  width: 100%;
+  .post-title {
+    padding-left: 0em;
+    transition: .25s all ease-in-out;
+  }
 }
 
 .posts-container li:hover {
+  // width: calc(100% - 1em);
   .post-title {
-    padding-left: 1em;
+    padding-left: .5em;
     transition: .25s all ease-in-out;
+  }
+  .post-body {
+  color: rgba($primary-white, 1);
   }
 }
 
@@ -114,13 +145,8 @@ export default {
 .single-post .post-date {
   font-size: .8em;
   margin-bottom: .5em;
-  color: rgba($primary-white,.5);
-  border-bottom: 1px solid $primary-green;
-}
-
-.post-title {
-  color: rgba($primary-green, .75);
-  text-transform: capitalize;
+  color: rgba($primary-white, .5);
+  border-bottom: 1px solid rgba($primary-white, .5);
 }
 
 .grid-main {

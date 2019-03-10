@@ -85,17 +85,34 @@ export default {
   margin-bottom: 2em;
 }
 
-.posts-container li {
-  padding-left: 0em;
-  transition: .25s all ease-in-out;
+.post-body {
+  color: rgba($primary-white, .5);
 }
 
-.posts-container li:hover {
+.post-title {
+  color: rgba($primary-blue, .75);
+  text-transform: capitalize;
+}
+
+.posts-container li {
+  width: 100%;
   .post-title {
-    padding-left: 1em;
+    padding-left: 0em;
     transition: .25s all ease-in-out;
   }
 }
+
+.posts-container li:hover {
+  // width: calc(100% - 1em);
+  .post-title {
+    padding-left: .5em;
+    transition: .25s all ease-in-out;
+  }
+  .post-body {
+  color: rgba($primary-white, 1);
+  }
+}
+
 
 .single-post a {
   color: white;
