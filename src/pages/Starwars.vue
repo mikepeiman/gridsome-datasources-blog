@@ -1,17 +1,17 @@
 <template>
 <DSLayout>
-  <div class="site-container">
+  <div class="site-container swapi-single">
     <DSSideBar />
     <div class="content">
       <h1 class="page-title">Star Wars API</h1>
-    <ul v-for="(item, index) in $page.allSWAPI.edges" :key="item.id">
-      <g-link :to="item.node.path">
-        <li class="item-container">
-          <h2>{{ item.node.name }}</h2>
-          <p>{{ item.node.starshipClass }}</p>
+      <ul>
+        <li class="item-container" v-for="(item, index) in $page.allSWAPI.edges" :key="item.id">
+          <g-link class="item-link" :to="item.node.path">
+            <h2>{{ item.node.name }}</h2>
+            <p>{{ item.node.starshipClass }}</p>
+          </g-link>
         </li>
-      </g-link>
-    </ul>
+      </ul>
     </div>
   </div>
 </DSLayout>
@@ -40,12 +40,12 @@ import DSSideBar from '~/components/DSSideBar.vue';
 export default {
   components: {
     DSLayout,
-    DSSideBar,  
+    DSSideBar,
   }
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 @import "./../assets/colors.scss";
 
 .site-container {
@@ -59,6 +59,7 @@ export default {
   border-bottom: 3px solid $primary-blue;
   margin-bottom: 1em;
 }
+
 .content {
   grid-area: main-content;
   color: white;
@@ -80,6 +81,19 @@ export default {
 .grid-item {
   text-align: center;
   color: white;
+}
+
+.item-link {
+  
+}
+
+.swapi-single .item-container {
+  line-height: 1em;
+  background: rgba($primary-blue, 0.25);
+  color: white;
+  :visited {
+    color: white;
+  }
 }
 
 .item-author {

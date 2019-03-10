@@ -7,7 +7,7 @@ module.exports = function (api) {
 
     const contentType = store.addContentType({
       typeName: 'BlogPost',
-      route: '/JSONplaceholder/:slug'
+      route: '/JSONplaceholder/:id'
     })
 
     for (const item of data) {
