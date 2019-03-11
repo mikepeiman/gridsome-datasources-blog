@@ -14,7 +14,7 @@
       <li @click="mainLink(4)" id="DataSources" class="nav-link-container">
         <g-link class="nav__link" :to="{ name: 'dataSources' }" focus>Data Sources</g-link>
       </li>
-      <li @click="mainLink(12)" class="nav-link-container">
+      <li @click="mainLink(5)" class="nav-link-container">
         <g-link class="nav__link" :to="{ name: 'contact' }">Contact</g-link>
       </li>
     </ul>
