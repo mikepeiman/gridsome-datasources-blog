@@ -1,5 +1,5 @@
 <template>
-<DSLayout>
+<DSLayout pageName="Filesystem">
   <div class="site-container">
     <DSSideBar />
     <div class="content">

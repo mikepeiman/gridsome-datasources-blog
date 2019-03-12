@@ -1,5 +1,5 @@
 <template>
-<DSLayout>
+<DSLayout pageName="DOTA2 ">
   <div class="site-container">
     <DSSideBar />
     <div class="content">
@@ -49,6 +49,14 @@ export default {
   components: {
     DSLayout,
     DSSideBar,  
+  },
+  // data: function() {
+  //   return {
+  //     pageName: 'DOTA2'
+  //   }
+  // },
+  created() {
+    this.$emit(this.pageName)
   }
 }
 </script>

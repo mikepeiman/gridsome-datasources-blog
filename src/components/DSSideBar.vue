@@ -48,6 +48,7 @@ export default {
       activeLink: ''
     }
   },
+  props: ['pageName'],
   methods: {
         mainLink(x) {
       let el = Object.values(this.$refs)[x].$el;

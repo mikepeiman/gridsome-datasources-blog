@@ -1,6 +1,6 @@
 <template>
 <div class="datasources">
-  <DSHeader></DSHeader>
+  <DSHeader :pageName="pageName"></DSHeader>
   <!-- <DSSideBar></DSSideBar> -->
   <slot />
 </div>
@@ -13,7 +13,8 @@ import DSSideBar from '~/components/DSSideBar.vue';
 export default {
   components: {
     DSHeader
-  }
+  },
+  props: ['pageName'],
 }
 </script>
 

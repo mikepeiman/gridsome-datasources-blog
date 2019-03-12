@@ -1,5 +1,5 @@
 <template>
-<DSLayout>
+<DSLayout pageName="SWAPI">
   <div class="site-container swapi-single">
     <DSSideBar />
     <div class="content">

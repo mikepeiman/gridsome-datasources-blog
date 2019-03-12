@@ -75,7 +75,8 @@ export default {
       activeLink: '',
       lastActiveLink: '',
       submenuActive: false,
-      linkSet: []
+      linkSet: [],
+      isDS: this.dataSources
     }
   },
   methods: {
@@ -108,6 +109,17 @@ export default {
       console.log(`subLINK - Current activelink: ${this.activeLink}, current click: ${link}, linkSet: ${this.linkSet}`);
       this.$router.push(this.activeLink);
 
+    },
+        dataSources() {
+      console.log(`router: ${this.$router}`)
+      this.isDS = true
+      if(this.$router) {
+        console.log('data sources computed active')
+        this.isDF = true
+      } else {
+        console.log('computed not data sources')
+        // this.isDF = false
+      }
     }
   },
   computed: {

@@ -1,5 +1,5 @@
 <template>
-<DSLayout>
+<DSLayout pageName="GraphCMS">
   <div class="site-container">
     <DSSideBar />
     <div class="content">
@@ -76,11 +76,6 @@ export default {
   height: calc(100vh - 70px);
 }
 
-#contact-us-layout {
-  color: white;
-  min-height: 100%;
-  width: 100%;
-}
 
 .page-title {
   line-height: 1.5em;

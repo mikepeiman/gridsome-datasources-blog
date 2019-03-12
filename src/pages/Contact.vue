@@ -29,11 +29,6 @@ export default {}
   grid-template-rows: minmax(100px, 1fr) 5fr 1fr;
 }
 
-#contact-us-layout {
-  color: white;
-  min-height: 100%;
-  width: 100%;
-}
 
 .content {
   grid-area: main-content;

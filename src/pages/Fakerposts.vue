@@ -1,5 +1,5 @@
 <template>
-<DSLayout id="ds-faker">
+<DSLayout pageName="Faker " id="ds-faker">
   <div class="site-container">
     <DSSideBar />
     <div class="content">

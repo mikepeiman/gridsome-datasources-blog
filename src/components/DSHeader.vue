@@ -12,7 +12,7 @@
         <g-link class="nav__link" :to="{ name: 'about' }">About</g-link>
       </li>
       <li @click="mainLink(4)" id="DataSources" class="nav-link-container">
-        <g-link class="nav__link" :to="{ name: 'dataSources' }" focus>Data Sources</g-link>
+        <g-link class="nav__link" :to="{ name: 'dataSources' }" focus>Data Source: {{ pageName }} </g-link>
       </li>
       <li @click="mainLink(5)" class="nav-link-container">
         <g-link class="nav__link" :to="{ name: 'contact' }">Contact</g-link>
@@ -38,13 +38,12 @@ export default {
       activeLink: '',
       lastActiveLink: '',
       submenuActive: false,
-      linkSet: []
+      linkSet: [],
+      pageName: ''
     }
   },
+  props: ['pageName'],
   methods: {
-    dropdownTest() {
-      console.log('dropdown test')
-    },
     mainLink(x) {
       let el = Object.values(this.$refs)[x].$el;
       let elClass = el.parentElement.parentElement.attributes.class.value
@@ -73,7 +72,26 @@ export default {
     }
   },
   computed: {
-
+    dataSources() {
+      let route = Object.values(this.$router)
+      let path = this.$router.path
+        console.log(`router path: ${path}`)
+        // console.log(`router Object.values: ${route}`)
+        // console.log(`the router: ${this.$router}`)
+        // route.forEach(obj => {
+        //   console.log(`this obj: ${Object.value(obj)}`)
+        // })
+        // console.log(`the router iteration: ${this.$router}`)
+      // console.log(`router href: ${this.$router.href}`)
+      this.isDS = true
+      if(this.$router.path = '/data-sources') {
+        console.log('data sources computed active')
+        this.isDF = true
+      } else {
+        console.log('computed not data sources')
+        // this.isDF = false
+      }
+    }
   },
 }
 </script>
@@ -168,7 +186,8 @@ li.nav-link-container {
   list-style: none;
   margin-bottom: 0;
   border-bottom: 3px solid rgba(0, 0, 0, 0);
-  width: 16ch;
+  min-width: 17ch;
+  // width: auto;
   height: 3ch;
   text-align: center;
 }
