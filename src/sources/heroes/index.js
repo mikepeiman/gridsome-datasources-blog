@@ -1,4 +1,3 @@
-// const axios = require('axios');
 const {
   GraphQLSchema,
   GraphQLList,
@@ -11,11 +10,8 @@ const {
 
 const $ = require("cheerio");
 const rp = require("request-promise");
-
-// let jsonframe = require("jsonframe-cheerio");
 const heroParse = require("../dota2/heroParse");
 const heroesUrl = "http://www.dota2.com/heroes/";
-// ************************
 
 module.exports = function(api) {
   api.loadSource(async store => {
@@ -69,18 +65,6 @@ module.exports = function(api) {
       type: graphql.GraphQLList(AbilityType),
       resolve(node) {
         return node.fields.abilities;
-      }
-    }));
-    Heroes.addSchemaField("abilityName", ({ graphql }) => ({
-      type: graphql.GraphQLString,
-      resolve(node) {
-        return node.fields.abilityName;
-      }
-    }));
-    Heroes.addSchemaField("abilitySrc", ({ graphql }) => ({
-      type: graphql.GraphQLString,
-      resolve(node) {
-        return node.fields.abilitySrc;
       }
     }));
 

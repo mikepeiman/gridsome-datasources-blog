@@ -37,11 +37,11 @@
           <li @click="subLink(7)" class="nav-link-container">
             <g-link class="nav__link" :to="{ name: 'starwars' }">StarWars</g-link>
           </li>
-          <li @click="subLink(8)" class="nav-link-container">
+          <!-- <li @click="subLink(8)" class="nav-link-container">
             <g-link class="nav__link" :to="{ name: 'dota' }">DOTA2</g-link>
-          </li>
-                    <li @click="subLink(9)" class="nav-link-container">
-            <g-link class="nav__link" :to="{ name: 'heros' }">DOTA Heroes</g-link>
+          </li> -->
+          <li @click="subLink(8)" class="nav-link-container">
+            <g-link class="nav__link" :to="{ name: 'heros' }">DOTA2 Heroes</g-link>
           </li>
           <li @click="subLink(9)" class="nav-link-container">
             <g-link class="nav__link" :to="{ name: 'filesystem' }">Filesystem</g-link>
@@ -113,10 +113,10 @@ export default {
       this.$router.push(this.activeLink);
 
     },
-        dataSources() {
+    dataSources() {
       console.log(`router: ${this.$router}`)
       this.isDS = true
-      if(this.$router) {
+      if (this.$router) {
         console.log('data sources computed active')
         this.isDF = true
       } else {
@@ -168,8 +168,9 @@ a {
   margin: 0 1em;
   grid-area: nav-filler;
   display: grid;
-  grid-template-columns: repeat(12,1fr)
+  grid-template-columns: repeat(12, 1fr)
 }
+
 .nav-filler-bar {
   background: $primary-green;
 }
@@ -180,9 +181,9 @@ nth-child mixin
 
 // $max-count is the maximum amount of colors you'll want
 // $color-frequency is how intense you want the color change to be. Lower # = more intense changes
-@mixin colors($max-count, $color-frequency){
+@mixin colors($max-count, $color-frequency) {
   $color: 460/$max-count;
-  
+
   @for $i from 1 through $max-count {
     &:nth-child(#{$max-count}n + #{$i}) {
       // Modify 's' and 'l' percentages to match color scheme you want
@@ -190,12 +191,13 @@ nth-child mixin
     }
   }
 }
+
 /************************
 nth-child mixin
 ********/
 
-#nav-filler > .nav-filler-bar {
-  @include colors(12,3);
+#nav-filler>.nav-filler-bar {
+  @include colors(12, 3);
 }
 
 nav {
@@ -205,9 +207,11 @@ nav {
   // border-bottom: 3px solid $primary-blue;
   // width: 760px;
 }
+
 .nav-items:first-child {
-      // border-left: 3px solid $primary-blue;
-    }
+  // border-left: 3px solid $primary-blue;
+}
+
 ul {
   /* background: darkorange; */
   list-style: none;
@@ -239,6 +243,7 @@ li.nav-link-container {
   height: 3ch;
   text-align: center;
 }
+
 .nav-link-container {
   z-index: 10;
 }

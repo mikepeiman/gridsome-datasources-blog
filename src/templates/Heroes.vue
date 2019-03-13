@@ -1,5 +1,5 @@
 <template>
-<DSLayout>
+<DSLayout :pageName="`DOTA2 Hero: `+this.$page.post.name">
   <div class="site-container">
     <DSSideBar />
     <div class="content">
