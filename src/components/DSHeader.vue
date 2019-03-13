@@ -39,7 +39,6 @@ export default {
       lastActiveLink: '',
       submenuActive: false,
       linkSet: [],
-      pageName: ''
     }
   },
   props: ['pageName'],

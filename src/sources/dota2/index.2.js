@@ -24,12 +24,18 @@ module.exports = function(api) {
       route: "/dota2/:name"
     });
 
-
     contentType.addSchemaField("name", ({ graphql }) => ({
       type: graphql.GraphQLString,
       allowNull: false,
       resolve(node) {
         return node.fields.name;
+      }
+    }));
+    contentType.addSchemaField("slug", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      allowNull: false,
+      resolve(node) {
+        return node.fields.slug;
       }
     }));
     contentType.addSchemaField("num", ({ graphql }) => ({
@@ -52,11 +58,24 @@ module.exports = function(api) {
       }
     }));
     contentType.addSchemaField("abilities", ({ graphql }) => ({
-      type: graphql.GraphQLList(GraphQLString),
+      type: graphql.GraphQLList(GraphQLList(GraphQLString)),
       resolve(node) {
         return node.fields.abilities;
       }
     }));
+    // contentType.addSchemaField("abilityName", ({ graphql }) => ({
+    //   type: graphql.GraphQLString,
+    //   allowNull: false,
+    //   resolve(node) {
+    //     return node.fields.abilities.name;
+    //   }
+    // }));
+    // contentType.addSchemaField("abilityImg", ({ graphql }) => ({
+    //   type: graphql.GraphQLString,
+    //   resolve(node) {
+    //     return node.fields.abilities.src;
+    //   }
+    // }));
 
     rp(heroesUrl)
       .then(html => {
@@ -81,11 +100,21 @@ module.exports = function(api) {
                 return newWord;
               })
               .join(" ");
+          };
+          function slugify(str) {
+            return splitName
+              .map(word => {
+                let newWord = word.charAt(0).toLowerCase() + word.slice(1);
+                return newWord;
+              })
+              .join("-");
           }
           let heroName = titleCase(splitName);
+          let heroSlug = slugify(splitName);
           heroesList.push({
             num: heroNum,
             name: heroName,
+            slug: heroSlug,
             url: heroUrl,
             heroImgSrc: heroImgSrc
           });
@@ -95,24 +124,34 @@ module.exports = function(api) {
         return Promise.all(
           heroesList.map(hero => {
             // console.log(`Promise calling heroParse with individual hero URL: ${hero.url}`)
-            return heroParse(hero.num, hero.name, hero.url, hero.heroImgSrc);
+            return heroParse(hero.num, hero.name, hero.slug, hero.url, hero.heroImgSrc);
           })
         )
-        // console.log('heroesList: ', heroesList)
+        console.log('heroesList: ', heroesList)
         // return heroesList
+        // console.log(`heroes length: ${heroes.length}`)
       })
       .then(async heroes => {
         heroes.forEach(hero => {
-          // console.log(`Inside final .then, heroes length: ${heroes.length}`)
           // console.log(`Inside final .then, heroes.forEach: ${hero.num}: ${hero.name}`)
           contentType.addNode({
             fields: {
               num: hero.num,
               name: hero.name,
+              slug: hero.slug,
+              url: hero.url,
               abilities: hero.abilities,
-              heroImgSrc: hero.heroImgSrc
+              heroImgSrc: hero.heroImgSrc,
+
             }
           });
+          hero.abilities.forEach(ability => {
+            // console.log(`hero ability adding nodes: ${ability.name}, ${ability.src}`)
+            contentType.addNode({
+              name: ability.name,
+              src: ability.src
+            })
+          })
         });
       })
       .catch(err => {

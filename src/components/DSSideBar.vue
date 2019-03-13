@@ -184,8 +184,10 @@ ul li ul:focus {
 
   a {
     // padding: 8% 8% 8% 12%;
-
     transition: all .25s ease-in-out;
+    :visited {
+      color: white;
+    }
   }
 }
 </style>

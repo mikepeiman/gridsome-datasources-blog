@@ -7,11 +7,17 @@ const heroParse = function(num, name, url, heroImgSrc) {
   let abilities = [];
   const numberOfAbilities = $('.overviewAbilityRowDescription > h2', html).length
   for (let i = 0; i < numberOfAbilities; i++) {
-    let ability = $('.overviewAbilityRowDescription > h2', html)[i].children[0].data;
-    // console.log('Hero abilities: ', ability)
-    abilities.push(ability)
+    let name = $('.overviewAbilityRowDescription > h2', html)[i].children[0].data;
+    let src = $('.overviewAbilityImg', html)[i].attribs.src;
+    // console.log(`hero img src: ${Object.keys(src)}`)
+    // console.log(`hero img src: ${src}`)
+    // console.log(`Hero abilities and src: ${name} ::: ${src}`)
+    abilities.push({name: name, src: src})
   }
-  // console.log(`Inside of heroParse: num(${num}) name(${name})`)
+  // console.log(`Inside of heroParse: name(${name}) abilities(${abilities})`)
+  // abilities.forEach(ability => {
+  //   console.log(`abilities.forEach => ability.name(${ability.name})`)
+  // })
   return { num: num, name: name, abilities: abilities, heroImgSrc: heroImgSrc }
 })
 .catch(err => {

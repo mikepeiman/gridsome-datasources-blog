@@ -3,22 +3,28 @@
   <div class="site-container">
     <DSSideBar />
     <div class="content">
-    <h1 class="post-title">Hero: {{$page.post.name}}</h1>
-    <ul v-for="ability in $page.post.abilities">
-      <g-link :to="`${$page.post.path}/${ability}`">
-      <li>{{ ability }}</li>
-      </g-link>
-    </ul>
+      <h1 class="post-title">Hero: {{$page.post.name}}</h1>
+      <ul class="abilities-container">
+        <li class="ability-container" v-for="ability in $page.post.abilities" >
+          <g-link :to="`${$page.post.path}/${ability.name}`">
+            <p>{{ ability.name }}</p>
+            <img :src="ability.src" alt="">
+            </g-link>
+        </li>
+      </ul>
     </div>
   </div>
 </DSLayout>
 </template>
 
 <page-query>
-query DOTA2 ($path: String!){
-  post: dota2 (path: $path){
+query Heroes ($path: String!){
+  post: heroes (path: $path){
     name
-    abilities
+    abilities {
+      name
+      src
+    }
     path
   }
 }
@@ -51,11 +57,24 @@ export default {
 <style lang="scss" scoped>
 @import "./../assets/colors.scss";
 
+a {
+  color: white;
+}
+
+.abilities-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr)
+}
+
+.ability-container {
+  display: flex;
+  flex-direction: column;
+}
+
 .site-container {
   background: #252525;
   height: calc(100vh - 70px);
 }
-
 
 .page-title {
   line-height: 1.5em;

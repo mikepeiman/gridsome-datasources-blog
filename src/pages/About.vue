@@ -11,7 +11,7 @@
     <div class="content">
       <h1 class="page-title">About Us</h1>
       <p id="textToCopy">Building a better world for all, through the power of transformational education, the development of virtuous character, and the unflagging pursuit of excellence.</p>
-      <!-- <button @click="copyOnClick">Copy</button> -->
+      <!-- <button @click="CopyText">Copy</button> -->
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati impedit totam voluptas quas repellendus modi, nam rem sequi tempora! Voluptate suscipit magnam aspernatur, et nesciunt dicta soluta. Fugit laboriosam harum laborum, ratione distinctio, omnis natus quo corporis vero inventore optio nulla debitis quasi consequatur accusamus eligendi reprehenderit accusantium quos rem quam, cum consectetur ad velit error. </p>
     </div>
   </div>
@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import CopyText from './../assets/CopyOnClick.js'
 export default {
   methods: {
     copyOnClick(e) {

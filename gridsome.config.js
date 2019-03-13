@@ -61,5 +61,12 @@ module.exports = {
         perPage: 120
       }
     },
+    {
+      use: "~/src/sources/heroes",
+      options: {
+        numNodes: 120,
+        perPage: 120
+      }
+    },
   ]
 };
