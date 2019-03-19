@@ -1,11 +1,11 @@
 <template>
-<DSLayout pageName="DOTA2 Heroes">
+<DSLayout pageName="DOTA2 ">
   <div class="site-container">
     <DSSideBar />
     <div class="content">
       <h1 class="page-title">DOTA2 Heroes</h1>
       <div class="grid-main">
-        <ul class="hero-list" v-for="(item, index) in $page.allHeroes.edges" :key="item.id">
+        <ul class="hero-list" v-for="(item, index) in $page.allDOTA2.edges" :key="item.id">
           <g-link :to="item.node.path">
             <li class="item-container grid-item">
               <div class="hero-number">{{ item.node.num }}</div>
@@ -14,7 +14,7 @@
               </div>
               <img class="hero-image" :Src="item.node.heroImgSrc" />
               <div class="abilities-list" v-for="ability in item.node.abilities">
-                <p class="single-ability">{{ ability.name }}</p>
+                <p class="single-ability">{{ ability }}</p>
               </div>
             </li>
           </g-link>
@@ -27,12 +27,12 @@
 
 <page-query>
 {
-  allHeroes (sortBy: "num", order: DESC, perPage: 120) {
+  allDOTA2 (sortBy: "num", order: DESC, perPage: 120) {
     edges {
       node {
         num
         name
-        abilities { name, src }
+        abilities
         path
         heroImgSrc
       }

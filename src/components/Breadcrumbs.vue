@@ -5,27 +5,6 @@
   </g-link>
   <div class="content">
     <ul class="page-link-listing">
-      <li @click="mainLink(1)" class="nav-link-container">
-        <g-link class="nav__link" :to="{ name: 'fakerPosts' }">Faker</g-link>
-      </li>
-      <li @click="mainLink(2)" class="nav-link-container">
-        <g-link class="nav__link" :to="{ name: 'placeholder' }">Placeholder</g-link>
-      </li>
-      <li @click="mainLink(3)" class="nav-link-container">
-        <g-link class="nav__link" :to="{ name: 'starwars' }">StarWars</g-link>
-      </li>
-      <li @click="mainLink(4)" class="nav-link-container">
-        <g-link class="nav__link" :to="{ name: 'dota' }">DOTA2</g-link>
-      </li>
-      <li @click="mainLink(5)" class="nav-link-container">
-        <g-link class="nav__link" :to="{ name: 'filesystem' }">Filesystem</g-link>
-      </li>
-      <li @click="mainLink(6)" class="nav-link-container">
-        <g-link class="nav__link" :to="{ name: 'airDb' }">Airtable</g-link>
-      </li>
-      <li @click="mainLink(7)" class="nav-link-container">
-        <g-link class="nav__link" :to="{ name: 'graph' }">GraphCMS</g-link>
-      </li>
     </ul>
   </div>
 </div>
@@ -41,7 +20,7 @@ query {
 
 <script>
 export default {
-  name: 'DSSideBar',
+  name: 'Breadcrumbs',
   data: function () {
     return {
       linkSet: [],
@@ -49,23 +28,6 @@ export default {
     }
   },
   props: ['pageName'],
-  methods: {
-        mainLink(x) {
-      let el = Object.values(this.$refs)[x].$el;
-      let elClass = el.parentElement.parentElement.attributes.class.value
-      let link = el.attributes.href.value
-      this.linkSet.push(link)
-      let i = this.linkSet.length;
-      this.activeLink = link;
-      console.log(`MAINLINK - Current activelink: ${this.activeLink}, current click: ${link}, linkSet: ${this.linkSet}`);
-      if (this.linkSet.length !== 1) {
-        this.$router.push(this.linkSet[0]);
-      } else {
-        this.$router.push(this.activeLink);
-      }
-      this.linkSet = []
-    },
-  }
 }
 </script>
 

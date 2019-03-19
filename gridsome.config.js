@@ -55,12 +55,15 @@ module.exports = {
       use: "~/src/sources/graphcms",
     },
     {
-      use: "~/src/sources/dota2",
-      options: {
-        numNodes: 120,
-        perPage: 120
-      }
+      use: "~/src/sources/localdota",
     },
+    // {
+    //   use: "~/src/sources/dota2",
+    //   options: {
+    //     numNodes: 120,
+    //     perPage: 120
+    //   }
+    // },
     {
       use: "~/src/sources/heroes",
       options: {

@@ -19,6 +19,10 @@ module.exports = function(api) {
       typeName: "Heroes",
       route: "/heroes/:name"
     });
+    const Abilities = store.addContentType({
+      typeName: "Abilities",
+      route: "/:hero/:name"
+    });
     const AbilityType = new GraphQLObjectType({
       name: 'Ability',
       description: 'An ability of a hero',
@@ -31,9 +35,46 @@ module.exports = function(api) {
           type: GraphQLString,
           resolve: ability => ability.src
         },
+        desc: {
+          type: GraphQLString,
+          resolve: ability => ability.desc
+        },
+        path: {
+          type: GraphQLString,
+          resolve: ability => ability.path
+        },
       })
     })
 
+    Abilities.addSchemaField("name", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      allowNull: false,
+      resolve(node) {
+        return node.fields.name;
+      }
+    }));
+    Abilities.addSchemaField("src", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      allowNull: false,
+      resolve(node) {
+        return node.fields.src;
+      }
+    }));
+    Abilities.addSchemaField("desc", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      allowNull: false,
+      resolve(node) {
+        return node.fields.desc;
+      }
+    }));
+    Abilities.addSchemaField("hero", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      allowNull: false,
+      resolve(node) {
+        return node.fields.hero;
+      }
+    }));
+    
 
     Heroes.addSchemaField("name", ({ graphql }) => ({
       type: graphql.GraphQLString,
@@ -104,33 +145,25 @@ module.exports = function(api) {
             heroImgSrc: heroImgSrc
           });
         }
-        // console.log('heroesList: ', heroesList)
 
         // now we take the complete heroes list scraped from the main page, and we map through it
         // invoking the heroParse() function, which returns more details for each hero (like abilities) 
 
         return Promise.all(
           heroesList.map(hero => {
-            // console.log(`Promise calling heroParse with individual hero URL: ${hero.url}`)
             return heroParse(hero.num, hero.name, hero.url, hero.heroImgSrc);
           })
         )
-        // console.log('heroesList: ', heroesList)
-        // return heroesList
       })
       .then(async heroes => {
         heroes.forEach(hero => {
-          // console.log(`Inside final .then, heroes length: ${heroes.length}`)
-          // console.log(`Inside final .then, heroes.forEach: ${hero.name}:`)
-          // hero.abilities.forEach(a => {
-          //   console.log(`${hero.name} ability: ${a.name}, ${a.src}`)
-          // })
 
           // Now we add each hero node to the GraphQL schema
           // Note that 'abilities' is an array of objects containing ability name, src, and other
           // attributes
 
           Heroes.addNode({
+            title: hero.name,
             fields: {
               num: hero.num,
               name: hero.name,
@@ -138,15 +171,19 @@ module.exports = function(api) {
               heroImgSrc: hero.heroImgSrc
             }
           });
-          
-            // console.log(`inside of Heroes.addNode for ${hero.name} each ability: ${ability.name}`)
-            // Heroes.addNode({
-            //   fields: {
-            //     abilityName: ability.name,
-            //     abilitySrc: ability.src
-            //   }
-            // })
-
+          hero.abilities.forEach(ability => {
+            Abilities.addNode({
+              title: ability.name,
+              path: ability.path,             
+              fields: {
+                src: ability.src,
+                name: ability.name,
+                desc: ability.desc,
+                hero: hero.name
+              }
+            })
+            // console.log(`hero.abilities.forEach: hero.name ${hero.name}`) 
+          })
         });
       })
       .catch(err => {

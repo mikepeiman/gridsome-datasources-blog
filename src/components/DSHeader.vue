@@ -74,22 +74,15 @@ export default {
     dataSources() {
       let route = Object.values(this.$router)
       let path = this.$router.path
-        console.log(`router path: ${path}`)
-        // console.log(`router Object.values: ${route}`)
-        // console.log(`the router: ${this.$router}`)
-        // route.forEach(obj => {
-        //   console.log(`this obj: ${Object.value(obj)}`)
-        // })
-        // console.log(`the router iteration: ${this.$router}`)
-      // console.log(`router href: ${this.$router.href}`)
-      this.isDS = true
-      if(this.$router.path = '/data-sources') {
-        console.log('data sources computed active')
-        this.isDF = true
-      } else {
-        console.log('computed not data sources')
-        // this.isDF = false
-      }
+      console.log(`router path: ${path}`)
+      // this.isDS = true
+      // if(this.$router.path = '/data-sources') {
+      //   console.log('data sources computed active')
+      //   this.isDF = true
+      // } else {
+      //   console.log('computed not data sources')
+      //   // this.isDF = false
+      // }
     }
   },
 }

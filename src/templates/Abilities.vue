@@ -1,16 +1,16 @@
 <template>
-<DSLayout :pageName="`DOTA2 Hero: `+this.$page.post.name">
+<DSLayout :pageName="`DOTA2 Hero: ${this.$page.post.name}`">
   <div class="site-container">
     <DSSideBar />
     <div class="content">
-      <h1 class="post-title">Hero: {{$page.post.name}}</h1>
+      <h1 class="post-title">{{$page.post.hero}} - <span class="ability-heading">{{ $page.post.name }}</span></h1>
       <ul class="abilities-container">
-        <li class="ability-container" v-for="ability in $page.post.abilities" >
-          <g-link :to="ability.path">
-            <p class="ability-name">{{ ability.name }}</p>
-            <img class="ability-img" :src="ability.src" alt="">
-            <p class="ability-desc">{{ ability.desc }}</p>
-            </g-link>
+        <li class="ability-container">
+          <div class="image-container">
+            <p class="ability-name">{{ $page.post.name }}</p>
+            <img class="ability-image" :src="$page.post.src" alt="">
+          </div>
+            <p class="ability-desc">{{ $page.post.desc }}</p>
         </li>
       </ul>
     </div>
@@ -19,16 +19,13 @@
 </template>
 
 <page-query>
-query Heroes ($path: String!){
-  post: heroes (path: $path){
+query Abilities ($path: String!){
+  post: abilities (path: $path){
     name
+    src
+    hero
+    desc
     path
-    abilities {
-      name
-      src
-      desc
-      path
-    }
   }
 }
 </page-query>
@@ -65,22 +62,41 @@ a {
 }
 
 .abilities-container {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr)
+
+}
+
+.ability-heading {
+  color: $primary-blue;
 }
 
 .ability-container {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+}
+
+.ability-name {
+  position: absolute;
+  padding: .5em;
+  margin-top: 0em;
+  font-size: 1.25em;
+  text-shadow: 0 0 2px black;
+  background: rgba(0,0,0,0.5);
 }
 
 .ability-desc {
-  padding: 0 1em 0 0;
+  padding: 0 1em;
+  margin: 0;
   font-weight: 300;
+  font-size: 1.5em;
+}
+
+.ability-image {
+  width: 100%;
+  height: auto;
 }
 
 .site-container {
-  background: #252525;
+  background: #white;
   height: calc(100vh - 70px);
 }
 
@@ -92,6 +108,7 @@ a {
 
 .content {
   grid-area: main-content;
+  width: 100%;
   color: white;
 }
 
