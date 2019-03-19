@@ -1,20 +1,17 @@
 <template>
-<DSLayout :pageName="`DOTA2 Hero: `+this.$page.post.name">
-  <div class="site-container">
-    <DSSideBar />
-    <div class="content">
+<DSLayout :pageName="`DOTA2 Hero: `+$page.post.name">
+
       <h1 class="post-title">Hero: {{$page.post.name}}</h1>
       <ul class="abilities-container">
         <li class="ability-container" v-for="ability in $page.post.abilities" >
-          <g-link :to="ability.path">
+          <g-link :to="`/heroes${ability.path}`">
             <p class="ability-name">{{ ability.name }}</p>
             <img class="ability-img" :src="ability.src" alt="">
             <p class="ability-desc">{{ ability.desc }}</p>
             </g-link>
         </li>
       </ul>
-    </div>
-  </div>
+
 </DSLayout>
 </template>
 

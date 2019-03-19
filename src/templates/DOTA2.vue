@@ -1,16 +1,13 @@
 <template>
 <DSLayout>
-  <div class="site-container">
-    <DSSideBar />
-    <div class="content">
+
     <h1 class="post-title">Hero: {{$page.post.name}}</h1>
     <ul v-for="ability in $page.post.abilities">
       <g-link :to="`${$page.post.path}/${ability}`">
       <li>{{ ability }}</li>
       </g-link>
     </ul>
-    </div>
-  </div>
+
 </DSLayout>
 </template>
 

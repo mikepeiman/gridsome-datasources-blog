@@ -1,25 +1,18 @@
 <template>
 <div class="datasources">
   <DSHeader :pageName="pageName"></DSHeader>
-  <div class="site-container">
-    <DSSideBar />
-    <Breadcrumbs />
-    <div class="content">
-      <slot />
-    </div>
-  </div>
+
+  <slot />
 </div>
 </template>
 
 <script>
 import DSHeader from '~/components/DSHeader.vue';
-import DSSideBar from '~/components/DSSideBar.vue';
 import Breadcrumbs from '~/components/Breadcrumbs.vue';
 
 export default {
   components: {
     DSHeader,
-    DSSideBar,
     Breadcrumbs
   },
   props: ['pageName'],
@@ -33,13 +26,11 @@ export default {
   grid-template-columns: 1fr 1fr 5fr 1fr;
   grid-template-rows: 60px 40px 1fr;
   grid-template-areas:
-    ". . . ."
+  ". . . ."
     ". . breadcrumbs ."
     "sidenav . main-content .";
 }
-.content {
-  grid-area: main-content;
-}
+
 .page-title {
   text-decoration: none;
 }

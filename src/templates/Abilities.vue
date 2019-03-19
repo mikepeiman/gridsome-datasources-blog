@@ -1,8 +1,6 @@
 <template>
-<DSLayout :pageName="`DOTA2 Hero: ${this.$page.post.name}`">
-  <div class="site-container">
-    <DSSideBar />
-    <div class="content">
+<DSLayout :pageName="`DOTA2 Hero: ${$page.post.name}`">
+  <!-- 
       <h1 class="post-title">{{$page.post.hero}} - <span class="ability-heading">{{ $page.post.name }}</span></h1>
       <ul class="abilities-container">
         <li class="ability-container">
@@ -12,9 +10,8 @@
           </div>
             <p class="ability-desc">{{ $page.post.desc }}</p>
         </li>
-      </ul>
-    </div>
-  </div>
+      </ul> -->
+
 </DSLayout>
 </template>
 
@@ -25,32 +22,29 @@ query Abilities ($path: String!){
     src
     hero
     desc
-    path
   }
 }
 </page-query>
 
 <script>
 import DSLayout from '~/layouts/DSLayout.vue';
-import DSSideBar from '~/components/DSSideBar.vue';
 
 export default {
   components: {
     DSLayout,
-    DSSideBar,
   },
-  metaInfo() {
-    return {
-      title: this.$page.post.name,
-      breadCrumb: this.$page.post.name
-    }
-  },
-  created() {
-    console.log(`dota2 hero view created() this.$metaInfo.breadCrumb: ${this.$metaInfo.breadCrumb}`)
-    let routesLength = this.$route.matched.length
-    console.log(`dota2 hero view created() this.$route.matched: ${Object.keys(this.$route.matched[routesLength-1])}`)
-    console.log(`dota2 hero view created() this.$route.matched[0].name: ${this.$route.matched[0].name}`)
-  }
+  // metaInfo() {
+  //   return {
+  //     title: this.$page.post.name,
+  //     breadCrumb: this.$page.post.name
+  //   }
+  // },
+  // created() {
+  //   console.log(`dota2 hero view created() this.$metaInfo.breadCrumb: ${this.$metaInfo.breadCrumb}`)
+  //   let routesLength = this.$route.matched.length
+  //   console.log(`dota2 hero view created() this.$route.matched: ${Object.keys(this.$route.matched[routesLength-1])}`)
+  //   console.log(`dota2 hero view created() this.$route.matched[0].name: ${this.$route.matched[0].name}`)
+  // }
 }
 </script>
 
@@ -61,9 +55,7 @@ a {
   color: white;
 }
 
-.abilities-container {
-
-}
+.abilities-container {}
 
 .ability-heading {
   color: $primary-blue;
@@ -80,7 +72,7 @@ a {
   margin-top: 0em;
   font-size: 1.25em;
   text-shadow: 0 0 2px black;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
 }
 
 .ability-desc {
@@ -96,7 +88,7 @@ a {
 }
 
 .site-container {
-  background: #white;
+  background: white;
   height: calc(100vh - 70px);
 }
 

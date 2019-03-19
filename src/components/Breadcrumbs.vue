@@ -1,12 +1,8 @@
 <template>
-<div id="datasources-sidebar">
-  <g-link class="nav__link" :to="{ name: 'dataSources' }">
-    <h1 class="page-title">Data Sources</h1>
-  </g-link>
-  <div class="content">
-    <ul class="page-link-listing">
-    </ul>
-  </div>
+<div id="breadcrumbs">
+  <!-- <g-link class="nav__link" :to="{ name: 'dataSources' }"> -->
+    <h1 class="page-title">Breadcrumbs</h1>
+  <!-- </g-link> -->
 </div>
 </template>
 
@@ -38,20 +34,21 @@ $primary-orange:#FF7800; // rgba($primary-orange,1)
 $primary-green: #67DD00; // rgba($primary-green,1)
 $primary-purple: #4600CD; // rgba($primary-purple,1)
 
-#datasources-sidebar {
-  grid-area: sidenav;
-
+#breadcrumbs {
+  grid-area: breadcrumbs;
+  // position: absolute;
   h1 {
     color: white;
   }
 }
 
-.page-title {
-  position: relative;
-  left: 10%;
-  text-align: left;
-  border-bottom: 3px solid $primary-blue;
-}
+// .page-title {
+//   position: relative;
+//   left: 10%;
+//   text-align: left;
+//   border-bottom: 3px solid $primary-blue;
+//   color: white;
+// }
 
 li.nav-link-container {
   color: #fff;

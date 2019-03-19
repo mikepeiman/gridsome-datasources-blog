@@ -1,8 +1,6 @@
 <template>
 <DSLayout pageName="GraphCMS">
-  <div class="site-container">
-    <DSSideBar />
-    <div class="content">
+
       <h1 class="page-title">GraphCMS</h1>
       <ul class="posts-container">
         <li class="single-post" v-for="(post, index) in $page.allGraphCMS.edges" :key="index">
@@ -21,8 +19,7 @@
           </div>
         </li>
       </ul>
-    </div>
-  </div>
+
 </DSLayout>
 </template>
 
@@ -47,11 +44,13 @@
 import moment from 'moment';
 import DSLayout from '~/layouts/DSLayout.vue';
 import DSSideBar from '~/components/DSSideBar.vue';
+import Breadcrumbs from '~/components/Breadcrumbs.vue';
 
 export default {
   components: {
     DSLayout,
     DSSideBar,
+    Breadcrumbs
   },
   data: function() {
     return {
@@ -71,6 +70,14 @@ export default {
 <style lang="scss" scoped>
 @import "./../assets/colors.scss";
 
+.content {
+  grid-area: main-content;
+}
+
+#breadcrumbs {
+  grid-area: breadcrumbs;
+}
+
 .site-container {
   background: #252525;
   height: calc(100vh - 70px);
@@ -81,6 +88,7 @@ export default {
   line-height: 1.5em;
   border-bottom: 3px solid $primary-blue;
   margin-bottom: 1em;
+  color: white;
 }
 
 .content {

@@ -1,8 +1,6 @@
 <template>
 <DSLayout pageName="DOTA2 Heroes">
-  <div class="site-container">
-    <DSSideBar />
-    <div class="content">
+
       <h1 class="page-title">DOTA2 Heroes</h1>
       <div class="grid-main">
         <ul class="hero-list" v-for="(item, index) in $page.allHeroes.edges" :key="item.id">
@@ -20,8 +18,7 @@
           </g-link>
         </ul>
       </div>
-    </div>
-  </div>
+
 </DSLayout>
 </template>
 

@@ -58,17 +58,6 @@ export default {
       }
       this.linkSet = []
     },
-    subLink(x) {
-      let el = Object.values(this.$refs)[x].$el;
-      let elClass = el.parentElement.parentElement.attributes.class.value
-      let link = el.attributes.href.value
-      this.linkSet.push(link)
-      let i = this.linkSet.length;
-      this.activeLink = link;
-      console.log(`subLINK - Current activelink: ${this.activeLink}, current click: ${link}, linkSet: ${this.linkSet}`);
-      this.$router.push(this.activeLink);
-
-    }
   },
   computed: {
     dataSources() {
