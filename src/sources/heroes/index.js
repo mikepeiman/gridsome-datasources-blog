@@ -21,8 +21,7 @@ module.exports = function(api) {
     });
     const Abilities = store.addContentType({
       typeName: "Abilities",
-      route: "/heroes/:hero/:name"
-      // path: "/heroes/:hero/:name"
+      route: "/:hero/:name"
     });
     const AbilityType = new GraphQLObjectType({
       name: 'Ability',
@@ -43,10 +42,6 @@ module.exports = function(api) {
         path: {
           type: GraphQLString,
           resolve: ability => ability.path
-        },
-        hero: {
-          type: GraphQLString,
-          resolve: ability => ability.hero
         },
       })
     })
@@ -77,13 +72,6 @@ module.exports = function(api) {
       allowNull: false,
       resolve(node) {
         return node.fields.hero;
-      }
-    }));
-    Abilities.addSchemaField("path", ({ graphql }) => ({
-      type: graphql.GraphQLString,
-      allowNull: false,
-      resolve(node) {
-        return node.fields.path;
       }
     }));
     

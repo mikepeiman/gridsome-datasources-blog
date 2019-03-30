@@ -4,7 +4,7 @@
       <h1 class="post-title">Hero: {{$page.post.name}}</h1>
       <ul class="abilities-container">
         <li class="ability-container" v-for="ability in $page.post.abilities" >
-          <g-link :to="`/heroes${ability.path}`">
+          <g-link :to="ability.path">
             <p class="ability-name">{{ ability.name }}</p>
             <img class="ability-img" :src="ability.src" alt="">
             <p class="ability-desc">{{ ability.desc }}</p>
