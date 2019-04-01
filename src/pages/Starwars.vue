@@ -1,10 +1,8 @@
 <template>
 <DSLayout pageName="SWAPI">
-  <div class="site-container swapi-single">
-    <DSSideBar />
-    <div class="content">
+
       <h1 class="page-title">Star Wars API</h1>
-      <ul>
+      <ul class="swapi-single">
         <li class="item-container" v-for="(item, index) in $page.allSWAPI.edges" :key="item.id">
           <g-link class="item-link" :to="item.node.path">
             <h2>{{ item.node.name }}</h2>
@@ -12,8 +10,7 @@
           </g-link>
         </li>
       </ul>
-    </div>
-  </div>
+
 </DSLayout>
 </template>
 

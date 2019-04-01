@@ -83,9 +83,9 @@ export default {
     }
   },
   methods: {
-    dropdownTest() {
-      console.log('dropdown test')
-    },
+    // dropdownTest() {
+    //   console.log('dropdown test')
+    // },
     mainLink(x) {
       let el = Object.values(this.$refs)[x].$el;
       let elClass = el.parentElement.parentElement.attributes.class.value

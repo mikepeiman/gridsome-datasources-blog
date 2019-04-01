@@ -1,7 +1,7 @@
 <template>
 <div id="breadcrumbs">
   <!-- <g-link class="nav__link" :to="{ name: 'dataSources' }"> -->
-    <h1 class="page-title">Breadcrumbs</h1>
+  <h4>heroes > {{ hero }} > {{ ability }}</h4>
   <!-- </g-link> -->
 </div>
 </template>
@@ -20,26 +20,36 @@ export default {
   data: function () {
     return {
       linkSet: [],
-      activeLink: ''
+      activeLink: '',
     }
   },
   props: ['pageName'],
+  metaInfo() {
+    return {
+      title: '',
+      breadCrumb: this.$route.name,
+      hero: this.$route.params.hero,
+      ability: this.$route.params.name
+    }
+  },
+  computed: {
+    hero() {
+      return this.$route.params.hero
+    },
+        ability() {
+      return this.$route.params.name
+    },
+  }
 }
 </script>
 
 <style lang="scss" scoped>
-$primary-graphite: #252525; // rgba($primary-graphite,1)
-$primary-blue: #00A1FF; // rgba($primary-blue,1)
-$primary-orange:#FF7800; // rgba($primary-orange,1)
-$primary-green: #67DD00; // rgba($primary-green,1)
-$primary-purple: #4600CD; // rgba($primary-purple,1)
+@import "./../assets/colors.scss";
 
 #breadcrumbs {
   grid-area: breadcrumbs;
-  // position: absolute;
-  h1 {
-    color: white;
-  }
+  color: white;
+
 }
 
 // .page-title {
@@ -144,6 +154,7 @@ ul li ul:focus {
   a {
     // padding: 8% 8% 8% 12%;
     transition: all .25s ease-in-out;
+
     :visited {
       color: white;
     }

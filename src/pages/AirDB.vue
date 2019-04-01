@@ -1,8 +1,6 @@
 <template>
 <DSLayout pageName="Airtable">
-  <div class="site-container">
-    <DSSideBar />
-    <div class="content">
+
       <h1 class="page-title">Airtable</h1>
       <ul class="posts-container">
         <li class="single-post" v-for="(lesson, index) in $page.allAirtable.edges" :key="index">
@@ -13,8 +11,7 @@
           </g-link>
         </li>
       </ul>
-    </div>
-  </div>
+
 </DSLayout>
 </template>
 

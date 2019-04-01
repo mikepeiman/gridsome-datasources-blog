@@ -1,13 +1,10 @@
 <template>
 <DSLayout>
-  <div class="site-container">
-    <DSSideBar />
-    <div class="content">
+
     <h2>{{$page.post.resort}} Private Snowboard Lesson</h2>
     <p class="lesson-length">{{ $page.post.length }} hours</p>
     <p class="lesson-price">${{$page.post.price}} {{$page.post.currency}}</p>
-    </div>
-  </div>
+
 </DSLayout>
 </template>
 

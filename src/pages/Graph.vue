@@ -1,24 +1,24 @@
 <template>
 <DSLayout pageName="GraphCMS">
 
-      <h1 class="page-title">GraphCMS</h1>
-      <ul class="posts-container">
-        <li class="single-post" v-for="(post, index) in $page.allGraphCMS.edges" :key="index">
-          <div class="post-hero">
-            <g-link class="post-link" :to="post.node.path">
-              <div class="post-thumbnail-wrapper">
-                <h2 class="post-title">{{ post.node.title }}</h2>
-                <h3 class="post-subtitle">{{ post.node.subtitle }}</h3>           
-                <img class="post-thumbnail" :src="post.node.imageUrl" />
+  <h1 class="page-title">GraphCMS</h1>
+  <ul class="posts-container">
+    <li class="single-post" v-for="(post, index) in $page.allGraphCMS.edges" :key="index">
+      <div class="post-hero">
+        <g-link class="post-link" :to="post.node.path">
+          <div class="post-thumbnail-wrapper">
+            <h2 class="post-title">{{ post.node.title }}</h2>
+            <h3 class="post-subtitle">{{ post.node.subtitle }}</h3>
+            <img class="post-thumbnail" :src="post.node.imageUrl" />
               </div>
-            </g-link>
-            <div class="post-body">
-              <p class="post-date">Published: {{ formatDate(post.node.datePublished) }}</p>
-              <p>{{ post.node.body }}</p>
-            </div>
-          </div>
-        </li>
-      </ul>
+        </g-link>
+        <div class="post-body">
+          <p class="post-date">Published: {{ formatDate(post.node.datePublished) }}</p>
+          <p>{{ post.node.body }}</p>
+        </div>
+      </div>
+    </li>
+  </ul>
 
 </DSLayout>
 </template>
@@ -52,7 +52,7 @@ export default {
     DSSideBar,
     Breadcrumbs
   },
-  data: function() {
+  data: function () {
     return {
       date: moment(),
       formatedDate: ''
@@ -83,7 +83,6 @@ export default {
   height: calc(100vh - 70px);
 }
 
-
 .page-title {
   line-height: 1.5em;
   border-bottom: 3px solid $primary-blue;
@@ -104,6 +103,7 @@ export default {
 
 .single-post {
   margin-bottom: 2em;
+
 }
 
 .posts-container .post-thumbnail-wrapper {
@@ -116,6 +116,7 @@ export default {
 }
 
 .posts-container .post-thumbnail-wrapper:hover {
+
   .post-title,
   .post-subtitle {
     color: $primary-blue;
@@ -127,6 +128,7 @@ export default {
   color: white;
   font-weight: 300;
   line-height: 1.25em;
+  margin-right: 1.5em;
 }
 
 .single-post p {
@@ -148,9 +150,10 @@ export default {
 .post-hero {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  padding-right: 1em;
-  border-top: 3px solid $primary-blue;
-  padding-top: 1em;
+  padding: 1em;
+}
+.post-hero:hover {
+  border-left: 3px solid $primary-blue;
 }
 
 .post-thumbnail-wrapper {}

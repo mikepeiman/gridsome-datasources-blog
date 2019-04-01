@@ -47,16 +47,17 @@ export default {
     DSLayout,
     DSSideBar,  
   },
-  // data: function() {
-  //   return {
-  //     pageName: 'DOTA2'
-  //   }
-  // },
+  data: function() {
+    return {
+      pageName: 'DOTA2'
+    }
+  },
   created() {
     this.$emit(this.pageName)
   },
   meta: {
-    breadCrumb: 'DOTA2 Heroes'
+    breadCrumb: 'DOTA2 Heroes',
+    title: 'DOTA2 title'
   }
 }
 </script>

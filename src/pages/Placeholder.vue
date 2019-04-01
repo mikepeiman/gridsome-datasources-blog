@@ -1,8 +1,6 @@
 <template>
 <DSLayout pageName="JSON Placeholder" id="ds-placeholder">
-  <div class="site-container">
-    <DSSideBar />
-    <div class="content">
+
       <h1 class="page-title">JSON Placeholder API</h1>
       <ul class="posts-container">
         <li class="single-post" v-for="(post, index) in $page.allBlogPost.edges" :key="index">
@@ -13,9 +11,7 @@
           </g-link>
         </li>
       </ul>
-    </div>
-  </div>
-  </div>
+
 </DSLayout>
 </template>
 
@@ -63,6 +59,7 @@ export default {
   line-height: 1.5em;
   border-bottom: 3px solid $primary-blue;
   margin-bottom: 1em;
+  color: white;
 }
 
 .content {

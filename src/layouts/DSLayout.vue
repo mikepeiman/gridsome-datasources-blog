@@ -23,10 +23,31 @@ export default {
     Breadcrumbs
   },
   props: ['pageName'],
+    data: function () {
+    return {
+      linkSet: [],
+      activeLink: '',
+      test: this.$route.name,
+      hero: this.$route.params.hero,
+      ability: this.$route.params.name
+    }
+},
+  created() {
+    test: 'DSLayout test'
+    let test = this.$route.name
+    let hero = this.$route.params.hero
+    let ability = this.$route.params.name
+    console.log(`DSLayout ||| Test: ${test}, hero: ${hero}, ability: ${ability}`)
+    let routesLength = this.$route.matched.length
+    let routeArray = Array.from(this.$route.matched)
+    console.log(`DSLayout created() this.$route.matched[0].name: ${this.$route.matched[0].name}`)
+    console.log(this.$route)
+  },
 }
 </script>
 
 <style lang="scss" scoped>
+@import "./../assets/colors.scss";
 .site-container {
   background: #252525;
   position: relative;
@@ -39,8 +60,13 @@ export default {
 }
 .content {
   grid-area: main-content;
+  color: white;
 }
 .page-title {
+  line-height: 1.5em;
+  border-bottom: 3px solid $primary-blue;
+  margin-bottom: 1em;
+  color: white;
   text-decoration: none;
 }
 

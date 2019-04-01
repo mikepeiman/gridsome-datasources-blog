@@ -1,19 +1,17 @@
 <template>
 <DSLayout>
-  <div class="site-container">
-    <DSSideBar />
-    <div class="content">
+
       <h1 class="page-title">APIs and Data Sources</h1>
       <p>This is a collection of pages, each pulling data from a different source. Sources include REST APIs like Faker, JSON-Placeholder, and StarWars API. Other sources include .md files, GraphCMS (a GraphQL database), Airtable, and web scraping.</p>
       <p>Still enqueue for implementation:</p>
       <ul>
         <li>Web scraping from e-commerce sites</li>
         <li>Amazon products API</li>
-        <li>Directus self-hosted DB</li>
+        <li>Directus self-hosted CMS</li>
         <li>WordPress API</li>
+        <li>Strapi self-hosted CMS</li>
       </ul>
-    </div>
-  </div>
+
 </DSLayout>
 </template>
 

@@ -1,8 +1,6 @@
 <template>
 <DSLayout pageName="Faker " id="ds-faker">
-  <div class="site-container">
-    <DSSideBar />
-    <div class="content">
+
       <h1 class="page-title">Faker</h1>
       <div class="grid-main">
         <div class="grid-item" v-for="(item, index) in $page.allFaker.edges" :key="index">
@@ -12,8 +10,7 @@
         </g-link>
         </div>
       </div>
-    </div>
-  </div>
+
 </DSLayout>
 </template>
 
@@ -53,28 +50,22 @@ export default {
   height: calc(100vh - 70px);
 }
 
-.page-title {
-  line-height: 1.5em;
-  border-bottom: 3px solid $primary-blue;
-  margin-bottom: 1em;
+.grid-main {
+  /* max-width: 100vw; */
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  grid-template-rows: auto;
+  grid-template-areas: "";
+  grid-gap: 1ch;
 }
 .content {
   grid-area: main-content;
   color: white;
 }
 
-.grid-main {
-  /* max-width: 100vw; */
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  grid-template-rows: auto;
-  grid-template-areas: "";
-  grid-gap: 1ch;
-}
-
-.main {
-  grid-area: main;
-}
+// .main {
+//   grid-area: main;
+// }
 
 .grid-item {
   text-align: center;

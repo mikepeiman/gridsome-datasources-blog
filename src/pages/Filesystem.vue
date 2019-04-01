@@ -1,8 +1,6 @@
 <template>
 <DSLayout pageName="Filesystem">
-  <div class="site-container">
-    <DSSideBar />
-    <div class="content">
+
       <h1 class="page-title">File System (markdown)</h1>
       <ul class="posts-container">
         <li class="single-post" v-for="(post, index) in $page.allPost.edges" :key="index">
@@ -15,8 +13,7 @@
           </g-link>
         </li>
       </ul>
-    </div>
-  </div>
+
 </DSLayout>
 </template>
 
