@@ -2,6 +2,7 @@ const axios = require('axios');
 
 module.exports = function (api) {
   api.loadSource(async store => {
+    console.log('Datasource loading: blogpost')
     // Use the Data store API here: https://gridsome.org/docs/data-store-api
     const { data } = await axios.get('https://jsonplaceholder.typicode.com/posts')
 

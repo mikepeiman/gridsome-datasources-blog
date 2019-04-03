@@ -15,6 +15,8 @@ const heroesUrl = "http://www.dota2.com/heroes/";
 
 module.exports = function(api) {
   api.loadSource(async store => {
+    console.log('Datasource loading: heroes')
+
     const Heroes = store.addContentType({
       typeName: "Heroes",
       route: "/heroes/:name"
@@ -161,9 +163,11 @@ module.exports = function(api) {
           // Now we add each hero node to the GraphQL schema
           // Note that 'abilities' is an array of objects containing ability name, src, and other
           // attributes
+          console.log('Datasource loading: Heroes.addNode')
 
           Heroes.addNode({
             title: hero.name,
+            path: hero.path,
             fields: {
               num: hero.num,
               name: hero.name,
@@ -188,6 +192,9 @@ module.exports = function(api) {
       })
       .catch(err => {
         console.log("error! ", err);
-      });
+      })
+      .then(err => {
+        console.log(`Final .then in heroes datasource index.js`)
+      })
   });
 };

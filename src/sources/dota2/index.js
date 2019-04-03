@@ -19,6 +19,7 @@ const heroesUrl = "http://www.dota2.com/heroes/";
 // heroParse('http://www.dota2.com/hero/earthshaker/')
 module.exports = function(api) {
   api.loadSource(async store => {
+    console.log('Datasource loading: dota2')
     const contentType = store.addContentType({
       typeName: "DOTA2",
       route: "/dota2/:name"

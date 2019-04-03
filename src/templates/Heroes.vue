@@ -39,6 +39,11 @@ export default {
     DSLayout,
     DSSideBar,
   },
+  data() {
+    return {
+      isAbilityPage: false
+    }
+  },
   metaInfo() {
     return {
       title: this.$page.post.name,

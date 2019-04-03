@@ -1,16 +1,16 @@
 <template>
 <DSLayout :pageName="`DOTA2 Hero: `+$page.post.name">
 
-      <h1 class="post-title">{{$page.post.hero}} - {{ $page.post.name}}</h1>
-      <ul class="abilities-container">
-        <li class="ability-container">
-          <div class="image-container">
-            <p class="ability-name">{{ $page.post.name }}</p>
-            <img class="ability-image" :src="$page.post.src" alt="">
+  <h1 class="post-title">{{$page.post.hero}} - {{ $page.post.name}}</h1>
+  <ul class="abilities-container">
+    <li class="ability-container">
+      <div class="image-container">
+        <p class="ability-name">{{ $page.post.name }}</p>
+        <img class="ability-image" :src="$page.post.src" alt="">
           </div>
-            <p class="ability-desc">{{ $page.post.desc }}</p>
-        </li>
-      </ul>
+        <p class="ability-desc">{{ $page.post.desc }}</p>
+    </li>
+  </ul>
 
 </DSLayout>
 </template>
@@ -36,12 +36,18 @@ export default {
     DSLayout,
     DSSideBar,
   },
-  // metaInfo() {
-  //   return {
-  //     title: this.$page.post.name,
-  //     breadCrumb: this.$page.post.name
-  //   }
-  // },
+  data() {
+    return {
+      isAbilityPage: true
+    }
+  },
+
+  metaInfo() {
+    return {
+      title: this.$page.post.name,
+      breadCrumb: this.$page.post.name
+    }
+  },
   // created() {
   //   console.log(`dota2 hero view created() this.$metaInfo.breadCrumb: ${this.$metaInfo.breadCrumb}`)
   //   let routesLength = this.$route.matched.length
@@ -58,9 +64,7 @@ a {
   color: white;
 }
 
-.abilities-container {
-
-}
+.abilities-container {}
 
 .ability-container {
   display: grid;
@@ -73,7 +77,7 @@ a {
   margin-top: 0em;
   font-size: 2em;
   text-shadow: 0 0 2px black;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
 }
 
 .ability-desc {

@@ -2,6 +2,7 @@ const axios = require("axios");
 
 module.exports = function(api) {
   api.loadSource(async store => {
+    console.log('Datasource loading: graphcms')
     // Use the Data store API here: https://gridsome.org/docs/data-store-api
     const contentType = store.addContentType({
       typeName: 'GraphCMS',

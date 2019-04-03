@@ -1,7 +1,14 @@
 <template>
 <div id="breadcrumbs">
   <!-- <g-link class="nav__link" :to="{ name: 'dataSources' }"> -->
-  <h4>heroes > {{ hero }} > {{ ability }}</h4>
+  <h4>
+    <g-link :to="{ name: 'dota' }">Heroes > </g-link>
+    <g-link :to="`/heroes/${hero}`">{{ hero.charAt(0).toUpperCase() + hero.slice(1) }}</g-link>
+    <span v-if="isAbilityPage">
+      >
+      <g-link  :to="ability">{{ abilityTitle }}</g-link>
+    </span>
+  </h4>
   <!-- </g-link> -->
 </div>
 </template>
@@ -15,12 +22,16 @@ query {
 </static-query>
 
 <script>
+var changeCase = require('change-case')
+
 export default {
   name: 'Breadcrumbs',
   data: function () {
     return {
       linkSet: [],
       activeLink: '',
+      isAbilityPage: '',
+      abilityTitle: ''
     }
   },
   props: ['pageName'],
@@ -29,16 +40,37 @@ export default {
       title: '',
       breadCrumb: this.$route.name,
       hero: this.$route.params.hero,
-      ability: this.$route.params.name
+      ability: this.$route.params.name,
+
     }
   },
   computed: {
     hero() {
-      return this.$route.params.hero
+      // return this.$route.params.hero
+      let name = this.$route.name
+      console.log(`computed hero(): ${name}`)
+      return (name == 'heroes' ? this.$route.params.name : this.$route.params.hero)
+      // return (name == 'heroes' ? false : true)
     },
-        ability() {
-      return this.$route.params.name
+    ability() {
+      let name = this.$route.params.name
+      console.log(`computed hero(): ${name}`)
+      this.abilityTitle = changeCase.title(name)
+      return name
     },
+    // isAbilityPage() {
+
+    //   // return (name == 'heroes' ? false : true)
+    //   // if(name == 'Heroes') { return true } else { return false }
+    // }
+  },
+  created() {
+    console.log(`this.$metaData.breadCrumb: ${this.$metaInfo.breadCrumb}`)
+    console.log('abilities page created()')
+      let name = this.$route.name
+      console.log(`${name} == 'heroes': ${name == 'heroes'}`)
+      return (name == 'heroes' ? this.isAbilityPage = false : this.isAbilityPage = true)
+
   }
 }
 </script>
@@ -48,8 +80,20 @@ export default {
 
 #breadcrumbs {
   grid-area: breadcrumbs;
-  color: white;
+  color: grey;
 
+  a {
+    text-decoration: none;
+    color: grey;
+
+    &:visited {
+      color: grey;
+    }
+
+    &:hover {
+      color: $primary-blue;
+    }
+  }
 }
 
 // .page-title {

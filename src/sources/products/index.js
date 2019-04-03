@@ -1,6 +1,7 @@
 const Airtable = require('airtable');
     
     module.exports = function (api, opts) {
+      console.log('Datasource loading: airtable products')
         const base = new Airtable({apiKey: opts.apiKey}).base(opts.base);
         
         api.loadSource(async store => {

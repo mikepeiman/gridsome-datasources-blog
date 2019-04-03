@@ -54,9 +54,9 @@ module.exports = {
     {
       use: "~/src/sources/graphcms",
     },
-    {
-      use: "~/src/sources/localdota",
-    },
+    // {
+    //   use: "~/src/sources/localdota",
+    // },
     // {
     //   use: "~/src/sources/dota2",
     //   options: {

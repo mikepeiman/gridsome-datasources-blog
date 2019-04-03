@@ -33,14 +33,12 @@ export default {
     }
 },
   created() {
-    test: 'DSLayout test'
     let test = this.$route.name
     let hero = this.$route.params.hero
     let ability = this.$route.params.name
-    console.log(`DSLayout ||| Test: ${test}, hero: ${hero}, ability: ${ability}`)
+    console.log(`DSLayout ||| test: ${test}, hero: ${hero}, ability: ${ability}`)
     let routesLength = this.$route.matched.length
     let routeArray = Array.from(this.$route.matched)
-    console.log(`DSLayout created() this.$route.matched[0].name: ${this.$route.matched[0].name}`)
     console.log(this.$route)
   },
 }
