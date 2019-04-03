@@ -7,10 +7,17 @@
 
 <script>
 import Header from '~/components/Header.vue';
+var changeCase = require('change-case')
 
 export default {
   components: {
     Header
+  },
+  metaInfo() {
+    return {
+    title: changeCase.title(this.$route.name),
+    titleTemplate: '%s | MikePeiman.com'
+    }
   }
 }
 </script>

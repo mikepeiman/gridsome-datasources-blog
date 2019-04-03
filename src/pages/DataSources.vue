@@ -23,7 +23,12 @@ export default {
   components: {
     DSLayout,
     DSSideBar,
-  }
+  },
+    metaInfo() {
+    return {
+      title: this.$route.name,
+    }
+  },
 }
 </script>
 

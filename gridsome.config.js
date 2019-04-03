@@ -5,9 +5,9 @@
 // To restart press CTRL + C in terminal and run `gridsome develop`
 
 module.exports = {
-  siteName: "Curriculum For Life",
-  siteUrl: "https://curriculumfor.life",
-  siteDescription: "The Missing Manual For Your Life",
+  siteName: "MikePeiman.com",
+  siteUrl: "https://mikepeiman.com",
+  siteDescription: "Father, Web Developer, Entrepreneur, Natural Philosopher. Learning and teaching how to live better lives and build a better world.",
   icon: "src/assets/LifeIQ.svg",
   plugins: [
     {

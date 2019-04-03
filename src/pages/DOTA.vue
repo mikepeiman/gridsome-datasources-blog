@@ -1,5 +1,5 @@
 <template>
-<DSLayout pageName="DOTA2 Heroes">
+<DSLayout :pageName="pageName">
 
       <h1 class="page-title">DOTA2 Heroes</h1>
       <div class="grid-main">
@@ -49,16 +49,19 @@ export default {
   },
   data: function() {
     return {
-      pageName: 'DOTA2'
+      pageName: 'DOTA2 Heroes'
     }
   },
   created() {
     this.$emit(this.pageName)
   },
-  meta: {
-    breadCrumb: 'DOTA2 Heroes',
-    title: 'DOTA2 title'
-  }
+  metaInfo() {
+    return {
+      title: 'DOTA.vue', // this.$route.name,
+      titleTemplate: '%s | DOTA2 Heroes',
+      breadCrumb: this.$route.name
+    }
+  },
 }
 </script>
 

@@ -41,10 +41,15 @@ export default {
       isAbilityPage: true
     }
   },
-
   metaInfo() {
     return {
-      title: this.$page.post.name,
+      meta: [{
+        key: 'description',
+        title: 'description',
+        content: 'DSLayout.vue'
+      }],
+      title: 'DOTA.vue', // this.$route.name,
+      titleTemplate: '%s | DOTA2 Ability',
       breadCrumb: this.$page.post.name
     }
   },

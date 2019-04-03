@@ -20,6 +20,7 @@ export default {}
 
 .site-container {
   background: #252525;
+  color: white;
   background-size: cover;
   background-image: linear-gradient(rgba($primary-graphite, 1), rgba($primary-blue, 0.5)), url('./../assets/papers.co-ml28-space-earth-nature-interstellar-3840x2400-4k-wallpaper.jpg');
   height: calc(100vh - 70px);

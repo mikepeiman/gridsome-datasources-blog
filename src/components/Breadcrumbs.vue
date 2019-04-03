@@ -31,13 +31,13 @@ export default {
       linkSet: [],
       activeLink: '',
       isAbilityPage: '',
-      abilityTitle: ''
+      abilityTitle: '',
     }
   },
   props: ['pageName'],
   metaInfo() {
     return {
-      title: '',
+      title: this.pageTitle,
       breadCrumb: this.$route.name,
       hero: this.$route.params.hero,
       ability: this.$route.params.name,
@@ -58,18 +58,27 @@ export default {
       this.abilityTitle = changeCase.title(name)
       return name
     },
-    // isAbilityPage() {
-
-    //   // return (name == 'heroes' ? false : true)
-    //   // if(name == 'Heroes') { return true } else { return false }
-    // }
+    pageTitle() {
+      let route = changeCase.title(this.$route.name)
+      let name = changeCase.title(this.$route.params.name)
+      let hero = changeCase.title(this.$route.params.hero)
+      let heroRoute = route + " > " + name
+      let abilityRoute = hero + " > " + route + " > " + name
+      if (route == 'Abilities') {
+        return abilityRoute
+      } else if (route == 'Heroes') {
+        return heroRoute
+      } else {
+        return route
+      }
+    }
   },
   created() {
-    console.log(`this.$metaData.breadCrumb: ${this.$metaInfo.breadCrumb}`)
-    console.log('abilities page created()')
-      let name = this.$route.name
-      console.log(`${name} == 'heroes': ${name == 'heroes'}`)
-      return (name == 'heroes' ? this.isAbilityPage = false : this.isAbilityPage = true)
+    let name = this.$route.name
+    console.log(`${name} == 'heroes': ${name == 'heroes'}`)
+    console.log(`breadcrumbs component created() $route:`)
+    console.log(this.$route)
+    return (name == 'heroes' ? this.isAbilityPage = false : this.isAbilityPage = true)
 
   }
 }

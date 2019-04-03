@@ -46,16 +46,17 @@ export default {
   },
   metaInfo() {
     return {
-      title: this.$page.post.name,
+      title: 'Heroes.vue', // this.$route.name,
+      titleTemplate: '%s | DOTA2 Hero',
       breadCrumb: this.$page.post.name
     }
   },
-  // created() {
-  //   console.log(`dota2 hero view created() this.$metaInfo.breadCrumb: ${this.$metaInfo.breadCrumb}`)
-  //   let routesLength = this.$route.matched.length
-  //   console.log(`dota2 hero view created() this.$route.matched: ${Object.keys(this.$route.matched[routesLength-1])}`)
-  //   console.log(`dota2 hero view created() this.$route.matched[0].name: ${this.$route.matched[0].name}`)
-  // }
+  created() {
+    console.log(`dota2 hero view created() this.$metaInfo.breadCrumb: ${this.$metaInfo.breadCrumb}`)
+    let routesLength = this.$route.matched.length
+    console.log(`dota2 hero view created() this.$route.matched: ${Object.keys(this.$route.matched[routesLength-1])}`)
+    console.log(`dota2 hero view created() this.$route.matched[0].name: ${this.$route.matched[0].name}`)
+  }
 }
 </script>
 
