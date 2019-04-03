@@ -1,13 +1,15 @@
 <template>
 <DSLayout>
-  <div class="site-container">
-    <DSSideBar />
-    <div class="content">
+  <div class="post-thumbnail" :style="`
+  background: url(${$page.post.imageUrl}) no-repeat center center;
+  background-size: cover;`">
+    <div class="post-title-container">
       <h1 class="post-title">{{$page.post.title}}</h1>
-      <h3 class="post-date">{{$page.post.date}}</h3>
-      <p class="post-body">{{$page.post.body}}</p>
     </div>
+
   </div>
+  <h3 class="post-date">{{ formatDate($page.post.date) }}</h3>
+  <p class="post-body">{{$page.post.body}}</p>
 </DSLayout>
 </template>
 
@@ -17,11 +19,13 @@ query GraphCMS ($path: String!){
     title
     date
     body
+    imageUrl
   }
 }
 </page-query>
 
 <script>
+import moment from 'moment';
 import DSLayout from '~/layouts/DSLayout.vue';
 import DSSideBar from '~/components/DSSideBar.vue';
 
@@ -34,6 +38,12 @@ export default {
     return {
       title: this.$page.post.title
     }
+  },
+    methods: {
+    formatDate(x) {
+      console.log(`moment date: ${moment(x).format('MMMM Do, YYYY')}`)
+      return moment(x).format('MMMM Do, YYYY');
+    }
   }
 }
 </script>
@@ -45,7 +55,6 @@ export default {
   background: #252525;
   height: calc(100vh - 70px);
 }
-
 
 .page-title {
   line-height: 1.5em;
@@ -72,7 +81,7 @@ export default {
 
   .post-title,
   .post-subtitle {
-    color: white;
+    color: black;
     transition: .25s all ease-in-out;
   }
 }
@@ -117,12 +126,28 @@ export default {
 
 .post-thumbnail-wrapper {}
 
-.post-title {
-  color: white;
+.post-thumbnail {
+  height: 50vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+}
+
+.post-title-container {
+  color: #ffffff;
+  background: black; //linear-gradient(black 75%, rgba(0, 0, 0, 0));
+  padding: 1em .5em 1em 0.5em;
   text-transform: uppercase;
-  font-size: 2em;
   margin: 0;
-  border-bottom: 3px solid $primary-blue;
+  border-top: 3px solid $primary-blue;
+    border-bottom: 3px solid $primary-blue;
+}
+
+.post-title {
+  padding: 0;
+  margin: 0;
+  font-size: 2em;
+  text-align: center;
 }
 
 .post-subtitle {
@@ -132,12 +157,12 @@ export default {
 }
 
 .post-date {
-  color: rgba($primary-white, 0.5);
+  color: $primary-blue; // rgba($primary-green, 0.5);
   font-size: .8em;
 }
 
-.post-thumbnail {
-  width: 90%;
+.post-body {
+  font-weight: 300;
 }
 
 .grid-main {

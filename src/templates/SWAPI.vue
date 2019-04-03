@@ -1,13 +1,10 @@
 <template>
 <DSLayout>
-  <div class="site-container">
-    <DSSideBar />
-    <div class="content">
+
     <h1 class="page-title">Starship Name: {{$page.post.name}}</h1>
     <h3>Starship Class: {{$page.post.starshipClass}}</h3>
     <p>Today's date: {{ formatDate($page.post.date)}}</p>
-    </div>
-  </div>
+
 </DSLayout>
 </template>
 

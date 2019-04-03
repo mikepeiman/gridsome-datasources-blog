@@ -1,13 +1,10 @@
 <template>
 <DSLayout>
-  <div class="site-container">
-    <DSSideBar />
-    <div class="content">
+
       <h1 class="post-title">{{$page.post.title}}</h1>
       <h3 class="post-date">Published: {{formatDate($page.post.date)}}</h3>
       <p class="post-body">Author: {{$page.post.author}}</p>
-    </div>
-  </div>
+
 </DSLayout>
 </template>
 
