@@ -1,10 +1,10 @@
 const $ = require('cheerio');
 const rp = require('request-promise');
 const slugify = require('slugify')
-let x = 0;
+// let x = 0;
 
 const heroParse = function(num, name, url, heroImgSrc) {
-  console.log(`Datasource loading: heroParse #${x++}`)
+  // console.log(`Datasource loading: heroParse #${x++}`)
   return rp(url)
 .then(html => {
   let abilities = [];

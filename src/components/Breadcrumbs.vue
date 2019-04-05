@@ -3,7 +3,7 @@
   <!-- <g-link class="nav__link" :to="{ name: 'dataSources' }"> -->
   <h4>
     <g-link :to="{ name: 'dota' }">Heroes > </g-link>
-    <g-link :to="`/heroes/${hero}`">{{ hero.charAt(0).toUpperCase() + hero.slice(1) }}</g-link>
+    <g-link :to="`/heroes/${hero}`">{{ heroTitle }}</g-link>
     <span v-if="isAbilityPage">
       >
       <g-link  :to="ability">{{ abilityTitle }}</g-link>
@@ -52,9 +52,12 @@ export default {
       return (name == 'heroes' ? this.$route.params.name : this.$route.params.hero)
       // return (name == 'heroes' ? false : true)
     },
+    heroTitle() {
+      return changeCase.title(this.hero)
+    },
     ability() {
       let name = this.$route.params.name
-      console.log(`computed hero(): ${name}`)
+      console.log(`computed ability(): ${name}`)
       this.abilityTitle = changeCase.title(name)
       return name
     },

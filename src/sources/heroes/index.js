@@ -163,7 +163,7 @@ module.exports = function(api) {
           // Now we add each hero node to the GraphQL schema
           // Note that 'abilities' is an array of objects containing ability name, src, and other
           // attributes
-          console.log('Datasource loading: Heroes.addNode')
+          // console.log('Datasource loading: Heroes.addNode')
 
           Heroes.addNode({
             title: hero.name,

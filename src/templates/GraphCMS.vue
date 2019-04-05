@@ -130,7 +130,7 @@ export default {
   height: 50vh;
   display: flex;
   flex-direction: column;
-  justify-content: start;
+  justify-content: flex-start;
 }
 
 .post-title-container {
