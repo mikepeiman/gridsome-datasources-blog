@@ -12,7 +12,7 @@
             <!-- <img class="post-thumbnail" :src="post.node.imageUrl" /> -->
           </div>
         </g-link>
-        <div class="post-body-wrapper">
+        <div class="post-body-wrapper module">
           <p class="post-date">Published: {{ formatDate(post.node.datePublished) }}</p>
           <p class="post-body">{{ post.node.body }}</p>
         </div>
@@ -63,6 +63,12 @@ export default {
       console.log(`moment date: ${moment(x).format('MMMM Do, YYYY')}`)
       return moment(x).format('MMMM Do, YYYY');
     }
+  },
+  created() {
+    clamp(document.getElementByClassName('js-toclamp'), 3);
+  },
+  beforeMount() {
+    clamp(document.getElementByClassName('js-toclamp'), 3);
   }
 }
 </script>
@@ -103,8 +109,10 @@ export default {
 
 .single-post {
   margin-bottom: 2em;
-  color: white;
+  color: rgba(white, 0.5);
   border-left: 3px solid rgba(0, 0, 0, 0);
+  max-height: 30vh;
+  overflow: hidden;
   transition: .25s all ease-in-out;
 
   .post-body {
@@ -114,6 +122,7 @@ export default {
 
   .post-title,
   .post-subtitle {
+    color: rgba(white, 0.75);
     transition: .25s all ease-in-out;
   }
 
@@ -127,7 +136,7 @@ export default {
 
     .post-title,
     .post-subtitle {
-      color: $primary-blue;
+      color: white;
     }
 
     .post-hero {
@@ -139,22 +148,6 @@ export default {
     }
   }
 }
-
-// .posts-container .post-thumbnail-wrapper {
-//   .post-title,
-//   .post-subtitle {
-//     color: white;
-//     transition: .25s all ease-in-out;
-//   }
-// }
-
-// .posts-container .post-thumbnail-wrapper:hover {
-//   .post-title,
-//   .post-subtitle {
-//     color: $primary-blue;
-//     transition: .25s all ease-in-out;
-//   }
-// }
 
 .single-post a {
   color: white;
@@ -200,8 +193,22 @@ export default {
 }
 
 .post-body-wrapper {
-  max-height: 30vh;
+  line-height: 1.2em;
+  height: calc(1.75em + (1.2em * 8));
   overflow: hidden;
+  position: relative;
+
+  :after {
+    content: "";
+    text-align: right;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 4.4em;
+    background: linear-gradient(to bottom, rgba(#252525,0) 30%, rgba(#252525,.5) 80%, rgba(#252525,1));
+    pointer-events: none;
+  }
 }
 
 .post-thumbnail-wrapper {
