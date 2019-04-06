@@ -12,10 +12,15 @@
             <!-- <img class="post-thumbnail" :src="post.node.imageUrl" /> -->
           </div>
         </g-link>
-        <div class="post-body-wrapper module">
-          <p class="post-date">Published: {{ formatDate(post.node.datePublished) }}</p>
-          <p class="post-body">{{ post.node.body }}</p>
-        </div>
+        <g-link class="post-link" :to="post.node.path">
+          <div class="post-body-wrapper">
+            <p class="post-date">Published: {{ formatDate(post.node.datePublished) }}</p>
+            <p class="post-body">{{ post.node.body }}</p>
+            <div class="read-more">
+              <p class="read-more-text">Read More</p>
+            </div>
+          </div>
+        </g-link>
       </div>
     </li>
   </ul>
@@ -64,12 +69,6 @@ export default {
       return moment(x).format('MMMM Do, YYYY');
     }
   },
-  created() {
-    clamp(document.getElementByClassName('js-toclamp'), 3);
-  },
-  beforeMount() {
-    clamp(document.getElementByClassName('js-toclamp'), 3);
-  }
 }
 </script>
 
@@ -115,15 +114,21 @@ export default {
   overflow: hidden;
   transition: .25s all ease-in-out;
 
+  .post-body,
+  .post-title,
+  .post-subtitle,
+  .read-more,
+  .read-more-text {
+    transition: .25s all ease-in-out;
+  }
+
   .post-body {
     color: rgba(white, 0.5);
-    transition: .25s all ease-in-out;
   }
 
   .post-title,
   .post-subtitle {
     color: rgba(white, 0.75);
-    transition: .25s all ease-in-out;
   }
 
   :hover {
@@ -144,8 +149,13 @@ export default {
     }
 
     .post-body {
-      color: white;
+      color: rgba(white, .75);
     }
+
+    .read-more .read-more-text {
+      opacity: 1;
+    }
+
   }
 }
 
@@ -155,6 +165,49 @@ export default {
   line-height: 1.25em;
   margin-right: 1.5em;
   max-height: 30vh;
+}
+
+.post-body-wrapper {
+  line-height: 1.2em;
+  height: calc(1.75em + (1.2em * 8));
+  overflow: hidden;
+  position: relative;
+
+  :after {
+    content: "";
+    text-align: center;
+    position: absolute;
+    bottom: 1.2em;
+    right: 0;
+    width: 100%;
+    height: 2.4em;
+    background: linear-gradient(to bottom, rgba(#252525, 0) 0%, rgba(#252525, .25) 80%, rgba(#252525, .45));
+    pointer-events: none;
+  }
+}
+
+.read-more {
+  position: absolute;
+  background: linear-gradient(to bottom, rgba(#252525, .8), rgba(#252525, 1) 80%);
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  text-align: center;
+  color: $primary-blue;
+  height: 1.2em;
+  display: flex;
+  justify-items: center;
+  justify-content: center;
+
+  .read-more-text {
+    width: auto;
+    text-align: center;
+    // background: #252525;
+    padding: 0 1em;
+    opacity: 0;
+    font-size: .9em;
+    border-bottom: 1px dotted $primary-blue;
+  }
 }
 
 .single-post p {
@@ -190,25 +243,6 @@ export default {
   line-height: 1.5em;
   margin: 0;
   padding: 0 0 1em 0;
-}
-
-.post-body-wrapper {
-  line-height: 1.2em;
-  height: calc(1.75em + (1.2em * 8));
-  overflow: hidden;
-  position: relative;
-
-  :after {
-    content: "";
-    text-align: right;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 100%;
-    height: 4.4em;
-    background: linear-gradient(to bottom, rgba(#252525,0) 30%, rgba(#252525,.5) 80%, rgba(#252525,1));
-    pointer-events: none;
-  }
 }
 
 .post-thumbnail-wrapper {
