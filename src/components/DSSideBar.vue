@@ -26,6 +26,9 @@
       <li @click="mainLink(7)" class="nav-link-container">
         <g-link class="nav__link" :to="{ name: 'graph' }">GraphCMS</g-link>
       </li>
+      <li @click="mainLink(8)" class="nav-link-container">
+        <g-link class="nav__link" :to="{ name: 'strapiCms' }">StrapiCMS</g-link>
+      </li>
     </ul>
   </div>
 </div>

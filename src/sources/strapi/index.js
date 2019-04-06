@@ -1,4 +1,6 @@
 const axios = require("axios");
+var slugify = require('slugify');
+var changeCase = require('change-case');
 const {
   GraphQLSchema,
   GraphQLList,
@@ -55,7 +57,7 @@ module.exports = function(api) {
   api.loadSource(async store => {
     const contentType = store.addContentType({
       typeName: "Strapi",
-      route: "/strapi/:id"
+      route: "/strapi/:slug"
     });
     const Category = new GraphQLObjectType({
       name: 'Category',
@@ -97,8 +99,12 @@ module.exports = function(api) {
     getPosts("mikepeiman@gmail.com", "326463").then(data => {
       console.log(`final .then data: ${data}`);
       data.forEach(item => {
+        item.slug = changeCase.lower(slugify(item.title))
+        item.path = `/strapi/${item.slug}`
+        console.log(`item path: ${item.path}`)
         contentType.addNode({
           date: item.created_at,
+          path: item.path,
           fields: {
             id: item.id,
             title: item.title,
@@ -107,6 +113,7 @@ module.exports = function(api) {
             categories: item.categories
           }
         });
+
       });
     });
   });

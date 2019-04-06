@@ -1,20 +1,20 @@
 <template>
-<DSLayout pageName="GraphCMS">
+<DSLayout pageName="StrapiCMS">
 
-  <h1 class="page-title">GraphCMS</h1>
+  <h1 class="page-title">StrapiCMS</h1>
   <ul class="posts-container">
-    <li class="single-post" v-for="(post, index) in $page.allGraphCMS.edges" :key="index">
+    <li class="single-post" v-for="(post, index) in $page.allStrapi.edges" :key="index">
       <div class="post-hero">
         <g-link class="post-link" :to="post.node.path">
           <div class="post-thumbnail-wrapper">
             <h2 class="post-title">{{ post.node.title }}</h2>
             <h3 class="post-subtitle">{{ post.node.subtitle }}</h3>
             <!-- <img class="post-thumbnail" :src="post.node.imageUrl" /> -->
-          </div>
+              </div>
         </g-link>
         <div class="post-body-wrapper">
-          <p class="post-date">Published: {{ formatDate(post.node.datePublished) }}</p>
-          <p class="post-body">{{ post.node.body }}</p>
+          <p class="post-date">Published: {{ formatDate(post.node.date) }}</p>
+          <p>{{ post.node.body }}</p>
         </div>
       </div>
     </li>
@@ -25,20 +25,23 @@
 
 <page-query>
 {
-  allGraphCMS {
-    edges {
-      node {
-        title
-        subtitle
-        datePublished
-        imageUrl
-        body
-        path
+allStrapi {
+  edges {
+    node {
+      id
+      title
+      subtitle
+      body
+      path
+      date
+      categories {
+        name
       }
     }
   }
 }
-</page-query>
+}
+</page-query> 
 
 <script>
 import moment from 'moment';
@@ -103,65 +106,32 @@ export default {
 
 .single-post {
   margin-bottom: 2em;
-  color: white;
-  border-left: 3px solid rgba(0, 0, 0, 0);
-  transition: .25s all ease-in-out;
 
-  .post-body {
-    color: rgba(white, 0.5);
-    transition: .25s all ease-in-out;
-  }
+}
+
+.posts-container .post-thumbnail-wrapper {
 
   .post-title,
   .post-subtitle {
+    color: white;
     transition: .25s all ease-in-out;
-  }
-
-  :hover {
-    color: $primary-blue;
-    transition: .25s all ease-in-out;
-
-    .post-date {
-      color: $primary-blue;
-    }
-
-    .post-title,
-    .post-subtitle {
-      color: $primary-blue;
-    }
-
-    .post-hero {
-      border-left: 3px solid $primary-blue;
-    }
-
-    .post-body {
-      color: white;
-    }
   }
 }
 
-// .posts-container .post-thumbnail-wrapper {
-//   .post-title,
-//   .post-subtitle {
-//     color: white;
-//     transition: .25s all ease-in-out;
-//   }
-// }
+.posts-container .post-thumbnail-wrapper:hover {
 
-// .posts-container .post-thumbnail-wrapper:hover {
-//   .post-title,
-//   .post-subtitle {
-//     color: $primary-blue;
-//     transition: .25s all ease-in-out;
-//   }
-// }
+  .post-title,
+  .post-subtitle {
+    color: $primary-blue;
+    transition: .25s all ease-in-out;
+  }
+}
 
 .single-post a {
   color: white;
   font-weight: 300;
   line-height: 1.25em;
   margin-right: 1.5em;
-  max-height: 30vh;
 }
 
 .single-post p {
@@ -177,7 +147,6 @@ export default {
   margin-bottom: .5em;
   color: rgba($primary-white, .5);
   border-bottom: 1px solid rgba($primary-white, .5);
-  transition: .25s all ease-in-out;
   // background: rgba($primary-blue, 0.25);
 }
 
@@ -185,7 +154,13 @@ export default {
   display: grid;
   grid-template-columns: 1fr 1fr;
   padding: 1em;
+  border-left: 3px solid rgba(0,0,0,0);
 }
+.post-hero:hover {
+  border-left: 3px solid $primary-blue;
+}
+
+.post-thumbnail-wrapper {}
 
 .post-title {
   color: white;
@@ -199,20 +174,13 @@ export default {
   padding: 0 0 1em 0;
 }
 
+.post-thumbnail {
+  width: 90%;
+}
 .post-body-wrapper {
   max-height: 30vh;
   overflow: hidden;
 }
-
-.post-thumbnail-wrapper {
-  max-height: 30vh;
-}
-
-.post-thumbnail {
-  width: 90%;
-
-}
-
 .grid-main {
   /* max-width: 100vw; */
   display: grid;
