@@ -53,7 +53,7 @@ export default {
   },
   props: ['pageName'],
   methods: {
-        mainLink(x) {
+    mainLink(x) {
       let el = Object.values(this.$refs)[x].$el;
       let elClass = el.parentElement.parentElement.attributes.class.value
       let link = el.attributes.href.value
@@ -188,6 +188,7 @@ ul li ul:focus {
   a {
     // padding: 8% 8% 8% 12%;
     transition: all .25s ease-in-out;
+
     :visited {
       color: white;
     }

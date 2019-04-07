@@ -13,7 +13,8 @@ module.exports = {
     {
       use: "@gridsome/source-faker",
       options: {
-        numNodes: 50
+        numNodes: 50,
+        route: "/faker-posts/:id"
       }
     },
     {
@@ -34,7 +35,7 @@ module.exports = {
     {
       use: "@gridsome/plugin-google-analytics",
       options: {
-        id: "UA-xxx"
+        id: "UA-93096307-4"
       }
     },
     {

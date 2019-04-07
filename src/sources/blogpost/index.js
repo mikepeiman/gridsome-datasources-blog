@@ -8,11 +8,11 @@ module.exports = function (api) {
 
     const contentType = store.addContentType({
       typeName: 'BlogPost',
-      route: '/JSONplaceholder/:id'
+      route: '/placeholder/:id'
     })
 
     for (const item of data) {
-      let path = `/JSONplaceholder/${item.id}`
+      let path = `/placeholder/${item.id}`
       contentType.addNode({
         id: item.id,
         title: item.title,

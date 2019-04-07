@@ -4,7 +4,7 @@
       <h1 class="page-title">Star Wars API</h1>
       <ul class="swapi-single">
         <li class="item-container" v-for="(item, index) in $page.allSWAPI.edges" :key="item.id">
-          <g-link class="item-link" :to="item.node.path">
+          <g-link class="item-link" :to="`/extra${item.node.path}`">
             <h2>{{ item.node.name }}</h2>
             <p>{{ item.node.starshipClass }}</p>
           </g-link>

@@ -57,6 +57,13 @@ export default {
     DSSideBar,
     Breadcrumbs
   },
+    metaInfo() {
+    return {
+      title: 'DOTA.vue', // this.$route.name,
+      titleTemplate: '%s | DOTA2 Heroes',
+      breadCrumb: this.$route.name
+    }
+  },
   data: function () {
     return {
       date: moment(),

@@ -1,13 +1,15 @@
 <template>
-<div id="breadcrumbs" v-on="listeners">
-
-  <div v-for="crumb in breadcrumbs" :name="crumb.name" class="breadcrumb">
-    <h4>
-      <!-- <g-link :name="crumb.name" :to="{ name: crumb.num }">{{ crumb.num }}</g-link> -->
-      <a :href="crumb.name">{{ crumb.name }}</a>
-    </h4>
-  </div>
-
+<div id="breadcrumbs">
+  <!-- <g-link class="nav__link" :to="{ name: 'dataSources' }"> -->
+  <h4>
+    <g-link :to="{ name: 'dota' }">Heroes > </g-link>
+    <g-link :to="`/heroes/${hero}`">{{ heroTitle }}</g-link>
+    <span v-if="isAbilityPage">
+      >
+      <g-link  :to="ability">{{ abilityTitle }}</g-link>
+    </span>
+  </h4>
+  <!-- </g-link> -->
 </div>
 </template>
 
@@ -30,8 +32,6 @@ export default {
       activeLink: '',
       isAbilityPage: '',
       abilityTitle: '',
-      crumb: 'test',
-
     }
   },
   props: ['pageName'],
@@ -45,29 +45,6 @@ export default {
     }
   },
   computed: {
-    listeners() {
-      const { ...listeners
-      } = this.$listeners
-      console.log(`attrs in Breadcrumbs.vue: ${this.$attrs}`)
-      console.log(this.$attrs)
-      return listeners
-    },
-    breadcrumbs() {
-      console.log(this.$route.path)
-      let i = 0
-      let path = this.$route.path.split("/")
-      path = path.splice(1, path.length)
-      let paths = path.map(path => changeCase.lower(path))
-      let pathsCount = path.map(path => {
-        return { name: path, num: i++ }
-      })
-      console.log(`new path array: ${path}, lower cased: ${paths}, count: ${pathsCount}`)
-      console.log(pathsCount)
-      return pathsCount
-    },
-    path() {
-      return this.$route.path
-    },
     hero() {
       // return this.$route.params.hero
       let name = this.$route.name
@@ -116,7 +93,6 @@ export default {
 #breadcrumbs {
   grid-area: breadcrumbs;
   color: grey;
-  display: flex;
 
   a {
     text-decoration: none;
@@ -130,19 +106,15 @@ export default {
       color: $primary-blue;
     }
   }
-
-  :first-child {
-    margin-left: 0;
-  }
 }
 
-.breadcrumb {
-  margin-left: 0.5em;
-  h4:after {
-    content: ">";
-    margin-left: 0.5em;
-  }
-}
+// .page-title {
+//   position: relative;
+//   left: 10%;
+//   text-align: left;
+//   border-bottom: 3px solid $primary-blue;
+//   color: white;
+// }
 
 li.nav-link-container {
   color: #fff;

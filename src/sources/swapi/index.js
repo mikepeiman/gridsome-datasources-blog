@@ -4,11 +4,11 @@ const axios = require("axios");
 // Use the Data store API here: https://gridsome.org/docs/data-store-api
 module.exports = function(api) {
   console.log('Datasource loading: swapi')
-  
+
   api.loadSource(async store => {
     const contentType = store.addContentType({
       typeName: 'SWAPI',
-      route: '/swapi/:id'
+      route: '/extra/swapi/:id'
     });
 
     contentType.addSchemaField("name", ({ graphql }) => ({

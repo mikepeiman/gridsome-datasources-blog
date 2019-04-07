@@ -4,7 +4,7 @@
     <h1 class="page-title">Starship Name: {{$page.post.name}}</h1>
     <h3>Starship Class: {{$page.post.starshipClass}}</h3>
     <p>Today's date: {{ formatDate($page.post.date)}}</p>
-
+    
 </DSLayout>
 </template>
 
@@ -15,6 +15,7 @@ query SWAPI ($path: String!){
     starshipClass
     date
     path
+    id
   }
 }
 </page-query>

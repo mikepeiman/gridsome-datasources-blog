@@ -3,7 +3,7 @@
   <DSHeader :pageName="pageName"></DSHeader>
   <div class="site-container">
     <DSSideBar />
-    <Breadcrumbs />
+    <Breadcrumbs :pageName="pageName" />
     <div class="content">
       <slot />
     </div>
