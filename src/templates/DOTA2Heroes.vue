@@ -1,16 +1,16 @@
 <template>
 <DSLayout :pageName="`DOTA2 Hero: `+$page.post.name">
 
-      <h1 class="post-title">Hero: {{$page.post.name}}</h1>
-      <ul class="abilities-container">
-        <li class="ability-container" v-for="ability in $page.post.abilities" v-on="setAbilityPaths" >
-          <g-link :href="ability.path">
+  <h1 class="post-title">Hero: {{$page.post.name}}</h1>
+  <ul class="abilities-container">
+    <li class="ability-container" v-for="ability in $page.post.abilities">
+      <a :href="ability.path">
             <p class="ability-name">{{ ability.name }}</p>
             <img class="ability-img" :src="ability.src" alt="">
             <p class="ability-desc">{{ ability.desc }}</p>
-            </g-link>
-        </li>
-      </ul>
+            </a>
+    </li>
+  </ul>
 
 </DSLayout>
 </template>
@@ -33,6 +33,7 @@ query DOTA2Heroes ($path: String!){
 <script>
 import DSLayout from '~/layouts/DSLayout.vue';
 import DSSideBar from '~/components/DSSideBar.vue';
+import changeCase from 'change-case';
 
 export default {
   components: {
@@ -58,10 +59,31 @@ export default {
     console.log(`dota2 hero view created() this.$route.matched: ${Object.keys(this.$route.matched[routesLength-1])}`)
     console.log(`dota2 hero view created() this.$route.matched[0].name: ${this.$route.matched[0].name}`)
   },
-  computed: {
-    setAbilityPaths() {
-      console.log('setAbilityPaths')
+  mounted() {
+    let abilities = this.$page.post.abilities
+    let numAbilities = this.$page.post.abilities.length
+    for (let i = 0; i < numAbilities; i++) {
+      let p = abilities[i].path
+      console.log(`abilities[i].path ${p}`)
+      let x = abilities[i].path.replace(/_/g,"-")
+      console.log(`abilities[i].path ${x}`)
+      let s = p.split('/').splice(1)
+      console.log(`abilities[i].path.split('/').splice(1) ${s}`)
+      changeCase.paramCase(s[0])
+      let a = changeCase.paramCase(s[0])
+      let b = s[1]
+      let c = a + b
+      s.join('/')
+      // c.push(a)
+      // c.push(b)
+      console.log(`changeCase.paramCase(abilities[i].path.split('/'))[0] ${c}, ${s}`)
+      c.join(',')
+      c.replace(',', '/')
+      console.log(`joined: ${c}`)
+      console.log(c.values)
+      abilities[i].path = `/heroes${abilities[i].path}`
     }
+
   }
 }
 </script>

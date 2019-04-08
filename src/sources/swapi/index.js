@@ -8,7 +8,7 @@ module.exports = function(api) {
   api.loadSource(async store => {
     const contentType = store.addContentType({
       typeName: 'SWAPI',
-      route: '/jukebox/:id'
+      route: '/swapi/:id'
     });
 
     contentType.addSchemaField("name", ({ graphql }) => ({

@@ -11,7 +11,7 @@ const {
 const $ = require("cheerio");
 const rp = require("request-promise");
 const changeCase = require("change-case");
-const heroParse = require("../dota2/heroParse");
+const heroParse = require("./heroParse");
 const heroesUrl = "http://www.dota2.com/heroes/";
 
 module.exports = function(api) {
@@ -54,6 +54,13 @@ module.exports = function(api) {
       allowNull: false,
       resolve(node) {
         return node.fields.name;
+      }
+    }));
+    Abilities.addSchemaField("root", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      allowNull: false,
+      resolve(node) {
+        return node.fields.root;
       }
     }));
     Abilities.addSchemaField("src", ({ graphql }) => ({
@@ -166,6 +173,7 @@ module.exports = function(api) {
         )
       })
       .then(async heroes => {
+        let i = 0;
         heroes.forEach(hero => {
 
           // Now we add each hero node to the GraphQL schema
@@ -184,18 +192,21 @@ module.exports = function(api) {
             }
           });
           hero.abilities.forEach(ability => {
-            ability.path = hero.path+'/'+ability.name;
+            
+            // ability.path = hero.path+'/'+ability.name;
+            // console.log(`FIRST hero.abilities.forEach: hero.path: ${hero.path}, ability.path: ${ability.path}`)
             Abilities.addNode({
               title: ability.name,
               fields: {
-                path: ability.path,
+                // path: 'TEST', // `/heroes${ability.path}`,
                 src: ability.src,
                 name: ability.name,
                 desc: ability.desc,
-                hero: hero.name
+                hero: hero.name,
+                path: ability.path
               }
             })
-            // console.log(`hero.abilities.forEach: hero.name ${hero.name}`) 
+            // console.log(`SECOND hero.abilities.forEach: hero.path: ${hero.path}, ability.path: ${ability.path}, ability.root: ${ability.root}`) 
           })
         });
       })

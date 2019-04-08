@@ -3,15 +3,9 @@
 
   <div v-for="crumb in setBreadcrumbs" :name="crumb.name" class="breadcrumb">
     <h4>
-      <g-link :href="crumb.path">{{ crumb.name }}</g-link>
-      <!-- <a v-if="crumb.num == 1":href="`${crumb.name}`">{{ crumb.name }}</a> -->
+      <a :href="crumb.path">{{ crumb.name }}</a>
     </h4>
   </div>
-
-  <!-- <div v-on="count" v-for="c in breadcrumbs" :name="c" class="breadcrumb">
-    <h4>
-      <a :href="path">{{ path }}</a>
-    </h4> -->
 
 </div>
 </template>
@@ -35,7 +29,6 @@ export default {
       activeLink: '',
       crumb: 'test',
       counter: '',
-      // breadcrumbs: this.setBreadcrumbs
     }
   },
   props: ['pageName'],
@@ -56,25 +49,10 @@ export default {
       console.log(this.$listeners)
       return listeners
     },
-    // breadcrumbs() {
-    //   let i = 0
-    //   let path = this.$route.path.split("/")
-    //   path = path.splice(1, path.length)
-    //   this.counter = path.length
-    //   let paths = path.map(path => changeCase.lower(path))
-    //   let pathsCount = path.map(path => {
-    //     return {
-    //       name: path,
-    //       num: i++
-    //     }
-    //   })
-    //   console.log(`new path array: ${path}, lower cased: ${paths}, count: ${pathsCount}`)
-    //   console.log(pathsCount)
-    //   return pathsCount
-    // },
     setBreadcrumbs() {
       console.log('set breadcrumbs')
       let path = this.$route.path
+      console.log(path)
       path = path.split("/").splice(1, path.length)
       this.counter = path.length
       console.log(`path: ${path}, path length: ${path.length}`)
@@ -138,7 +116,7 @@ export default {
       } else {
         return route
       }
-    }
+    },
   },
   created() {
     let name = this.$route.name
@@ -151,6 +129,33 @@ export default {
     count() {
       console.log(`count() i = ${i}`)
       return this.i++
+    },
+    checkActiveClass(crumbPath) {
+      console.log(`this is the href of this breadcrumb: ${crumbPath}`)
+      let path = this.$route.path
+      if (path !== crumbPath) {
+        console.log(`no match! `)
+
+      }
+      console.log(` This is this:`)
+      console.log(this.$el)
+    }
+  },
+  mounted() {
+    // remove active class from breadcrumbs
+
+    let crumbs = this.$el.children
+    let path = this.$route.path
+    for(let i = 0; i < crumbs.length; i++) {
+      // console.log(crumbs[i])
+      let child = crumbs[i].childNodes[0].firstChild
+      let href = child.attributes.href.nodeValue
+      // console.log(`child.className: ${child.className}`)
+      // console.log(`child.attributes.href:`)
+      // console.log(child.attributes.href.nodeValue)
+      if(href !== path) {
+        child.className = ""
+      }
     }
   }
 }
