@@ -192,7 +192,7 @@ module.exports = function(api) {
             }
           });
           hero.abilities.forEach(ability => {
-            
+            let path = `/heroes/${hero.name}/${ability.name}`
             // ability.path = hero.path+'/'+ability.name;
             // console.log(`FIRST hero.abilities.forEach: hero.path: ${hero.path}, ability.path: ${ability.path}`)
             Abilities.addNode({
@@ -203,7 +203,7 @@ module.exports = function(api) {
                 name: ability.name,
                 desc: ability.desc,
                 hero: hero.name,
-                path: ability.path
+                path: path
               }
             })
             // console.log(`SECOND hero.abilities.forEach: hero.path: ${hero.path}, ability.path: ${ability.path}, ability.root: ${ability.root}`) 

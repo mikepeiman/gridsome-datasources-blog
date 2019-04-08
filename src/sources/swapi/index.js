@@ -8,7 +8,7 @@ module.exports = function(api) {
   api.loadSource(async store => {
     const contentType = store.addContentType({
       typeName: 'SWAPI',
-      route: '/swapi/:id'
+      route: '/starwars/:id'
     });
 
     contentType.addSchemaField("name", ({ graphql }) => ({
@@ -50,7 +50,7 @@ module.exports = function(api) {
       let pathArray = item.url.split("/");
       let id = pathArray[5];
       item.id = id
-      let path = `/swapi/${id}`
+      let path = `/starwars/${id}`
       contentType.addNode({
         date: item.date,
         path,

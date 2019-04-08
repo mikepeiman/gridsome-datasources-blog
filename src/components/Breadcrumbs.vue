@@ -62,18 +62,11 @@ export default {
       for (let i = 0; i < pathLength; i++) {
         console.log(`i in path.length: ${i}: ${path[i]}`)
         breadcrumbPaths.push({
-          'path': '/' + path.slice(0, i + 1).join('/'),
+          'path': '/' + path.slice(0, i + 1).join('/').replace(/_/g,"-"),
           'name': path[i],
           'num': i + 1
         })
-        // breadcrumbPaths[i].join('/')
       }
-      for (let i = 0; i < pathLength; i++) {
-        // breadcrumbPaths[i].name.join('/')
-      }
-
-      console.log(`breadcrumbPaths:`)
-      console.log(breadcrumbPaths)
       this.breadcrumbs = breadcrumbPaths
       return breadcrumbPaths
     },
@@ -83,25 +76,6 @@ export default {
       path = path[i]
       console.log(`path: ${path}`)
       return path
-    },
-    // count() {
-
-    // },
-    hero() {
-      // return this.$route.params.hero
-      let name = this.$route.name
-      console.log(`computed hero(): ${name}`)
-      return (name == 'heroes' ? this.$route.params.name : this.$route.params.hero)
-      // return (name == 'heroes' ? false : true)
-    },
-    heroTitle() {
-      return changeCase.title(this.hero)
-    },
-    ability() {
-      let name = this.$route.params.name
-      console.log(`computed ability(): ${name}`)
-      this.abilityTitle = changeCase.title(name)
-      return name
     },
     pageTitle() {
       let route = changeCase.title(this.$route.name)

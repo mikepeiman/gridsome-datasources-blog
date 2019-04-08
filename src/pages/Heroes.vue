@@ -1,23 +1,23 @@
 <template>
 <DSLayout :pageName="pageName">
 
-      <h1 class="page-title">DOTA2 Heroes</h1>
-      <div class="grid-main">
-        <ul class="hero-list" v-for="(item, index) in $page.allDOTA2Heroes.edges" :key="item.id">
-          <g-link :to="item.node.path">
-            <li class="item-container grid-item">
-              <div class="hero-number">{{ item.node.num }}</div>
-              <div class="hero-number-bg">
-                <h2 class="hero-name">{{ item.node.name }}</h2>
-              </div>
-              <img class="hero-image" :Src="item.node.heroImgSrc" />
-              <div class="abilities-list" v-for="ability in item.node.abilities">
-                <p class="single-ability">{{ ability.name }}</p>
-              </div>
-            </li>
-          </g-link>
-        </ul>
-      </div>
+  <h1 class="page-title">DOTA2 Heroes</h1>
+  <div class="grid-main">
+    <ul class="hero-list" v-for="(item, index) in $page.allDOTA2Heroes.edges" :key="item.id">
+      <g-link :to="item.node.path">
+        <li class="item-container grid-item">
+          <div class="hero-number">{{ item.node.num }}</div>
+          <div class="hero-number-bg">
+            <h2 class="hero-name">{{ item.node.name }}</h2>
+          </div>
+          <img class="hero-image" :Src="item.node.heroImgSrc" />
+          <div class="abilities-list" v-for="ability in item.node.abilities">
+            <p class="single-ability">{{ ability.name }}</p>
+          </div>
+        </li>
+      </g-link>
+    </ul>
+  </div>
 
 </DSLayout>
 </template>
@@ -45,9 +45,9 @@ import DSSideBar from '~/components/DSSideBar.vue';
 export default {
   components: {
     DSLayout,
-    DSSideBar,  
+    DSSideBar,
   },
-  data: function() {
+  data: function () {
     return {
       pageName: 'DOTA2 Heroes'
     }
@@ -71,17 +71,19 @@ export default {
 .site-container {
   background: #252525;
   height: calc(100vh - 70px);
-    grid-template-columns: 1fr 1fr 5fr 1fr;
+  grid-template-columns: 1fr 1fr 5fr 1fr;
   grid-template-rows: 100px 1fr;
   grid-template-areas:
     ". . . ."
     "sidenav . main-content .";
 }
+
 .page-title {
   line-height: 1.5em;
   border-bottom: 3px solid $primary-blue;
   // margin-bottom: -1em;
 }
+
 .content {
   grid-area: main-content;
   color: white;

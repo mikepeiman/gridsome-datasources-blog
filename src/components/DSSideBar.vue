@@ -15,7 +15,7 @@
         <g-link class="nav__link" :to="{ name: 'starwars' }">StarWars</g-link>
       </li>
       <li @click="mainLink(4)" class="nav-link-container">
-        <g-link class="nav__link" :to="{ name: 'dota' }">DOTA2</g-link>
+        <g-link class="nav__link" :to="{ name: 'heroes' }">DOTA2 Heroes</g-link>
       </li>
       <li @click="mainLink(5)" class="nav-link-container">
         <g-link class="nav__link" :to="{ name: 'filesystem' }">Filesystem</g-link>
