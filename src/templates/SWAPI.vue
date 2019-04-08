@@ -40,6 +40,10 @@ export default {
       console.log(`moment date: ${moment(x).format('MMMM Do, YYYY')}`)
       return moment(x).format('MMMM Do, YYYY');
     }
+  },
+  mounted() {
+    console.log(`SWAPI route name: `)
+    console.log(this.$route.name)
   }
 }
 </script>

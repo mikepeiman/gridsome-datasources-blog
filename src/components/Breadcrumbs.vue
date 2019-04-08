@@ -1,7 +1,7 @@
 <template>
 <div id="breadcrumbs" v-on="listeners">
 
-  <div v-for="crumb in setBreadcrumbs" :name="crumb.name" class="breadcrumb">
+  <div v-for="crumb in setBreadcrumbs" :name="crumb.name" :last="last" class="breadcrumb">
     <h4>
       <a :href="crumb.path">{{ crumb.name }}</a>
     </h4>
@@ -27,8 +27,8 @@ export default {
     return {
       linkSet: [],
       activeLink: '',
-      crumb: 'test',
       counter: '',
+      last: false
     }
   },
   props: ['pageName'],
@@ -36,9 +36,6 @@ export default {
     return {
       title: this.pageTitle,
       breadCrumb: this.$route.name,
-      hero: this.$route.params.hero,
-      ability: this.$route.params.name,
-      i: 0
     }
   },
   computed: {
@@ -59,15 +56,29 @@ export default {
       let newArray = []
       let breadcrumbPaths = []
       let pathLength = path.length
+      let last = false
       for (let i = 0; i < pathLength; i++) {
+        if (i >= pathLength - 1) {
+          this.last = true
+          breadcrumbPaths.push({
+            'path': '/' + path.slice(0, i + 1).join('/').replace(/_/g, "-"),
+            'name': path[i],
+            'last': true
+          })
+        } else {
+          this.last = false
+          breadcrumbPaths.push({
+            'path': '/' + path.slice(0, i + 1).join('/').replace(/_/g, "-"),
+            'name': path[i] + ' > ',
+            'last': false
+          })
+        }
         console.log(`i in path.length: ${i}: ${path[i]}`)
-        breadcrumbPaths.push({
-          'path': '/' + path.slice(0, i + 1).join('/').replace(/_/g,"-"),
-          'name': path[i],
-          'num': i + 1
-        })
+
       }
       this.breadcrumbs = breadcrumbPaths
+      console.log(`breadcrumbPaths:`)
+      console.log(breadcrumbPaths)
       return breadcrumbPaths
     },
     path(i) {
@@ -78,14 +89,18 @@ export default {
       return path
     },
     pageTitle() {
+      console.log(`pageTitle(): this route`)
+      console.log(changeCase.title(this.$route.name))
       let route = changeCase.title(this.$route.name)
       let name = changeCase.title(this.$route.params.name)
       let hero = changeCase.title(this.$route.params.hero)
       let heroRoute = route + " > " + name
-      let abilityRoute = hero + " > " + route + " > " + name
+      let abilityRoute = hero + " > " + name
       if (route == 'Abilities') {
+        console.log(`route == Abilities`)
         return abilityRoute
-      } else if (route == 'Heroes') {
+      } else if (route == 'Dota2 Heroes') {
+        console.log(`route == Dota2 Heroes`)
         return heroRoute
       } else {
         return route
@@ -109,14 +124,14 @@ export default {
 
     let crumbs = this.$el.children
     let path = this.$route.path
-    for(let i = 0; i < crumbs.length; i++) {
+    for (let i = 0; i < crumbs.length; i++) {
       // console.log(crumbs[i])
       let child = crumbs[i].childNodes[0].firstChild
       let href = child.attributes.href.nodeValue
       // console.log(`child.className: ${child.className}`)
       // console.log(`child.attributes.href:`)
       // console.log(child.attributes.href.nodeValue)
-      if(href !== path) {
+      if (href !== path) {
         child.className = ""
       }
     }
@@ -152,11 +167,10 @@ export default {
 
 .breadcrumb {
   margin-left: 0.5em;
-
-  h4:after {
-    content: ">";
-    margin-left: 0.5em;
-  }
+  // h4:after {
+  //   content: ">";
+  //   margin-left: 0.5em;
+  // }
 }
 
 li.nav-link-container {
