@@ -3,8 +3,8 @@
 
       <h1 class="post-title">Hero: {{$page.post.name}}</h1>
       <ul class="abilities-container">
-        <li class="ability-container" v-for="ability in $page.post.abilities" >
-          <g-link :to="ability.path">
+        <li class="ability-container" v-for="ability in $page.post.abilities" v-on="setAbilityPaths" >
+          <g-link :href="ability.path">
             <p class="ability-name">{{ ability.name }}</p>
             <img class="ability-img" :src="ability.src" alt="">
             <p class="ability-desc">{{ ability.desc }}</p>
@@ -16,8 +16,8 @@
 </template>
 
 <page-query>
-query Heroes ($path: String!){
-  post: heroes (path: $path){
+query DOTA2Heroes ($path: String!){
+  post: dota2Heroes (path: $path){
     name
     path
     abilities {
@@ -41,12 +41,13 @@ export default {
   },
   data() {
     return {
-      isAbilityPage: false
+      isAbilityPage: false,
+      pageRoot: 'heroes',
     }
   },
   metaInfo() {
     return {
-      title: 'Heroes.vue', // this.$route.name,
+      title: 'DOTA2Heroes.vue', // this.$route.name,
       titleTemplate: '%s | DOTA2 Hero',
       breadCrumb: this.$page.post.name
     }
@@ -56,6 +57,11 @@ export default {
     let routesLength = this.$route.matched.length
     console.log(`dota2 hero view created() this.$route.matched: ${Object.keys(this.$route.matched[routesLength-1])}`)
     console.log(`dota2 hero view created() this.$route.matched[0].name: ${this.$route.matched[0].name}`)
+  },
+  computed: {
+    setAbilityPaths() {
+      console.log('setAbilityPaths')
+    }
   }
 }
 </script>

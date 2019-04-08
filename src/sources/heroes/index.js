@@ -10,6 +10,7 @@ const {
 
 const $ = require("cheerio");
 const rp = require("request-promise");
+const changeCase = require("change-case");
 const heroParse = require("../dota2/heroParse");
 const heroesUrl = "http://www.dota2.com/heroes/";
 
@@ -17,13 +18,13 @@ module.exports = function(api) {
   api.loadSource(async store => {
     console.log('Datasource loading: heroes')
 
-    const Heroes = store.addContentType({
-      typeName: "Heroes",
+    const DOTA2Heroes = store.addContentType({
+      typeName: "DOTA2Heroes",
       route: "/heroes/:name"
     });
     const Abilities = store.addContentType({
       typeName: "Abilities",
-      route: "/:hero/:name"
+      route: "/heroes/:hero/:name"
     });
     const AbilityType = new GraphQLObjectType({
       name: 'Ability',
@@ -76,35 +77,42 @@ module.exports = function(api) {
         return node.fields.hero;
       }
     }));
+    Abilities.addSchemaField("path", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      allowNull: false,
+      resolve(node) {
+        return node.fields.path;
+      }
+    }));
     
 
-    Heroes.addSchemaField("name", ({ graphql }) => ({
+    DOTA2Heroes.addSchemaField("name", ({ graphql }) => ({
       type: graphql.GraphQLString,
       allowNull: false,
       resolve(node) {
         return node.fields.name;
       }
     }));
-    Heroes.addSchemaField("num", ({ graphql }) => ({
+    DOTA2Heroes.addSchemaField("num", ({ graphql }) => ({
       type: graphql.GraphQLInt,
       allowNull: false,
       resolve(node) {
         return node.fields.num;
       }
     }));
-    Heroes.addSchemaField("url", ({ graphql }) => ({
+    DOTA2Heroes.addSchemaField("url", ({ graphql }) => ({
       type: graphql.GraphQLString,
       resolve(node) {
         return node.fields.url;
       }
     }));
-    Heroes.addSchemaField("heroImgSrc", ({ graphql }) => ({
+    DOTA2Heroes.addSchemaField("heroImgSrc", ({ graphql }) => ({
       type: graphql.GraphQLString,
       resolve(node) {
         return node.fields.heroImgSrc;
       }
     }));
-    Heroes.addSchemaField("abilities", ({ graphql }) => ({
+    DOTA2Heroes.addSchemaField("abilities", ({ graphql }) => ({
       type: graphql.GraphQLList(AbilityType),
       resolve(node) {
         return node.fields.abilities;
@@ -163,9 +171,9 @@ module.exports = function(api) {
           // Now we add each hero node to the GraphQL schema
           // Note that 'abilities' is an array of objects containing ability name, src, and other
           // attributes
-          // console.log('Datasource loading: Heroes.addNode')
+          // console.log('Datasource loading: DOTA2Heroes.addNode')
 
-          Heroes.addNode({
+          DOTA2Heroes.addNode({
             title: hero.name,
             path: hero.path,
             fields: {
@@ -176,10 +184,11 @@ module.exports = function(api) {
             }
           });
           hero.abilities.forEach(ability => {
+            ability.path = hero.path+'/'+ability.name;
             Abilities.addNode({
               title: ability.name,
-              path: ability.path,             
               fields: {
+                path: ability.path,
                 src: ability.src,
                 name: ability.name,
                 desc: ability.desc,

@@ -1,12 +1,17 @@
 <template>
 <div id="breadcrumbs" v-on="listeners">
 
-  <div v-for="crumb in breadcrumbs" :name="crumb.name" class="breadcrumb">
+  <div v-for="crumb in setBreadcrumbs" :name="crumb.name" class="breadcrumb">
     <h4>
-      <!-- <g-link :name="crumb.name" :to="{ name: crumb.num }">{{ crumb.num }}</g-link> -->
-      <a :href="crumb.name">{{ crumb.name }}</a>
+      <g-link :href="crumb.path">{{ crumb.name }}</g-link>
+      <!-- <a v-if="crumb.num == 1":href="`${crumb.name}`">{{ crumb.name }}</a> -->
     </h4>
   </div>
+
+  <!-- <div v-on="count" v-for="c in breadcrumbs" :name="c" class="breadcrumb">
+    <h4>
+      <a :href="path">{{ path }}</a>
+    </h4> -->
 
 </div>
 </template>
@@ -28,10 +33,9 @@ export default {
     return {
       linkSet: [],
       activeLink: '',
-      isAbilityPage: '',
-      abilityTitle: '',
       crumb: 'test',
-
+      counter: '',
+      // breadcrumbs: this.setBreadcrumbs
     }
   },
   props: ['pageName'],
@@ -41,33 +45,70 @@ export default {
       breadCrumb: this.$route.name,
       hero: this.$route.params.hero,
       ability: this.$route.params.name,
-
+      i: 0
     }
   },
   computed: {
     listeners() {
       const { ...listeners
       } = this.$listeners
-      console.log(`attrs in Breadcrumbs.vue: ${this.$attrs}`)
-      console.log(this.$attrs)
+      console.log(`listeners in Breadcrumbs.vue: ${this.$listeners}`)
+      console.log(this.$listeners)
       return listeners
     },
-    breadcrumbs() {
-      console.log(this.$route.path)
-      let i = 0
-      let path = this.$route.path.split("/")
-      path = path.splice(1, path.length)
-      let paths = path.map(path => changeCase.lower(path))
-      let pathsCount = path.map(path => {
-        return { name: path, num: i++ }
-      })
-      console.log(`new path array: ${path}, lower cased: ${paths}, count: ${pathsCount}`)
-      console.log(pathsCount)
-      return pathsCount
+    // breadcrumbs() {
+    //   let i = 0
+    //   let path = this.$route.path.split("/")
+    //   path = path.splice(1, path.length)
+    //   this.counter = path.length
+    //   let paths = path.map(path => changeCase.lower(path))
+    //   let pathsCount = path.map(path => {
+    //     return {
+    //       name: path,
+    //       num: i++
+    //     }
+    //   })
+    //   console.log(`new path array: ${path}, lower cased: ${paths}, count: ${pathsCount}`)
+    //   console.log(pathsCount)
+    //   return pathsCount
+    // },
+    setBreadcrumbs() {
+      console.log('set breadcrumbs')
+      let path = this.$route.path
+      path = path.split("/").splice(1, path.length)
+      this.counter = path.length
+      console.log(`path: ${path}, path length: ${path.length}`)
+      let newArray = []
+      let breadcrumbPaths = []
+      let pathLength = path.length
+      for (let i = 0; i < pathLength; i++) {
+        console.log(`i in path.length: ${i}: ${path[i]}`)
+        breadcrumbPaths.push({
+          'path': '/' + path.slice(0, i + 1).join('/'),
+          'name': path[i],
+          'num': i + 1
+        })
+        // breadcrumbPaths[i].join('/')
+      }
+      for (let i = 0; i < pathLength; i++) {
+        // breadcrumbPaths[i].name.join('/')
+      }
+
+      console.log(`breadcrumbPaths:`)
+      console.log(breadcrumbPaths)
+      this.breadcrumbs = breadcrumbPaths
+      return breadcrumbPaths
     },
-    path() {
-      return this.$route.path
+    path(i) {
+      let path = this.$route.path.split("/").splice(1, path.length)
+      this.counter = path.length
+      path = path[i]
+      console.log(`path: ${path}`)
+      return path
     },
+    // count() {
+
+    // },
     hero() {
       // return this.$route.params.hero
       let name = this.$route.name
@@ -105,7 +146,12 @@ export default {
     console.log(`breadcrumbs component created() $route:`)
     console.log(this.$route)
     return (name == 'heroes' ? this.isAbilityPage = false : this.isAbilityPage = true)
-
+  },
+  methods: {
+    count() {
+      console.log(`count() i = ${i}`)
+      return this.i++
+    }
   }
 }
 </script>
@@ -138,6 +184,7 @@ export default {
 
 .breadcrumb {
   margin-left: 0.5em;
+
   h4:after {
     content: ">";
     margin-left: 0.5em;

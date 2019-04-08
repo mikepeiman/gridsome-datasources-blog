@@ -22,7 +22,7 @@ module.exports = {
       options: {
         path: "blog/**/*.md",
         typeName: "Post",
-        route: "/blog/:slug",
+        route: "/filesystem/:slug",
         resolveAbsolutePaths: true,
         remark: {
           autolinkClassName: "fas fa-hashtag",

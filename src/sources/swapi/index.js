@@ -8,7 +8,7 @@ module.exports = function(api) {
   api.loadSource(async store => {
     const contentType = store.addContentType({
       typeName: 'SWAPI',
-      route: '/extra/swapi/:id'
+      route: '/jukebox/:id'
     });
 
     contentType.addSchemaField("name", ({ graphql }) => ({
@@ -16,6 +16,13 @@ module.exports = function(api) {
       allowNull: false,
       resolve(node) {
         return node.fields.name;
+      }
+    }));
+    contentType.addSchemaField("id", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      allowNull: false,
+      resolve(node) {
+        return node.fields.id;
       }
     }));
     contentType.addSchemaField("starship_class", ({ graphql }) => ({
@@ -41,7 +48,8 @@ module.exports = function(api) {
     data.results.forEach(item => {
       
       let pathArray = item.url.split("/");
-      id = pathArray[5];
+      let id = pathArray[5];
+      item.id = id
       let path = `/swapi/${id}`
       contentType.addNode({
         date: item.date,
