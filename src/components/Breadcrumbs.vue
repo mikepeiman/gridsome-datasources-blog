@@ -118,18 +118,7 @@ export default {
       }
     },
   },
-  created() {
-    let name = this.$route.name
-    console.log(`${name} == 'heroes': ${name == 'heroes'}`)
-    console.log(`breadcrumbs component created() $route:`)
-    console.log(this.$route)
-    return (name == 'heroes' ? this.isAbilityPage = false : this.isAbilityPage = true)
-  },
   methods: {
-    count() {
-      console.log(`count() i = ${i}`)
-      return this.i++
-    },
     checkActiveClass(crumbPath) {
       console.log(`this is the href of this breadcrumb: ${crumbPath}`)
       let path = this.$route.path

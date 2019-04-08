@@ -63,25 +63,8 @@ export default {
     let abilities = this.$page.post.abilities
     let numAbilities = this.$page.post.abilities.length
     for (let i = 0; i < numAbilities; i++) {
-      let p = abilities[i].path
-      console.log(`abilities[i].path ${p}`)
-      let x = abilities[i].path.replace(/_/g,"-")
-      console.log(`abilities[i].path ${x}`)
-      let s = p.split('/').splice(1)
-      console.log(`abilities[i].path.split('/').splice(1) ${s}`)
-      changeCase.paramCase(s[0])
-      let a = changeCase.paramCase(s[0])
-      let b = s[1]
-      let c = a + b
-      s.join('/')
-      // c.push(a)
-      // c.push(b)
-      console.log(`changeCase.paramCase(abilities[i].path.split('/'))[0] ${c}, ${s}`)
-      c.join(',')
-      c.replace(',', '/')
-      console.log(`joined: ${c}`)
-      console.log(c.values)
-      abilities[i].path = `/heroes${abilities[i].path}`
+      let p = abilities[i].path.replace(/_/g,"-")
+      abilities[i].path = `/heroes${p}`
     }
 
   }
