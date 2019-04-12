@@ -58,16 +58,6 @@ module.exports = {
     {
       use: "~/src/sources/graphcms",
     },
-    // {
-    //   use: "~/src/sources/localdota",
-    // },
-    // {
-    //   use: "~/src/sources/dota2",
-    //   options: {
-    //     numNodes: 120,
-    //     perPage: 120
-    //   }
-    // },
     {
       use: "~/src/sources/heroes",
       options: {
@@ -75,5 +65,12 @@ module.exports = {
         perPage: 120
       }
     },
+    {
+    use: "~/src/sources/todoist",
+    options: {
+      url: "https://beta.todoist.com/API/v8/projects",
+      token: "b4944a8b7cf87e9c658ee1fb640d0d298fd0596f"
+    }
+    }
   ]
 };

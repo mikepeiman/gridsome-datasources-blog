@@ -98,7 +98,7 @@ module.exports = function(api) {
 
     getPosts("mikepeiman@gmail.com", "326463").then(data => {
       console.log(`STRAPI: final .then data: `);
-      console.log(data)
+      // console.log(data)
       data.forEach(item => {
         item.slug = changeCase.lower(slugify(item.title))
         item.path = `/strapi-cms/${item.slug}`

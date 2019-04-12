@@ -66,7 +66,6 @@ export default {
       let p = abilities[i].path.replace(/_/g,"-")
       abilities[i].path = `/heroes${p}`
     }
-
   }
 }
 </script>

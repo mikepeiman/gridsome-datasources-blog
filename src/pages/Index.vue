@@ -6,7 +6,6 @@
       <h2 class="sub-title">It didn't come with an instruction manual, did it?</h2>
       <p class="subtext">Fortunately, you don't have to go it alone. We exist in relationship, and we learn from each other. The wisest of us have passed down their learnings over thousands of years. Today, we can discover, collect, synthesize and integrate the wisdom of the ages with the best of modern science to guide us - reliably and consistently - to a better way of life.</p>
     </div>
-    <!-- {{ clicked }} -->
     <div class="bottom-line">
       <div class="bottom-line-inner">
         <p>Join The Movement Of Lifelong Learners</p>
@@ -27,7 +26,6 @@
 export default {
   data: function () {
     return {
-      clicked: true
     }
   }
 }
@@ -51,6 +49,10 @@ export default {
   color: white;
   min-height: 100%;
   width: 100%;
+  .site-container {
+  grid-template-columns: 1fr 2fr 2fr 1fr;
+  grid-template-areas: ". . . ."". cta . main-content";
+  }
 }
 
 .content {

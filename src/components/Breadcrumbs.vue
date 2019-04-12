@@ -113,7 +113,6 @@ export default {
       let path = this.$route.path
       if (path !== crumbPath) {
         console.log(`no match! `)
-
       }
       console.log(` This is this:`)
       console.log(this.$el)
@@ -121,16 +120,11 @@ export default {
   },
   mounted() {
     // remove active class from breadcrumbs
-
     let crumbs = this.$el.children
     let path = this.$route.path
     for (let i = 0; i < crumbs.length; i++) {
-      // console.log(crumbs[i])
       let child = crumbs[i].childNodes[0].firstChild
       let href = child.attributes.href.nodeValue
-      // console.log(`child.className: ${child.className}`)
-      // console.log(`child.attributes.href:`)
-      // console.log(child.attributes.href.nodeValue)
       if (href !== path) {
         child.className = ""
       }

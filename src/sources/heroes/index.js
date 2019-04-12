@@ -16,7 +16,7 @@ const heroesUrl = "http://www.dota2.com/heroes/";
 
 module.exports = function(api) {
   api.loadSource(async store => {
-    console.log('Datasource loading: heroes')
+    console.log('Datasource loading: DOTA2 heroes')
 
     const DOTA2Heroes = store.addContentType({
       typeName: "DOTA2Heroes",
@@ -193,20 +193,23 @@ module.exports = function(api) {
           });
           hero.abilities.forEach(ability => {
             let path = `/heroes/${hero.name}/${ability.name}`
+            ability.path = `/heroes${ability.path}`
+            let i = 0
             // ability.path = hero.path+'/'+ability.name;
             // console.log(`FIRST hero.abilities.forEach: hero.path: ${hero.path}, ability.path: ${ability.path}`)
             Abilities.addNode({
               title: ability.name,
+              // path: ability.path,
               fields: {
                 // path: 'TEST', // `/heroes${ability.path}`,
                 src: ability.src,
                 name: ability.name,
                 desc: ability.desc,
                 hero: hero.name,
-                path: path
+                // path: ability.path
               }
             })
-            // console.log(`SECOND hero.abilities.forEach: hero.path: ${hero.path}, ability.path: ${ability.path}, ability.root: ${ability.root}`) 
+            console.log(`abilities path ${path}, ${ability.path}, ${hero.path}, ${this.path}`)
           })
         });
       })
