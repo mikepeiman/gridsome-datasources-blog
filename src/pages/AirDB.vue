@@ -26,9 +26,7 @@
       url
       resort
       path
-      pricePerHour {
-        specialValue
-      }
+
     }
   }
 }

@@ -59,7 +59,7 @@ function getSync() {
   })
 }
 
-getSync()
+// getSync()
 
 function getTODOist(url, type, token) {
   console.log("Commencing todoist data source getTODOist()");
