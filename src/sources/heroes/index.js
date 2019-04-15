@@ -15,7 +15,7 @@ const heroParse = require("./heroParse");
 const heroesUrl = "http://www.dota2.com/heroes/";
 
 module.exports = function(api) {
-  api.loadSource(async store => {
+  api.loadSource(store => {
     console.log('Datasource loading: DOTA2 heroes')
 
     const DOTA2Heroes = store.addContentType({
@@ -126,6 +126,8 @@ module.exports = function(api) {
       }
     }));
 
+    DOTA2Heroes.addReference('abilities', 'Abilities')
+
     rp(heroesUrl)
       .then(html => {
         let heroesList = [];
@@ -180,7 +182,7 @@ module.exports = function(api) {
           // Note that 'abilities' is an array of objects containing ability name, src, and other
           // attributes
           // console.log('Datasource loading: DOTA2Heroes.addNode')
-
+          
           DOTA2Heroes.addNode({
             title: hero.name,
             path: hero.path,
@@ -206,10 +208,10 @@ module.exports = function(api) {
                 name: ability.name,
                 desc: ability.desc,
                 hero: hero.name,
-                // path: ability.path
+                path: ability.path
               }
             })
-            console.log(`abilities path ${path}, ${ability.path}, ${hero.path}, ${this.path}`)
+            // console.log(`abilities path ${path}, ${ability.path}, ${hero.path}, ${this.path}`)
           })
         });
       })

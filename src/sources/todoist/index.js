@@ -59,7 +59,7 @@ function getSync() {
   })
 }
 
-getSync()
+// getSync()
 
 function getTODOist(url, type, token) {
   console.log("Commencing todoist data source getTODOist()");
@@ -165,22 +165,42 @@ module.exports = function(api) {
       typeName: "TodoistTasks",
       route: "/todoist/:project/:id"
     });
+    const CommentsType = store.addContentType({
+      typeName: "TodoistTaskComments",
+      route: "/todoist/:project/:task/:id"
+    });
+    const LabelsType = store.addContentType({
+      typeName: "TodoistLabels",
+      route: "/todoist/labels/:name"
+    });
 
     const TaskType = new GraphQLObjectType({
       name: "Tasks",
       description: "A Task within a project",
       fields: () => ({
+        id: {
+          type: GraphQLString,
+          resolve: task => task.id
+        },
         name: {
           type: GraphQLString,
           resolve: task => task.name
         },
-        src: {
+        created: {
           type: GraphQLString,
-          resolve: task => task.src
+          resolve: task => task.created
         },
-        desc: {
+        comments: {
           type: GraphQLString,
-          resolve: task => task.desc
+          resolve: task => task.comments
+        },
+        project: {
+          type: GraphQLString,
+          resolve: task => task.project
+        },
+        content: {
+          type: GraphQLString,
+          resolve: task => task.content
         },
         path: {
           type: GraphQLString,
@@ -188,6 +208,22 @@ module.exports = function(api) {
         }
       })
     });
+
+    
+    ProjectsType.addSchemaField("name", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      allowNull: false,
+      resolve(node) {
+        return node.fields.name;
+      }
+    }));
+    ProjectsType.addSchemaField("parent_id", ({ graphql }) => ({
+      type: graphql.GraphQLInt,
+      allowNull: false,
+      resolve(node) {
+        return node.fields.parent_id;
+      }
+    }));
 
     TasksType.addSchemaField("name", ({ graphql }) => ({
       type: graphql.GraphQLString,
@@ -224,39 +260,19 @@ module.exports = function(api) {
         return node.fields.path;
       }
     }));
+    TasksType.addSchemaField("labels", ({ graphql }) => ({
+      type: graphql.GraphQLList(LabelsType),
+      resolve(node) {
+        return node.fields.labels;
+      }
+    }));
+    TasksType.addSchemaField("comments", ({ graphql }) => ({
+      type: graphql.GraphQLList(CommentsType),
+      resolve(node) {
+        return node.fields.comments;
+      }
+    }));
 
-    ProjectsType.addSchemaField("name", ({ graphql }) => ({
-      type: graphql.GraphQLString,
-      allowNull: false,
-      resolve(node) {
-        return node.fields.name;
-      }
-    }));
-    ProjectsType.addSchemaField("num", ({ graphql }) => ({
-      type: graphql.GraphQLInt,
-      allowNull: false,
-      resolve(node) {
-        return node.fields.num;
-      }
-    }));
-    ProjectsType.addSchemaField("url", ({ graphql }) => ({
-      type: graphql.GraphQLString,
-      resolve(node) {
-        return node.fields.url;
-      }
-    }));
-    ProjectsType.addSchemaField("projectImgSrc", ({ graphql }) => ({
-      type: graphql.GraphQLString,
-      resolve(node) {
-        return node.fields.projectImgSrc;
-      }
-    }));
-    ProjectsType.addSchemaField("tasks", ({ graphql }) => ({
-      type: graphql.GraphQLList(TaskType),
-      resolve(node) {
-        return node.fields.tasks;
-      }
-    }));
   });
 };
 

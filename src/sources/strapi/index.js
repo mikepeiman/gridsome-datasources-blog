@@ -96,26 +96,26 @@ module.exports = function(api) {
       }
     }));
 
-    getPosts("mikepeiman@gmail.com", "326463").then(data => {
-      console.log(`STRAPI: final .then data: `);
-      // console.log(data)
-      data.forEach(item => {
-        item.slug = changeCase.lower(slugify(item.title))
-        item.path = `/strapi-cms/${item.slug}`
-        console.log(`item path: ${item.path}`)
-        contentType.addNode({
-          date: item.created_at,
-          path: item.path,
-          fields: {
-            id: item.id,
-            title: item.title,
-            subtitle: item.subtitle,
-            body: item.body,
-            categories: item.categories
-          }
-        });
+    // getPosts("mikepeiman@gmail.com", "326463").then(data => {
+    //   console.log(`STRAPI: final .then data: `);
+    //   // console.log(data)
+    //   data.forEach(item => {
+    //     item.slug = changeCase.lower(slugify(item.title))
+    //     item.path = `/strapi-cms/${item.slug}`
+    //     console.log(`item path: ${item.path}`)
+    //     contentType.addNode({
+    //       date: item.created_at,
+    //       path: item.path,
+    //       fields: {
+    //         id: item.id,
+    //         title: item.title,
+    //         subtitle: item.subtitle,
+    //         body: item.body,
+    //         categories: item.categories
+    //       }
+    //     });
 
-      });
-    });
+    //   });
+    // });
   });
 };

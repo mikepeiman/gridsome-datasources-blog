@@ -7,7 +7,8 @@
 module.exports = {
   siteName: "MikePeiman.com",
   siteUrl: "https://mikepeiman.com",
-  siteDescription: "Father, Web Developer, Entrepreneur, Natural Philosopher. Learning and teaching how to live better lives and build a better world.",
+  siteDescription:
+    "Father, Web Developer, Entrepreneur, Natural Philosopher. Learning and teaching how to live better lives and build a better world.",
   icon: "src/assets/LifeIQ.svg",
   plugins: [
     {
@@ -47,16 +48,16 @@ module.exports = {
       }
     },
     {
-      use: "~/src/sources/swapi",
+      use: "~/src/sources/swapi"
     },
     {
-      use: "~/src/sources/strapi",
+      use: "~/src/sources/strapi"
     },
     {
-      use: "~/src/sources/blogpost",
+      use: "~/src/sources/blogpost"
     },
     {
-      use: "~/src/sources/graphcms",
+      use: "~/src/sources/graphcms"
     },
     {
       use: "~/src/sources/heroes",
@@ -64,13 +65,13 @@ module.exports = {
         numNodes: 120,
         perPage: 120
       }
-    },
-    {
-    use: "~/src/sources/todoist",
-    options: {
-      url: "https://beta.todoist.com/API/v8/projects",
-      token: "b4944a8b7cf87e9c658ee1fb640d0d298fd0596f"
     }
-    }
+    //   {
+    //   use: "~/src/sources/todoist",
+    //   options: {
+    //     url: "https://beta.todoist.com/API/v8/projects",
+    //     token: "b4944a8b7cf87e9c658ee1fb640d0d298fd0596f"
+    //   }
+    //   }
   ]
 };
