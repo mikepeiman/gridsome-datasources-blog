@@ -59,14 +59,14 @@ export default {
     console.log(`dota2 hero view created() this.$route.matched: ${Object.keys(this.$route.matched[routesLength-1])}`)
     console.log(`dota2 hero view created() this.$route.matched[0].name: ${this.$route.matched[0].name}`)
   },
-  mounted() {
-    let abilities = this.$page.post.abilities
-    let numAbilities = this.$page.post.abilities.length
-    for (let i = 0; i < numAbilities; i++) {
-      let p = abilities[i].path.replace(/_/g,"-")
-      abilities[i].path = `/heroes${p}`
-    }
-  }
+  // mounted() {
+  //   let abilities = this.$page.post.abilities
+  //   let numAbilities = this.$page.post.abilities.length
+  //   for (let i = 0; i < numAbilities; i++) {
+  //     let p = abilities[i].path.replace(/_/g,"-")
+  //     abilities[i].path = `/heroes${p}`
+  //   }
+  // }
 }
 </script>
 

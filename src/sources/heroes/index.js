@@ -30,6 +30,10 @@ module.exports = function(api) {
       name: 'Ability',
       description: 'An ability of a hero',
       fields: () => ({
+        id: {
+          type: GraphQLString,
+          resolve: ability => ability.id
+        },
         name: {
           type: GraphQLString,
           resolve: ability => ability.name
@@ -119,16 +123,15 @@ module.exports = function(api) {
         return node.fields.heroImgSrc;
       }
     }));
-    // DOTA2Heroes.addSchemaField("abilities", ({ graphql }) => ({
-    //   type: graphql.GraphQLList(AbilityType),
-    //   resolve(node) {
-    //     return node.fields.abilities;
-    //   }
-    // }));
+    DOTA2Heroes.addSchemaField("abilities", ({ graphql }) => ({
+      type: graphql.GraphQLList(AbilityType),
+      resolve(node) {
+        return node.fields.abilities;
+      }
+    }));
 
-    DOTA2Heroes.addReference('abilities', 'Abilities')
-
-    DOTA2Heroes.addReference('abilities', 'Abilities')
+    // DOTA2Heroes.addReference('abilities', 'Abilities')
+    // DOTA2Heroes.addReference('abilities', 'Abilities')
 
     rp(heroesUrl)
       .then(html => {
@@ -191,17 +194,18 @@ module.exports = function(api) {
             fields: {
               num: hero.num,
               name: hero.name,
-              // abilities: hero.abilities,
-              heroImgSrc: hero.heroImgSrc
+              heroImgSrc: hero.heroImgSrc,
+              abilities: hero.abilities,              
             }
           });
           hero.abilities.forEach(ability => {
             let path = `/heroes/${hero.name}/${ability.name}`
-            ability.path = `/heroes${ability.path}`
-            let i = 0
+            // let i = 0
             
-            // ability.path = hero.path+'/'+ability.name;
-            // console.log(`FIRST hero.abilities.forEach: hero.path: ${hero.path}, ability.path: ${ability.path}`)
+            ability.path = `/heroes${ability.path}`
+            // hero.abilities[i].path = `/heroes${ability.path}`
+            // i++
+            
             Abilities.addNode({
               id: ability.id,
               title: ability.name,
@@ -210,6 +214,7 @@ module.exports = function(api) {
                 name: ability.name,
                 desc: ability.desc,
                 hero: hero.name,
+                path: ability.path
               }
             })
             // hero.abilities[i].push(i)
