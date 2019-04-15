@@ -119,12 +119,14 @@ module.exports = function(api) {
         return node.fields.heroImgSrc;
       }
     }));
-    DOTA2Heroes.addSchemaField("abilities", ({ graphql }) => ({
-      type: graphql.GraphQLList(AbilityType),
-      resolve(node) {
-        return node.fields.abilities;
-      }
-    }));
+    // DOTA2Heroes.addSchemaField("abilities", ({ graphql }) => ({
+    //   type: graphql.GraphQLList(AbilityType),
+    //   resolve(node) {
+    //     return node.fields.abilities;
+    //   }
+    // }));
+
+    DOTA2Heroes.addReference('abilities', 'Abilities')
 
     DOTA2Heroes.addReference('abilities', 'Abilities')
 
@@ -189,7 +191,7 @@ module.exports = function(api) {
             fields: {
               num: hero.num,
               name: hero.name,
-              abilities: hero.abilities,
+              // abilities: hero.abilities,
               heroImgSrc: hero.heroImgSrc
             }
           });
@@ -197,21 +199,22 @@ module.exports = function(api) {
             let path = `/heroes/${hero.name}/${ability.name}`
             ability.path = `/heroes${ability.path}`
             let i = 0
+            
             // ability.path = hero.path+'/'+ability.name;
             // console.log(`FIRST hero.abilities.forEach: hero.path: ${hero.path}, ability.path: ${ability.path}`)
             Abilities.addNode({
+              id: ability.id,
               title: ability.name,
-              // path: ability.path,
               fields: {
-                // path: 'TEST', // `/heroes${ability.path}`,
                 src: ability.src,
                 name: ability.name,
                 desc: ability.desc,
                 hero: hero.name,
-                path: ability.path
               }
             })
-            // console.log(`abilities path ${path}, ${ability.path}, ${hero.path}, ${this.path}`)
+            // hero.abilities[i].push(i)
+            // i++
+            // console.log(`abilities path ${path}, ${ability.path}`)
           })
         });
       })
