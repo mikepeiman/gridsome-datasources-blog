@@ -14,6 +14,53 @@ const {
 const url = "https://beta.todoist.com/API/v8/";
 const token = "b4944a8b7cf87e9c658ee1fb640d0d298fd0596f";
 
+
+// code b77b4f155334fb8c53690d1f7bedf83e65ff9c5c
+
+function getSync() {
+  return axios.post("https://todoist.com/API/v7/sync/",{
+      token: token,
+      sync_token: '*',
+      resource_types: '["all"]',
+  })
+  .then(response => {
+    let projects = response.data.projects
+    let tasks = response.data.items
+    console.log(response.data.projects)
+    console.log(`number of tasks/notes: ${response.data.items.length}`)
+    /* DATA OF INTEREST
+    
+    projects {
+      id
+      name
+      parent_id (if a child)
+    }
+
+    items {
+      date_added
+      id
+      content
+      has_more_notes (no, these are all false - comments must be drawn from V8)
+      priority (int)
+      is_deleted
+    }
+
+    completed {
+      items
+    }
+
+    labels [{}]
+    user {}
+    filters [{}]
+
+    sync_token ""
+
+    */
+  })
+}
+
+getSync()
+
 function getTODOist(url, type, token) {
   console.log("Commencing todoist data source getTODOist()");
   return axios
@@ -78,32 +125,32 @@ function getComments(url, task) {
     });
 }
 
-getProject(url, "126474190", token).then(project => {
-  getTasks(url, project).then(tasks => {
-    tasks.forEach(task => {
-      // console.log('\n'+`Task for ${project.name} is: `)
-      // console.log(task.content.slice(0, 50))
-      // if(task.comment_count != 0) {
-        getComments(url, task).then(comments => {
-          console.log('*************************************************************************')
-          console.log(`********    TODOist getComments() call for task ${task.id}:  ************`)
-          console.log(`********    CONTENT:   ${task.content.slice(0,50)}:  ************`)
-          console.log('*************************************************************************')
-          comments.forEach(comment => {
-            console.log('\n'+`TODOist getComments() for task ${task.id}:`);
-            console.log(comment.posted + '\n')
-          })
-        })
-        .catch(err => {
-          console.log(`Error in getComments() function call: ${err.statusText}`)
-        })
-      // }
-    })
-  })
-  .catch(err => {
-    console.log(`Error in getTasks() function call: ${err.statusText}`)
-  })
-})
+// getProject(url, "126474190", token).then(project => {
+//   getTasks(url, project).then(tasks => {
+//     tasks.forEach(task => {
+//       // console.log('\n'+`Task for ${project.name} is: `)
+//       // console.log(task.content.slice(0, 50))
+//       // if(task.comment_count != 0) {
+//         getComments(url, task).then(comments => {
+//           console.log('*************************************************************************')
+//           console.log(`********    TODOist getComments() call for task ${task.id}:  ************`)
+//           console.log(`********    CONTENT:   ${task.content.slice(0,50)}:  ************`)
+//           console.log('*************************************************************************')
+//           comments.forEach(comment => {
+//             console.log('\n'+`TODOist getComments() for task ${task.id}:`);
+//             console.log(comment.posted + '\n')
+//           })
+//         })
+//         .catch(err => {
+//           console.log(`Error in getComments() function call: ${err.statusText}`)
+//         })
+//       // }
+//     })
+//   })
+//   .catch(err => {
+//     console.log(`Error in getTasks() function call: ${err.statusText}`)
+//   })
+// })
 
 
 module.exports = function(api) {
@@ -212,6 +259,8 @@ module.exports = function(api) {
     }));
   });
 };
+
+//********************************************************************** */
 
 // getTODOist(
 //   url,
