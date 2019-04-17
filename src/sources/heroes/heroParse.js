@@ -17,7 +17,7 @@ const heroParse = function(num, name, url, heroImgSrc) {
     let abilityName = name.toLowerCase()
     let abilitySlug = abilityName.split(" ").join("-")
     let path = "/heroes/".concat(heroSlug, "/", abilitySlug.replace(/'/g,"-"))
-    console.log(`Ability path from heroParse: ${heroSlug} ${path}`)
+    // console.log(`Ability path from heroParse: ${heroSlug} ${path}`)
     // console.log(`hero img src: ${Object.keys(src)}`)
     // console.log(`hero name?: ${this.name}`)
     // console.log(`Hero abilities and src: ${name} ::: ${src}`)
