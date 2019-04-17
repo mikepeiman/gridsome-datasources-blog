@@ -6,7 +6,7 @@
         <div class="grid-item" v-for="(item, index) in $page.allFaker.edges" :key="index">
           <g-link :to="`/faker-posts/${item.node.id}`">
             <p class="item-author">{{item.node.author}}</p>
-            <img class="item-img" :src="item.node.avatar.src" width="200">
+            <img class="item-img" :src="item.node.avatar" width="200">
         </g-link>
         </div>
       </div>

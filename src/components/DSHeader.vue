@@ -5,16 +5,16 @@
   </g-link>
   <nav id="topnav" role="navigation">
     <ul class="nav-items">
-      <li @click="mainLink(2)" class="nav-link-container">
+      <li @click="mainLink(1)" class="nav-link-container">
         <g-link class="nav__link" :to="{ name: 'home' }">Home</g-link>
       </li>
-      <li @click="mainLink(3)" class="nav-link-container">
+      <li @click="mainLink(2)" class="nav-link-container">
         <g-link class="nav__link" :to="{ name: 'about' }">About</g-link>
       </li>
-      <li @click="mainLink(4)" id="DataSources" class="nav-link-container">
+      <li @click="mainLink(3)" id="DataSources" class="nav-link-container">
         <g-link class="nav__link" :to="{ name: 'dataSources' }" focus>Data Source: {{ pageName }} </g-link>
       </li>
-      <li @click="mainLink(5)" class="nav-link-container">
+      <li @click="mainLink(4)" class="nav-link-container">
         <g-link class="nav__link" :to="{ name: 'contact' }">Contact</g-link>
       </li>
     </ul>
@@ -44,7 +44,7 @@ export default {
   props: ['pageName'],
   methods: {
     mainLink(x) {
-      let el = Object.values(this.$refs)[x].$el;
+      let el = Object.values(this.$children)[x].$el;
       let elClass = el.parentElement.parentElement.attributes.class.value
       let link = el.attributes.href.value
       this.linkSet.push(link)

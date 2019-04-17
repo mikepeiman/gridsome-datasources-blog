@@ -19,34 +19,34 @@
   </div> -->
   <nav id="topnav" role="navigation">
     <ul class="nav-items">
-      <li @click="mainLink(2)" class="nav-link-container">
+      <li @click="mainLink(1)" class="nav-link-container">
         <g-link class="nav__link" :to="{ name: 'home' }">Home</g-link>
       </li>
-      <li @click="mainLink(3)" class="nav-link-container">
+      <li @click="mainLink(2)" class="nav-link-container">
         <g-link class="nav__link" :to="{ name: 'about' }">About</g-link>
       </li>
-      <li @click="mainLink(4)" class="nav-link-container">
+      <li @click="mainLink(3)" class="nav-link-container">
         <g-link class="nav__link" :to="{ name: 'dataSources' }">Data Sources</g-link>
         <ul class="dropdown" aria-label="submenu">
-          <li @click="subLink(5)" class="nav-link-container">
+          <li @click="subLink(4)" class="nav-link-container">
             <g-link class="nav__link" :to="{ name: 'fakerPosts' }">Faker</g-link>
           </li>
-          <li @click="subLink(6)" class="nav-link-container">
+          <li @click="subLink(5)" class="nav-link-container">
             <g-link class="nav__link" :to="{ name: 'placeholder' }">Placeholder</g-link>
           </li>
-          <li @click="subLink(7)" class="nav-link-container">
+          <li @click="subLink(6)" class="nav-link-container">
             <g-link class="nav__link" :to="{ name: 'starwars' }">StarWars</g-link>
           </li>
-          <li @click="subLink(8)" class="nav-link-container">
+          <li @click="subLink(7)" class="nav-link-container">
             <g-link class="nav__link" :to="{ name: 'heroes' }">DOTA2</g-link>
           </li>
-          <li @click="subLink(9)" class="nav-link-container">
+          <li @click="subLink(8)" class="nav-link-container">
             <g-link class="nav__link" :to="{ name: 'filesystem' }">Filesystem</g-link>
           </li>
-          <li @click="subLink(10)" class="nav-link-container">
+          <li @click="subLink(9)" class="nav-link-container">
             <g-link class="nav__link" :to="{ name: 'airDb' }">Airtable</g-link>
           </li>
-          <li @click="subLink(11)" class="nav-link-container">
+          <li @click="subLink(10)" class="nav-link-container">
             <g-link class="nav__link" :to="{ name: 'graph' }">GraphCMS</g-link>
           </li>
         </ul>
@@ -84,23 +84,22 @@ export default {
     //   console.log('dropdown test')
     // },
     mainLink(x) {
-      let el = Object.values(this.$refs)[x].$el;
+      let el = Object.values(this.$children)[x].$el;
       let elClass = el.parentElement.parentElement.attributes.class.value
       let link = el.attributes.href.value
       this.linkSet.push(link)
       let i = this.linkSet.length;
       this.activeLink = link;
-      console.log(`MAINLINK - Current activelink: ${this.activeLink}, current click: ${link}, linkSet: ${this.linkSet}`);
+      console.log(`DSSideBar MAINLINK - Current activelink: ${this.activeLink}, current click: ${link}, linkSet: ${this.linkSet}`);
       if (this.linkSet.length !== 1) {
         this.$router.push(this.linkSet[0]);
       } else {
         this.$router.push(this.activeLink);
       }
-
       this.linkSet = []
     },
     subLink(x) {
-      let el = Object.values(this.$refs)[x].$el;
+      let el = Object.values(this.$children)[x].$el;
       let elClass = el.parentElement.parentElement.attributes.class.value
       let link = el.attributes.href.value
       this.linkSet.push(link)

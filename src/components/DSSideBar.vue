@@ -54,13 +54,13 @@ export default {
   props: ['pageName'],
   methods: {
     mainLink(x) {
-      let el = Object.values(this.$refs)[x].$el;
+      let el = Object.values(this.$children)[x].$el;
       let elClass = el.parentElement.parentElement.attributes.class.value
       let link = el.attributes.href.value
       this.linkSet.push(link)
       let i = this.linkSet.length;
       this.activeLink = link;
-      console.log(`MAINLINK - Current activelink: ${this.activeLink}, current click: ${link}, linkSet: ${this.linkSet}`);
+      console.log(`DSSideBar MAINLINK - Current activelink: ${this.activeLink}, current click: ${link}, linkSet: ${this.linkSet}`);
       if (this.linkSet.length !== 1) {
         this.$router.push(this.linkSet[0]);
       } else {
@@ -68,7 +68,7 @@ export default {
       }
       this.linkSet = []
     },
-  }
+  },
 }
 </script>
 
@@ -113,6 +113,7 @@ li.nav-link-container {
 
 .nav__link {
   text-decoration: none;
+
 }
 
 .nav-link-container {

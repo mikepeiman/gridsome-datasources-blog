@@ -42,17 +42,17 @@ export default {
     listeners() {
       const { ...listeners
       } = this.$listeners
-      console.log(`listeners in Breadcrumbs.vue: ${this.$listeners}`)
-      console.log(this.$listeners)
+      // console.log(`listeners in Breadcrumbs.vue: ${this.$listeners}`)
+      // console.log(this.$listeners)
       return listeners
     },
     setBreadcrumbs() {
-      console.log('set breadcrumbs')
+      // console.log('set breadcrumbs')
       let path = this.$route.path
-      console.log(path)
+      // console.log(path)
       path = path.split("/").splice(1, path.length)
       this.counter = path.length
-      console.log(`path: ${path}, path length: ${path.length}`)
+      // console.log(`path: ${path}, path length: ${path.length}`)
       let newArray = []
       let breadcrumbPaths = []
       let pathLength = path.length
@@ -73,34 +73,34 @@ export default {
             'last': false
           })
         }
-        console.log(`i in path.length: ${i}: ${path[i]}`)
+        // console.log(`i in path.length: ${i}: ${path[i]}`)
 
       }
       this.breadcrumbs = breadcrumbPaths
-      console.log(`breadcrumbPaths:`)
-      console.log(breadcrumbPaths)
+      // console.log(`breadcrumbPaths:`)
+      // console.log(breadcrumbPaths)
       return breadcrumbPaths
     },
     path(i) {
       let path = this.$route.path.split("/").splice(1, path.length)
       this.counter = path.length
       path = path[i]
-      console.log(`path: ${path}`)
+      // console.log(`path: ${path}`)
       return path
     },
     pageTitle() {
-      console.log(`pageTitle(): this route`)
-      console.log(changeCase.title(this.$route.name))
+      // console.log(`pageTitle(): this route`)
+      // console.log(changeCase.title(this.$route.name))
       let route = changeCase.title(this.$route.name)
       let name = changeCase.title(this.$route.params.name)
       let hero = changeCase.title(this.$route.params.hero)
       let heroRoute = route + " > " + name
       let abilityRoute = hero + " > " + name
       if (route == 'Abilities') {
-        console.log(`route == Abilities`)
+        // console.log(`route == Abilities`)
         return abilityRoute
       } else if (route == 'Dota2 Heroes') {
-        console.log(`route == Dota2 Heroes`)
+        // console.log(`route == Dota2 Heroes`)
         return heroRoute
       } else {
         return route
