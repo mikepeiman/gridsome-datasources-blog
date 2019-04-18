@@ -14,8 +14,6 @@ const {
 const url = "https://beta.todoist.com/API/v8/";
 const token = "b4944a8b7cf87e9c658ee1fb640d0d298fd0596f";
 
-
-
 module.exports = function(api) {
   api.loadSource(async store => {
     console.log("Datasource loading: TODOist");
@@ -73,7 +71,7 @@ module.exports = function(api) {
     });
 
     const LabelType = new GraphQLObjectType({
-      name: 'Label',
+      name: "Label",
       fields: () => ({
         id: {
           type: GraphQLString,
@@ -82,12 +80,12 @@ module.exports = function(api) {
         name: {
           type: GraphQLString,
           resolve: label => label.name
-        },
+        }
       })
-    })
+    });
 
     const CommentType = new GraphQLObjectType({
-      name: 'Comment',
+      name: "Comment",
       fields: () => ({
         id: {
           type: GraphQLString,
@@ -106,8 +104,8 @@ module.exports = function(api) {
           resolve: comment => comment.date_added
         }
       })
-    })
-    
+    });
+
     ProjectsType.addSchemaField("name", ({ graphql }) => ({
       type: graphql.GraphQLString,
       allowNull: false,
@@ -170,190 +168,125 @@ module.exports = function(api) {
         return node.fields.comments;
       }
     }));
+
+    CommentsType.addSchemaField("task_id", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.fields.task_id;
+      }
+    }));
     function getComments(url, task) {
       // console.log("Commencing todoist data source getComments()");
       return axios
-        .get(`${url}comments?task_id=${task.id}`, { headers: { Authorization: `Bearer ${token}` } })
+        .get(`${url}comments?task_id=${task.id}`, {
+          headers: { Authorization: `Bearer ${token}` }
+        })
         .then(comments => {
           // Handle success.
-  
-          // console.log(comments)
-          if(comments.data.length != 0) {
+          let commentsArray = [];
+          if (comments.data.length != 0) {
             comments.data.forEach(comment => {
-              // console.log(comment)
+              console.log(`inside of comments.data.forEach: ${comment}`);
               CommentsType.addNode({
                 fields: {
                   id: comment.id,
-                  task_id: comment.task.id,
+                  task_id: comment.task_id,
                   date: comment.posted,
                   content: comment.content
                 }
-              })
-            })
-            // return comments.data;
+              });
+              commentsArray.push(comment);
+            });
+          } else {
+            console.log(`no comments for task ${task.content.slice(0, 50)}`);
           }
-          else {
-            // console.log(`no comments for task ${task.content.slice(0,50)}`)
-          }
+          return commentsArray;
         })
         .catch(error => {
           // Handle error.
-          console.log("An error occurred in function getComments():", error.statusText);
+          console.log("An error occurred in function getComments():", error);
         });
     }
-  
-  function getSync() {
-    return axios.post("https://todoist.com/API/v7/sync/",{
-        token: token,
-        sync_token: '*',
-        resource_types: '["all"]',
-    })
-    .then(response => {
-      let projects = response.data.projects
-      let tasks = response.data.items
-      let labels = response.data.labels
-      // console.log(response.data.projects)
-      console.log(`number of tasks/notes: ${response.data.items.length}`)
-  
-      // ***** START Check projects object for relevant fields ********
-      // let count = [1,2,3,4,5]
-      // count.forEach(i => {
-      //   console.log(projects[i])
-      // })
-      // ***** END Check tasks object for relevant fields ********
-  
-      projects.forEach(project => {
-        // console.log(`Project name: ${project.name}`)
-        ProjectsType.addNode({
-          id: project.id,
-          fields: {
-            parent_id: project.parent_id,
-            name: project.name
-          }
+
+    function getSync() {
+      return axios
+        .post("https://todoist.com/API/v7/sync/", {
+          token: token,
+          sync_token: "*",
+          resource_types: '["all"]'
         })
-      })
-  
-      tasks.forEach(task => {
-        // console.log(`Task snippet: ${task.content.slice(0,50)}`)
-        getComments(url, task)
-        TasksType.addNode({
-          fields: {
-            id: task.id,
-            project_id: task.project_id,
-            content: task.content,
-            created: task.date_added,
-            labels: task.labels,
-            comments: task.comments
+        .then(response => {
+          let projects = response.data.projects;
+          let tasks = response.data.items;
+          let labels = response.data.labels;
+          // console.log(response.data.projects)
+          console.log(`number of tasks/notes: ${response.data.items.length}`);
+
+          projects.forEach(project => {
+            // console.log(`Project name: ${project.name}`)
+            ProjectsType.addNode({
+              id: project.id,
+              fields: {
+                parent_id: project.parent_id,
+                name: project.name
+              }
+            });
+          });
+
+          for (let i = 0; i < 25; i++) {
+            let task = tasks[i]
+            console.log(`Task snippet: ${task.content.slice(0,50)}`)
+            
+            let taskComments = getComments(url, task);
+            taskComments.then(result => {
+              task.comments = result;
+              console.log(result)
+              return task.comments;
+            });
+            TasksType.addNode({
+              fields: {
+                id: task.id,
+                project_id: task.project_id,
+                content: task.content,
+                created: task.date_added,
+                labels: task.labels,
+                comments: task.comments
+              }
+            });
           }
-        })
-      })
-  
-      // ***** START Check tasks object for relevant fields ********
-      // let count = [1,2,3,4,5]
-      // count.forEach(i => {
-      //   console.log(tasks[i])
-      // })
-      // ***** END Check tasks object for relevant fields ********
-  
-      labels.forEach(label => {
-        LabelsType.addNode({
-          fields: {
-            id: label.id,
-            name: label.name
-          }
-        })
-      })
-  
-    })
-  }
-  getSync()
+          // tasks.forEach(task => {
+          //   // console.log(`Task snippet: ${task.content.slice(0,50)}`)
+
+          //   let taskComments = getComments(url, task)
+          //   taskComments.then((result) => {
+          //     task.comments = result
+          //     return task.comments
+          //   })
+          //   TasksType.addNode({
+          //     fields: {
+          //       id: task.id,
+          //       project_id: task.project_id,
+          //       content: task.content,
+          //       created: task.date_added,
+          //       labels: task.labels,
+          //       comments: task.comments
+          //     }
+          //   })
+          // })
+
+          labels.forEach(label => {
+            LabelsType.addNode({
+              fields: {
+                id: label.id,
+                name: label.name
+              }
+            });
+          });
+        });
+    }
+    getSync();
   });
 };
-
-//********************************************************************** */
-
-// code b77b4f155334fb8c53690d1f7bedf83e65ff9c5c
-
-    /* DATA OF INTEREST
-    
-    projects {
-      id
-      name
-      parent_id (if a child)
-    }
-
-    items {
-      date_added
-      id
-      content
-      has_more_notes (no, these are all false - comments must be drawn from V8)
-      priority (int)
-      is_deleted
-    }
-
-    completed {
-      items
-    }
-
-    labels [{}]
-    user {}
-    filters [{}]
-
-    sync_token ""
-
-    */
- 
-
-function getTODOist(url, type, token) {
-  console.log("Commencing todoist data source getTODOist()");
-  return axios
-    .get(`${url}${type}`, { headers: { Authorization: `Bearer ${token}` } })
-    .then(response => {
-      // Handle success.
-      console.log("TODOist connected - Well done!");
-      return response.data;
-    })
-    .catch(error => {
-      // Handle error.
-      console.log("An error occurred in function getTODOist():", error.statusText);
-    });
-}
-
-function getProject(url, projectId, token) {
-  console.log("TODOist getProject() SINGULAR running");
-  return axios
-    .get(`${url}projects/${projectId}`, { headers: { Authorization: `Bearer ${token}` } })
-    .then(response => {
-      // Handle success.
-      console.log('TODOist project: ', response.data);
-      return response.data;
-    })
-    .catch(error => {
-      // Handle error.
-      console.log("An error occurred in function getProject():", error.statusText);
-    });
-}
-
-function getTasks(url, project) {
-  console.log("TODOist getTasks() running");
-  return axios
-    .get(`${url}tasks?project_id=${project.id}`, { headers: { Authorization: `Bearer ${token}` } })
-    .then(response => {
-      // Handle success.
-      // console.log("TODOist getTasks() running");
-      console.log(`TODOist tasks for project ${project.name}:`);
-      // console.log(response.data)
-      // response.data.forEach(item => {
-      //   console.log(`TODOist project item: ${item}`)
-      // });
-      return response.data;
-    })
-    .catch(error => {
-      // Handle error.
-      console.log("An error occurred in function getTasks():", error.statusText);
-    });
-}
-
 
 // getProject(url, "126474190", token).then(project => {
 //   getTasks(url, project).then(tasks => {
@@ -413,5 +346,3 @@ function getTasks(url, project) {
 // .catch(err => {
 //   console.log(`Error in getTODOist: ${err}`)
 // })
-
-
