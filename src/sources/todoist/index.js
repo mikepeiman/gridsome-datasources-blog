@@ -78,7 +78,7 @@ module.exports = function(api) {
       name: "Label",
       fields: () => ({
         id: {
-          type: GraphQLString,
+          type: GraphQLInt,
           resolve: label => label.id
         },
         name: {
@@ -168,7 +168,7 @@ module.exports = function(api) {
       }
     }));
     TasksQL.addSchemaField("labels", ({ graphql }) => ({
-      type: graphql.GraphQLList(GraphQLInt), //GraphQLList(LabelType)
+      type: graphql.GraphQLList(GraphQLString),
       resolve(node) {
         return node.fields.labels;
       }
