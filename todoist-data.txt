@@ -1,0 +1,28 @@
+    /* DATA OF INTEREST
+    
+    projects {
+      id
+      name
+      parent_id (if a child)
+    }
+
+    items {
+      date_added
+      id
+      content
+      has_more_notes (no, these are all false - comments must be drawn from V8)
+      priority (int)
+      is_deleted
+    }
+
+    completed {
+      items
+    }
+
+    labels [{}]
+    user {}
+    filters [{}]
+
+    sync_token ""
+
+    */

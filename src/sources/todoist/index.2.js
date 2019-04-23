@@ -49,8 +49,15 @@ function getSync() {
     let projects = response.data.projects
     let tasks = response.data.items
     let labels = response.data.labels
-    // console.log(response.data.projects)
+    console.log(labels)
     console.log(`number of tasks/notes: ${response.data.items.length}`)
+    for (let i = 0; i < 25; i++) {
+      let task = tasks[i];
+      console.log(`task labels: `)
+      console.log(task.labels)
+      let taskComments = getComments(url, task);
+
+    }
 
     // ***** START Check tasks object for relevant fields ********
     let count = [11,22,33,44,55,57,58,59,71,72,73,74,75,85,86,87,88,90,91,92,93,94,95]
