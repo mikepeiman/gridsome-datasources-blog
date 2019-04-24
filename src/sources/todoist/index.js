@@ -35,55 +35,62 @@ module.exports = function(api) {
       route: "/todoist/labels/:name"
     });
 
-    const TaskType = new GraphQLObjectType({
-      name: "Task",
-      description: "A Task within a project",
-      fields: () => ({
-        id: {
-          type: GraphQLString,
-          resolve: task => task.id
-        },
-        name: {
-          type: GraphQLString,
-          resolve: task => task.name
-        },
-        created: {
-          type: GraphQLString,
-          resolve: task => task.created
-        },
-        comments: {
-          type: GraphQLString,
-          resolve: task => task.comments
-        },
-        labels: {
-          type: GraphQLString,
-          resolve: task => task.labels
-        },
-        project: {
-          type: GraphQLString,
-          resolve: task => task.project
-        },
-        content: {
-          type: GraphQLString,
-          resolve: task => task.content
-        },
-        path: {
-          type: GraphQLString,
-          resolve: task => task.path
-        }
-      })
-    });
+    TasksQL.addReference("labels", "TodoistLabels");
+    // LabelsQL.addReference("TasksQL", "TodoistTasks");
+
+    // const TaskType = new GraphQLObjectType({
+    //   name: "Task",
+    //   description: "A Task within a project",
+    //   fields: () => ({
+    //     id: {
+    //       type: GraphQLString,
+    //       resolve: task => task.id
+    //     },
+    //     name: {
+    //       type: GraphQLString,
+    //       resolve: task => task.name
+    //     },
+    //     created: {
+    //       type: GraphQLString,
+    //       resolve: task => task.created
+    //     },
+    //     comments: {
+    //       type: GraphQLString,
+    //       resolve: task => task.comments
+    //     },
+    //     labels: {
+    //       type: GraphQLString,
+    //       resolve: task => task.labels
+    //     },
+    //     project: {
+    //       type: GraphQLString,
+    //       resolve: task => task.project
+    //     },
+    //     content: {
+    //       type: GraphQLString,
+    //       resolve: task => task.content
+    //     },
+    //     path: {
+    //       type: GraphQLString,
+    //       resolve: task => task.path
+    //     }
+    //   })
+    // });
 
     const LabelType = new GraphQLObjectType({
       name: "Label",
       fields: () => ({
         id: {
-          type: GraphQLInt,
+          type: GraphQLString,
           resolve: label => label.id
         },
         name: {
           type: GraphQLString,
           resolve: label => label.name
+        },
+        path: {
+          type: GraphQLString,
+          resolve: label => label.path
         }
       })
     });
@@ -168,7 +175,7 @@ module.exports = function(api) {
       }
     }));
     TasksQL.addSchemaField("labels", ({ graphql }) => ({
-      type: graphql.GraphQLList(GraphQLString),
+      type: graphql.GraphQLList(LabelType),
       resolve(node) {
         return node.fields.labels;
       }
@@ -220,10 +227,17 @@ module.exports = function(api) {
           if (comments.data.length != 0) {
             comments.data.forEach(comment => {
               console.log(
-                // `inside of getComments() { comments.data.forEach: ${comment} }`
+                `${comments.data.length} Comments for task ${task.content.slice(
+                  0,
+                  50
+                )}`
               );
-              // console.log(comment);
-              // console.log(task.id);
+              console.log(
+                `${task.labels.length} labels for task ${task.content.slice(
+                  0,
+                  50
+                )}`
+              );
               commentsArray.push(comment);
             });
           } else {
@@ -273,17 +287,37 @@ module.exports = function(api) {
               name: label.name,
               fields: {
                 id: label.id,
-                name: label.name
+                name: label.name,
+                path: label.path
               }
             });
           });
 
-          for (let i = 20; i < 45; i++) {
+          for (let i = 150; i < 190; i++) {
             let task = tasks[i];
-            let temp = [];
-            // console.log(`Task snippet: ${task.content.slice(0, 50)}`);
-            let taskComments = getComments(url, task);
+            let labelArray = []
+            labels.forEach(label => {
+              // console.log(`label from labels: ${label}`)
+              // console.log(label.id)
 
+              task.labels.forEach(taskLabel => {
+                if(label.id == taskLabel) {
+                  // console.log(`Found a label match at ${label} and i: ${i} and task: ${task.id}`)
+                  // console.log(label)
+                  // console.log(`Task snippet: ${task.content.slice(0, 50)}`)
+                  labelName = changeCase.lower(slugify(label.name))
+                  label.path = `/todoist/labels/${label.name}`
+                  labelArray.push(label)
+                } else {
+                  // console.log(`no label match`)
+                }
+              })
+              return labelArray
+            })
+            // console.log(`Task snippet: ${task.content.slice(0, 50)}`);
+            // console.log(`Task id: ${task.id} | task labels: ${task.labels}`);
+            
+            let taskComments = getComments(url, task);
             taskComments
               .then(comments => {
                 if (comments.length > 0) {
@@ -299,7 +333,7 @@ module.exports = function(api) {
                       }
                     });
                   });
-                } 
+                }
                 TasksQL.addNode({
                   id: task.id,
                   fields: {
@@ -307,9 +341,9 @@ module.exports = function(api) {
                     project: task.project_id,
                     created: task.date_added,
                     date: task.date_added,
-                    labels: task.labels,
+                    labels: labelArray, // task.labels,//store.createReference(task.labels),
                     content: task.content,
-                    comments: comments,
+                    comments: comments
                   }
                 });
               })
