@@ -28,7 +28,7 @@ function dotaParse(dir, filename) {
     var keys = Object.keys(data);
     var values = Object.values(data);
 
-    console.log(data.npc_dota_hero_grimstroke);
+    // console.log(data.npc_dota_hero_grimstroke);
 
     let name,
       title,
@@ -39,17 +39,14 @@ function dotaParse(dir, filename) {
       int_base,
       int_gain,
       primary_attr;
+
     for (var i in data) {
       hero = data[i];
       heroKeys = Object.keys(data[i]);
       heroValues = Object.values(data[i]);
-      // console.log(`%%%%%%%%%%%%%%%%%%% hero key #${i}:!!! ${heroKeys}`)
-      // console.log(`%%%%%%%%%%%%%%%%%%% hero values #${i}:!!! ${heroValues}`)
       let x = 0;
-      // console.log(hero.HeroID);
 
       if (hero.HeroID == 129) {
-
         heroKeys.forEach(key => {
           let currentKeyValue = heroValues[x];
           isItAnObject(currentKeyValue);
@@ -58,8 +55,6 @@ function dotaParse(dir, filename) {
             let z = 0
             let currentKeys = Object.keys(obj)
             let currentValues = Object.values(obj) 
-            
-            // console.log(`${x}: @@@ @@@ logObject: this IS an object: ${currentKeys[z]}: ${currentValues[z]} under ${key}`);
             for (var s in obj) {  
               if(typeof obj[s] === "object" && obj[s] !== null) {
                 console.log(`logObject(obj) Current object ${s}: ${obj[s]}`)
@@ -72,7 +67,6 @@ function dotaParse(dir, filename) {
           }
           
           function isItAnObject(o) {      
-            // console.log(`${x}: ${key}: ${o}`);
             if (typeof o !== "object") {
               console.log(`${x}: XXX Default case: This one is NOT an object: ${key}: ${o}`);
               return o;
@@ -84,13 +78,10 @@ function dotaParse(dir, filename) {
               for(var k in currentKeys){
                 console.log(`${x}: ${key}: ${currentKeys[y]}:`);
                 console.log(`    {`)
-                // console.log(`   ${currentKeys[y]}: {`)
                 if(typeof currentValues[k] === "object") {
-                  // console.log(`    {`)
                   logObject(currentValues[k])
                 } else {
                   console.log(`    ${currentKeys[k]}: ${currentValues[k]}`)
-                  // console.log(`---------------- ${currentKeys[k]}: ${currentValues[k]} ||| ${key}`)
                 }
                 console.log(`    }`)
                 y++
@@ -98,40 +89,11 @@ function dotaParse(dir, filename) {
 
             }            
           }
-
-          
-
-
-          // if (typeof currentKeyValue === "object" && currentKeyValue !== null) {
-          //   let y = 0;
-          //   let currentSubKeys = Object.keys(currentKeyValue);
-          //   // console.log(`### This key ${x}: ${key}: ${currentKeyValue}`);
-          //   currentSubKeys.forEach(subKey => {
-          //     // console.log(
-          //     //   `###### This subKey ${x}: ${subKey}: ${
-          //     //     Object.values(currentKeyValue)[y]
-          //     //   }`
-          //     // );
-          //     y++;
-          //   });
-          // } else if (typeof currentKeyValue === null) {
-          //   console.log(
-          //     `###### TESTED NULL value This key ${x}: ${key}: ${currentKeyValue}`
-          //   );
-          // } else {
-          //   console.log(`### This key ${x}: ${key}: ${currentKeyValue}`);
-          // }
-
           x++;
         });
       }
 
-      // heroValues.forEach(value => {
-      //   console.log(`@@@@@@@@ This value: ${value}`)
-      // })
-
       name = hero.workshop_guide_name;
-
       str_base = hero.AttributeBaseStrength;
       agi_base = hero.AttributeBaseAgility;
       int_base = hero.AttributeBaseIntelligence;
@@ -161,15 +123,6 @@ function dotaParse(dir, filename) {
       } else {
       }
     }
-    // console.log(`HeroesList: ${heroesList}`);
-
-    // heroesList.forEach(hero => {
-    //   hero = JSON.parse(hero)
-    //   console.log(`${hero}`)
-    // })
-    // console.log(heroesList)
-    // console.log(keys);
-    // console.log(values)
     return heroesList;
   });
 }
