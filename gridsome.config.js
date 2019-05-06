@@ -60,7 +60,7 @@ module.exports = {
       use: "~/src/sources/graphcms"
     },
     {
-      use: "~/src/sources/gitdota"
+      use: "~/src/sources/localdota"
     },
     {
       use: "~/src/sources/heroes",

@@ -1,7 +1,5 @@
-const axios = require("axios");
 const fs = require("fs");
 const VDF = require('@node-steam/vdf');
-const { parse, stringify } = require('flatted/cjs');
 
 let filepath = "C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/";
 let dir = process.cwd()
