@@ -2,7 +2,7 @@ console.log("localdota loaded");
 const fs = require("fs");
 const slugify = require("slugify");
 const changeCase = require("change-case");
-const objectPath = require('object-path');
+const objectPath = require("object-path");
 
 const {
   GraphQLSchema,
@@ -25,10 +25,10 @@ function dotaParse(dir, filename) {
     if (err) throw err;
     data = JSON.parse(data);
     data = data.DOTAHeroes;
-    var keys = Object.keys(data)
-    var values = Object.values(data)
+    var keys = Object.keys(data);
+    var values = Object.values(data);
 
-    console.log(data.npc_dota_hero_grimstroke)
+    console.log(data.npc_dota_hero_grimstroke);
 
     let name,
       title,
@@ -41,36 +41,90 @@ function dotaParse(dir, filename) {
       primary_attr;
     for (var i in data) {
       hero = data[i];
-      heroKeys = Object.keys(data[i])
-      heroValues = Object.values(data[i])
+      heroKeys = Object.keys(data[i]);
+      heroValues = Object.values(data[i]);
       // console.log(`%%%%%%%%%%%%%%%%%%% hero key #${i}:!!! ${heroKeys}`)
-    // console.log(`%%%%%%%%%%%%%%%%%%% hero values #${i}:!!! ${heroValues}`)
-      let x = 0
-      console.log(hero.HeroID)
+      // console.log(`%%%%%%%%%%%%%%%%%%% hero values #${i}:!!! ${heroValues}`)
+      let x = 0;
+      // console.log(hero.HeroID);
 
-      if(hero.HeroID == 129) {
-        console.log(`You hit MARS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!`)
-      heroKeys.forEach(key => {
-        let currentKeyValue = heroValues[x]
-        // console.log(heroKeys[key])
+      if (hero.HeroID == 129) {
 
-        if (typeof currentKeyValue === 'object' && currentKeyValue !== null) {
-          let y = 0
-          let currentSubKeys = Object.keys(currentKeyValue)
-          console.log(`### This key ${x}: ${key}: ${currentKeyValue}`)
-          currentSubKeys.forEach(subKey => {
-            console.log(`###### This subKey ${x}: ${subKey}: ${Object.values(currentKeyValue)[y]}`)
-            y++
-          })
+        heroKeys.forEach(key => {
+          let currentKeyValue = heroValues[x];
+          isItAnObject(currentKeyValue);
+
+          function logObject(obj) {
+            let z = 0
+            let currentKeys = Object.keys(obj)
+            let currentValues = Object.values(obj) 
+            
+            // console.log(`${x}: @@@ @@@ logObject: this IS an object: ${currentKeys[z]}: ${currentValues[z]} under ${key}`);
+            for (var s in obj) {  
+              if(typeof obj[s] === "object" && obj[s] !== null) {
+                console.log(`logObject(obj) Current object ${s}: ${obj[s]}`)
+                return isItAnObject(obj[s])
+              } else {
+                console.log(`    ${s}: ${obj[s]}`)
+              }
+              z++
+            }
+          }
           
-        } else if(typeof currentKeyValue === null) {
-          console.log(`###### TESTED NULL value This key ${x}: ${key}: ${currentKeyValue}`)
-        } else {
-          console.log(`### This key ${x}: ${key}: ${currentKeyValue}`)
-        }        
-        x++
-      })
-    }
+          function isItAnObject(o) {      
+            // console.log(`${x}: ${key}: ${o}`);
+            if (typeof o !== "object") {
+              console.log(`${x}: XXX Default case: This one is NOT an object: ${key}: ${o}`);
+              return o;
+            } else {
+              let y = 0
+              let currentKeys = Object.keys(o)
+              let currentValues = Object.values(o) 
+              
+              for(var k in currentKeys){
+                console.log(`${x}: ${key}: ${currentKeys[y]}:`);
+                console.log(`    {`)
+                // console.log(`   ${currentKeys[y]}: {`)
+                if(typeof currentValues[k] === "object") {
+                  // console.log(`    {`)
+                  logObject(currentValues[k])
+                } else {
+                  console.log(`    ${currentKeys[k]}: ${currentValues[k]}`)
+                  // console.log(`---------------- ${currentKeys[k]}: ${currentValues[k]} ||| ${key}`)
+                }
+                console.log(`    }`)
+                y++
+              }
+
+            }            
+          }
+
+          
+
+
+          // if (typeof currentKeyValue === "object" && currentKeyValue !== null) {
+          //   let y = 0;
+          //   let currentSubKeys = Object.keys(currentKeyValue);
+          //   // console.log(`### This key ${x}: ${key}: ${currentKeyValue}`);
+          //   currentSubKeys.forEach(subKey => {
+          //     // console.log(
+          //     //   `###### This subKey ${x}: ${subKey}: ${
+          //     //     Object.values(currentKeyValue)[y]
+          //     //   }`
+          //     // );
+          //     y++;
+          //   });
+          // } else if (typeof currentKeyValue === null) {
+          //   console.log(
+          //     `###### TESTED NULL value This key ${x}: ${key}: ${currentKeyValue}`
+          //   );
+          // } else {
+          //   console.log(`### This key ${x}: ${key}: ${currentKeyValue}`);
+          // }
+
+          x++;
+        });
+      }
 
       // heroValues.forEach(value => {
       //   console.log(`@@@@@@@@ This value: ${value}`)
@@ -91,20 +145,19 @@ function dotaParse(dir, filename) {
         let thisHero = `{"${title}":
             {
               "name": "${name}",
-              "str_base": "${str_base}",
-              "str_gain": "${str_gain}",
-              "agi_base": "${agi_base}",
-              "agi_gain": "${agi_gain}",
-              "int_base": "${int_base}",
-              "int_gain": "${int_gain}",
+              "str_base": ${str_base},
+              "str_gain": ${str_gain},
+              "agi_base": ${agi_base},
+              "agi_gain": ${agi_gain},
+              "int_base": ${int_base},
+              "int_gain": ${int_gain},
               "primary_attr": "${primary_attr}"
             }}`;
-            
-            thisHero = thisHero.replace(/\s+/g, "");
-            
+
+        thisHero = thisHero.replace(/\s+/g, "");
+
         JSON.parse(thisHero);
         heroesList.push(thisHero);
-        
       } else {
       }
     }
