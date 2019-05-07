@@ -4,6 +4,7 @@ const {
   GraphQLSchema,
   GraphQLList,
   GraphQLString,
+  GraphQLFloat,
   GraphQLInt,
   buildSchema,
   GraphQLObjectType
@@ -19,7 +20,7 @@ module.exports = function(api) {
     console.log("Datasource loading: XDOTA from local JSON");
     const contentType = store.addContentType({
       typeName: "XDOTA",
-      route: "/xdota/:name"
+      route: "/xdota/:id"
     });
 
     contentType.addSchemaField("name", ({ graphql }) => ({
@@ -29,47 +30,115 @@ module.exports = function(api) {
         return node.fields.name;
       }
     }));
-    contentType.addSchemaField("primary_attr", ({ graphql }) => ({
-      type: graphql.GraphQLInt,
+    contentType.addSchemaField("primaryAttr", ({ graphql }) => ({
+      type: graphql.GraphQLString,
       allowNull: false,
       resolve(node) {
-        return node.fields.primary_attr;
+        return node.fields.primaryAttr;
       }
     }));
-    contentType.addSchemaField("stats_str_base", ({ graphql }) => ({
-      type: graphql.GraphQLString,
+    contentType.addSchemaField("strBase", ({ graphql }) => ({
+      type: graphql.GraphQLFloat,
       resolve(node) {
-        return node.fields.stats_str_base;
+        return node.fields.strBase;
       }
     }));
-    contentType.addSchemaField("stats_str_gain", ({ graphql }) => ({
-      type: graphql.GraphQLString,
+    contentType.addSchemaField("strGain", ({ graphql }) => ({
+      type: graphql.GraphQLFloat,
       resolve(node) {
-        return node.fields.stats_str_gain;
+        return node.fields.strGain;
       }
     }));
-    contentType.addSchemaField("stats_agi_base", ({ graphql }) => ({
-      type: graphql.GraphQLString,
+    contentType.addSchemaField("agiBase", ({ graphql }) => ({
+      type: graphql.GraphQLFloat,
       resolve(node) {
-        return node.fields.stats_agi_base;
+        return node.fields.agiBase;
       }
     }));
-    contentType.addSchemaField("stats_agi_gain", ({ graphql }) => ({
-      type: graphql.GraphQLString,
+    contentType.addSchemaField("agiGain", ({ graphql }) => ({
+      type: graphql.GraphQLFloat,
       resolve(node) {
-        return node.fields.stats_agi_gain;
+        return node.fields.agiGain;
       }
     }));
-    contentType.addSchemaField("stats_int_base", ({ graphql }) => ({
-      type: graphql.GraphQLString,
+    contentType.addSchemaField("intBase", ({ graphql }) => ({
+      type: graphql.GraphQLFloat,
       resolve(node) {
-        return node.fields.stats_int_base;
+        return node.fields.intBase;
       }
     }));
-    contentType.addSchemaField("stats_int_gain", ({ graphql }) => ({
+    contentType.addSchemaField("intGain", ({ graphql }) => ({
+      type: graphql.GraphQLFloat,
+      resolve(node) {
+        return node.fields.intGain;
+      }
+    }));
+    contentType.addSchemaField("totalAttrGain", ({ graphql }) => ({
+      type: graphql.GraphQLFloat,
+      resolve(node) {
+        return node.fields.totalAttrGain;
+      }
+    }));
+    contentType.addSchemaField("armor", ({ graphql }) => ({
+      type: graphql.GraphQLFloat,
+      resolve(node) {
+        return node.fields.armor;
+      }
+    }));
+
+    contentType.addSchemaField("attackType", ({ graphql }) => ({
       type: graphql.GraphQLString,
       resolve(node) {
-        return node.fields.stats_int_gain;
+        return node.fields.attackType;
+      }
+    }));
+
+    contentType.addSchemaField("attackDamageMin", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.fields.attackDamageMin;
+      }
+    }));
+
+    contentType.addSchemaField("attackDamageMax", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.fields.attackDamageMax;
+      }
+    }));
+
+    contentType.addSchemaField("attackRate", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.fields.attackRate;
+      }
+    }));
+
+    contentType.addSchemaField("attackRange", ({ graphql }) => ({
+      type: graphql.GraphQLFloat,
+      resolve(node) {
+        return node.fields.attackRange;
+      }
+    }));
+
+    contentType.addSchemaField("projectileSpeed", ({ graphql }) => ({
+      type: graphql.GraphQLFloat,
+      resolve(node) {
+        return node.fields.projectileSpeed;
+      }
+    }));
+
+    contentType.addSchemaField("movementSpeed", ({ graphql }) => ({
+      type: graphql.GraphQLFloat,
+      resolve(node) {
+        return node.fields.movementSpeed;
+      }
+    }));
+
+    contentType.addSchemaField("turnRate", ({ graphql }) => ({
+      type: graphql.GraphQLFloat,
+      resolve(node) {
+        return node.fields.turnRate;
       }
     }));
 
@@ -83,62 +152,102 @@ module.exports = function(api) {
         if (err) throw err;
         data = JSON.parse(data);
         data = data.DOTAHeroes;
-        let name,
-          str_base,
-          str_gain,
-          agi_base,
-          agi_gain,
-          int_base,
-          int_gain,
-          primary_attr;
+        var keys = Object.keys(data);
+        var values = Object.values(data);
+
+        // console.log(data.npc_dota_hero_grimstroke);
+
+        // let name,
+        //   title,
+        //   strBase,
+        //   strGain,
+        //   agiBase,
+        //   agiGain,
+        //   intBase,
+        //   intGain,
+        //   primaryAttr,
+        //   armor,
+        //   attackType,
+        //   attackDamageMin,
+        //   attackDamageMax,
+        //   attackRate,
+        //   attackRange,
+        //   projectileSpeed,
+        //   movementSpeed,
+        //   turnRate,
+        
+
         for (var i in data) {
-          name = data[i].workshop_guide_name;
-          str_base = data[i].AttributeBaseStrength;
-          agi_base = data[i].AttributeBaseAgility;
-          int_base = data[i].AttributeBaseIntelligence;
-          str_gain = data[i].AttributeStrengthGain;
-          agi_gain = data[i].AttributeAgilityGain;
-          int_gain = data[i].AttributeIntelligenceGain;
-          primary_attr = data[i].AttributePrimary;
+          hero = data[i];
+          if (hero.workshop_guide_name !== undefined) {
+            let totalAttrGain = hero.AttributeStrengthGain + hero.AttributeAgilityGain + hero.AttributeIntelligenceGain
+            contentType.addNode({
+              id: hero.HeroID,
+              fields: {
+                name: hero.workshop_guide_name,
+                strBase: hero.AttributeBaseStrength,
+                strGain: hero.AttributeStrengthGain,
+                agiBase: hero.AttributeBaseAgility,
+                agiGain: hero.AttributeAgilityGain,
+                intBase: hero.AttributeBaseIntelligence,
+                intGain: hero.AttributeIntelligenceGain,
+                totalAttrGain: totalAttrGain,
+                primaryAttr: hero.AttributePrimary,
+                armor: hero.ArmorPhysical,
+                attackType: hero.AttackCapabilities,
+                attackDamageMin: hero.AttackDamageMin,
+                attackDamageMax: hero.AttackDamageMax,
+                attackRate: hero.AttackRate,
+                attackRange: hero.AttackRange,
+                projectileSpeed: hero.ProjectileSpeed,
+                movementSpeed: hero.MovementSpeed,
+                turnRate: hero.MovementTurnRate
+              }
+            });
+          }
 
+          heroKeys = Object.keys(data[i]);
+          heroValues = Object.values(data[i]);
+          let x = 0;
 
-          let hero = `${name}
-          {
-            "str_base": ${str_base},
-            "str_gain": ${str_gain},
-            "agi_base": ${agi_base},
-            "agi_gain": ${agi_gain},
-            "int_base": ${int_base},
-            "int_gain": ${int_gain},
-            "primary_attr": ${primary_attr}
-          }`
-          heroesList.push(hero);
+          name = hero.workshop_guide_name;
+          strBase = hero.AttributeBaseStrength;
+          agiBase = hero.AttributeBaseAgility;
+          intBase = hero.AttributeBaseIntelligence;
+          strGain = hero.AttributeStrengthGain;
+          agiGain = hero.AttributeAgilityGain;
+          intGain = hero.AttributeIntelligenceGain;
+          primaryAttr = hero.AttributePrimary;
+
+          if (name != undefined) {
+            title = name.replace(/\s+/g, "");
+            let thisHero = `{"${title}":
+                {
+                  "name": "${name}",
+                  "strBase": ${strBase},
+                  "strGain": ${strGain},
+                  "agiBase": ${agiBase},
+                  "agiGain": ${agiGain},
+                  "intBase": ${intBase},
+                  "intGain": ${intGain},
+                  "primaryAttr": "${primaryAttr}"
+                }}`;
+
+            thisHero = thisHero.replace(/\s+/g, "");
+
+            JSON.parse(thisHero);
+            heroesList.push(thisHero);
+          } else {
+          }
         }
-        console.log(`HeroesList: ${heroesList}`);
-
-        heroesList.forEach(hero => {
-          hero = JSON.parse(hero)
-          console.log(`Hero ${hero.name}`)
-        })
+        // heroesList.forEach(hero => {
+        // GraphQL here
+        // })
 
         return heroesList;
       });
     }
 
     dotaParse(dir, "dota2_heroes");
-
-    // contentType.addSchemaField("url", ({ graphql }) => ({
-    //   type: graphql.GraphQLString,
-    //   resolve(node) {
-    //     return node.fields.url;
-    //   }
-    // }));
-
-    // contentType.addSchemaField("abilities", ({ graphql }) => ({
-    //   type: graphql.GraphQLList(GraphQLString),
-    //   resolve(node) {
-    //     return node.fields.abilities;
-    //   }
-    // }));
   });
 };

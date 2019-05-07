@@ -46,6 +46,7 @@ function dotaParse(dir, filename) {
       heroValues = Object.values(data[i]);
       let x = 0;
 
+      if (hero.HeroID == 129) {
         heroKeys.forEach(key => {
           let currentKeyValue = heroValues[x];
           isItAnObject(currentKeyValue);
@@ -56,10 +57,10 @@ function dotaParse(dir, filename) {
             let currentValues = Object.values(obj) 
             for (var s in obj) {  
               if(typeof obj[s] === "object" && obj[s] !== null) {
-                // console.log(`logObject(obj) Current object ${s}: ${obj[s]}`)
+                console.log(`logObject(obj) Current object ${s}: ${obj[s]}`)
                 return isItAnObject(obj[s])
               } else {
-                // console.log(`    ${s}: ${obj[s]}`)
+                console.log(`    ${s}: ${obj[s]}`)
               }
               z++
             }
@@ -67,7 +68,7 @@ function dotaParse(dir, filename) {
           
           function isItAnObject(o) {      
             if (typeof o !== "object") {
-              // console.log(`${x}: XXX Default case: This one is NOT an object: ${key}: ${o}`);
+              console.log(`${x}: XXX Default case: This one is NOT an object: ${key}: ${o}`);
               return o;
             } else {
               let y = 0
@@ -75,14 +76,14 @@ function dotaParse(dir, filename) {
               let currentValues = Object.values(o) 
               
               for(var k in currentKeys){
-                // console.log(`${x}: ${key}: ${currentKeys[y]}:`);
-                // console.log(`    {`)
+                console.log(`${x}: ${key}: ${currentKeys[y]}:`);
+                console.log(`    {`)
                 if(typeof currentValues[k] === "object") {
                   logObject(currentValues[k])
                 } else {
-                  // console.log(`    ${currentKeys[k]}: ${currentValues[k]}`)
+                  console.log(`    ${currentKeys[k]}: ${currentValues[k]}`)
                 }
-                // console.log(`    }`)
+                console.log(`    }`)
                 y++
               }
 
@@ -90,7 +91,7 @@ function dotaParse(dir, filename) {
           }
           x++;
         });
-      
+      }
 
       name = hero.workshop_guide_name;
       str_base = hero.AttributeBaseStrength;
@@ -102,8 +103,7 @@ function dotaParse(dir, filename) {
       primary_attr = hero.AttributePrimary;
 
       if (name != undefined) {
-        title = name
-        title = title.replace(/\s+/g, "");
+        title = name.replace(/\s+/g, "");
         let thisHero = `{"${title}":
             {
               "name": "${name}",
@@ -123,29 +123,8 @@ function dotaParse(dir, filename) {
       } else {
       }
     }
-    // console.log(heroesList)
-    heroesList.forEach(hero => {
-      hero = JSON.parse(hero)
-      for(var x in hero) {
-        console.log(x)
-        let heroKeys = Object.keys(hero)
-        let heroVals = Object.values(hero)
-        let heroSets = Object.entries(heroKeys)
- 
-      }
-      console.log(getValueByKey(hero, 'str_base'))
-    })
     return heroesList;
   });
-  
 }
-function getValueByKey(object, key) {
-  return Object.values(object).find(value => object[value] === key);
-}
-function getKeyByValue(object, value) {
-  return Object.keys(object).find(key => object[key] === value);
-}
-
 
 dotaParse(dir, "dota2_heroes");
-
