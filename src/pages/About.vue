@@ -20,22 +20,22 @@
 </template>
 
 <script>
-import CopyText from './../assets/CopyOnClick.js'
+// import CopyText from './../assets/CopyOnClick.js'
 export default {
-  methods: {
-    copyOnClick(e) {
-      {
-        let t = document.querySelector('#textToCopy').innerText
-        // var selObj = window.getSelection();
-        // alert(selObj);
-        navigator.clipboard.writeText(t).then(function () {
-          console.log(`Async: Copying to clipboard was successful! Copied: ${t}`);
-        }, function (err) {
-          console.error('Async: Could not copy text: ', err);
-        });
-      }
-    }
-  }
+  // methods: {
+  //   copyOnClick(e) {
+  //     {
+  //       let t = document.querySelector('#textToCopy').innerText
+  //       // var selObj = window.getSelection();
+  //       // alert(selObj);
+  //       navigator.clipboard.writeText(t).then(function () {
+  //         console.log(`Async: Copying to clipboard was successful! Copied: ${t}`);
+  //       }, function (err) {
+  //         console.error('Async: Could not copy text: ', err);
+  //       });
+  //     }
+  //   }
+  // }
 }
 </script>
 

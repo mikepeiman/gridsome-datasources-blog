@@ -1,31 +1,32 @@
 <template>
-  <DSLayout :pageName="pageName">
-    <h1 class="page-title">DOTA2 Heroes</h1>
-    <div class="grid-main">
-      <ul class="hero-list" v-for="(item, index) in $page.allXDOTA.edges" :key="item.id">
-        <g-link :to="item.node.path">
-          <li class="item-container grid-item">
-            <div class="hero-number">{{ item.node.id }}</div>
-            <div class="hero-number-bg">
-              <h2 class="hero-name">{{ item.node.name }}</h2>
-            </div>
-          </li>
-          <div class="attribute-container" :class="primaryAttr">
-            <span class="attribute-name">STR</span>
-            <span class="attribute-name">AGI</span>
-            <span class="attribute-name">INT</span>
+<DSLayout :pageName="pageName">
+  <h1 class="page-title">DOTA2 Heroes</h1>
+  <div class="grid-main">
+    <ul class="hero-list" v-for="(item, index) in $page.allXDOTA.edges" :key="item.id">
+      <g-link :to="item.node.path">
+        <li class="item-container grid-item">
+          <img :src="" width="40" />
+          <div class="hero-number">{{ item.node.id }}</div>
+          <div class="hero-number-bg">
+            <h2 class="hero-name">{{ item.node.name }}</h2>
           </div>
-          <div class="attribute-container">
-            <span class="attribute">{{ item.node.strGain }}</span>
-            <span class="attribute">{{ item.node.agiGain }}</span>
-            <span class="attribute">{{ item.node.intGain }}</span>
-          </div>
-          <p class="total-attribute-gain">{{ item.node.totalAttrGain.toFixed(1) }}</p>
-          <!-- <p>{{ attrSum }}</p> -->
-        </g-link>
-      </ul>
-    </div>
-  </DSLayout>
+        </li>
+        <div class="attribute-container" :on="setPrimaryAttribute">
+          <span class="attribute-name">STR</span>
+          <span class="attribute-name">AGI</span>
+          <span class="attribute-name">INT</span>
+        </div>
+        <div class="attribute-container">
+          <span class="attribute">{{ item.node.strGain }}</span>
+          <span class="attribute">{{ item.node.agiGain }}</span>
+          <span class="attribute">{{ item.node.intGain }}</span>
+        </div>
+        <p class="total-attribute-gain" :class="item.node.primaryAttr">{{ item.node.totalAttrGain.toFixed(1) }}</p>
+        <!-- <p>{{ attrSum }}</p> -->
+      </g-link>
+    </ul>
+  </div>
+</DSLayout>
 </template>
 
 <page-query>
@@ -65,49 +66,43 @@ export default {
     DSLayout,
     DSSideBar
   },
-  data: function() {
+  data: function () {
     return {
       pageName: "DOTA2 Heroes",
       primaryAttr: 'test'
     };
   },
   computed: {
-    setPrimaryAttribute() {
-      if (this.$page.allXDOTA.edges.node.primaryAttr === "DOTA_ATTRIBUTE_INTELLECT") {
-        this.primaryAttr = 'primary-attribute-int'
-      }
-            if (this.$page.allXDOTA.edges.node.primaryAttr === "DOTA_ATTRIBUTE_STRENGTH") {
-        this.primaryAttr = 'primary-attribute-str'
-      }
-            if (this.$page.allXDOTA.edges.node.primaryAttr === "DOTA_ATTRIBUTE_AGILITY") {
-        this.primaryAttr = 'primary-attribute-agi'
-      }
-    },
-    attrSum() {
-      return (this.str + this.agi + this.int).toFixed(1)
-    },
-    str() {
-      this.str = parseFloat(this.$page.allXDOTA.edges.node.strGain)
-      return parseFloat(this.$page.allXDOTA.edges.node.strGain);
-    },
-    agi() {
-      this.agi = parseFloat(this.$page.allXDOTA.edges.node.agiGain)
-      return parseFloat(this.$page.allXDOTA.edges.node.agiGain);
-    },
-    int() {
-      this.int = parseFloat(this.$page.allXDOTA.edges.node.intGain)
-      return parseFloat(this.$page.allXDOTA.edges.node.intGain);
-    }
+    // getAttrIcon() {
+    //   console.log('setAttrIcon:')
+    //   console.log(this)
+    // },
+    // setPrimaryAttribute() {
+    //   // let x = this.$page.allXDOTA.edges
+    //   // x.forEach(hero => {
+    //   //   console.log(hero.node.primaryAttr)
+    //   // })
+    //   // console.log(this.$page.allXDOTA.edges)
+    //   // if (this.$page.allXDOTA.edges.node.primaryAttr === "DOTA_ATTRIBUTE_INTELLECT") {
+    //   //   console.log("return this.primaryAttr = 'primary-attribute-int'")
+    //   // }
+    //   //       if (this.$page.allXDOTA.edges.node.primaryAttr === "DOTA_ATTRIBUTE_STRENGTH") {
+    //   //   console.log("return this.primaryAttr = 'primary-attribute-str'")
+    //   // }
+    //   //       if (this.$page.allXDOTA.edges.node.primaryAttr === "DOTA_ATTRIBUTE_AGILITY") {
+    //   //   console.log("return this.primaryAttr = 'primary-attribute-agi'")
+    //   // }
+    // },
   },
   mounted() {
     this.$emit(this.pageName);
-    let x = this.$page.allXDOTA.edges
     let attrs = ''
+    let x = this.$page.allXDOTA.edges
     x.forEach(hero => {
       attrs = (parseFloat(hero.node.strGain) + parseFloat(hero.node.agiGain) + parseFloat(hero.node.intGain)).toFixed(1)
-      console.log(attrs)
+      // console.log(attrs)
     })
-    
+
   },
   metaInfo() {
     return {
@@ -115,7 +110,7 @@ export default {
       titleTemplate: "%s | DOTA2 Heroes",
       breadCrumb: this.$route.name
     };
-  }
+  },
 };
 </script>
 
@@ -131,11 +126,13 @@ export default {
     ". . . ."
     "sidenav . main-content .";
 }
+
 .page-title {
   line-height: 1.5em;
   border-bottom: 3px solid $primary-blue;
   // margin-bottom: -1em;
 }
+
 .content {
   grid-area: main-content;
   color: white;
@@ -169,42 +166,56 @@ export default {
 .attribute-container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+
+  // :nth-child(1) {
+  //   color: $primary-red;
+  // }
+
+  // :nth-child(2) {
+  //   color: $primary-green;
+  // }
+
+  // :nth-child(3) {
+  //   color: $primary-blue;
+  // }
+
 }
+
 .attribute-name {
   color: rgba(100, 200, 255, 1);
   font-size: 10px;
   text-align: center;
 }
-.attribute, .total-attribute-gain {
+
+.attribute,
+.total-attribute-gain {
   color: white;
   border: 1px solid black;
   text-align: center;
   background: rgba(255, 255, 255, 0.1);
   font-size: 12px;
+  
+  &.DOTA_ATTRIBUTE_STRENGTH {
+    color: $primary-red;
+  }
+
+  &.DOTA_ATTRIBUTE_AGILITY {
+    color: $primary-green;
+  }
+
+  &.DOTA_ATTRIBUTE_INTELLECT {
+    color: $primary-blue;
+  }
 }
 
 .total-attribute-gain {
-  // font-weight: 700;
+  font-weight: 500;
   font-size: 14px;
   // background: rgba(255, 255, 255, 0.1);
   padding: 2px;
-  border: 1px solid rgba(155,255,205,1);
+  border: 1px solid rgba(155, 255, 205, 1);
 }
 
-.primary-attribute {
-
-}
-.primary-attribute-str {
-  color: red;
-}
-.primary-attribute-agi {
-  color: green;
-  
-}
-.primary-attribute-int {
-  color: blue;
-  
-}
 .hero-list {
   padding: 0;
   margin: 0;
