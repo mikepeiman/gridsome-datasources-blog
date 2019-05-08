@@ -3,7 +3,9 @@
   <h1 class="page-title">DOTA2 Heroes</h1>
   <div class="filter-container">
     <div class="attribute-filter-container">
-      <p>FILTER BY ATTR:</p>
+      <div>FILTER BY ATTR:
+
+      </div>
       <ul class="filter-container-inner">
         <!-- <li @click="attrFilter('str')" class="filter-item attr-icon attr-icon-large DOTA_ATTRIBUTE_STRENGTH"></li>
         <li @click="attrFilter('agi')" class="filter-item attr-icon attr-icon-large DOTA_ATTRIBUTE_AGILITY"></li>
@@ -12,16 +14,21 @@
           v-for="(entry, index) in filterListAttr"
           :item="entry.dotaName"
           :key="index"
-          @click="filter = entry.shortName;"
+          @click="filter = entry.dotaName;"
           :class="[ entry.dotaName, {active: entry.shortName == filter} ]"
           class="filter-item attr-icon attr-icon-large"
         ></button>
+        <button
+          @click="filter = 'All';"
+          class=""
+        >
+        Show All</button>
       </ul>
     </div>
 
   </div>
   <ul class="grid-main hero-list">
-    <li v-for="(item, index) in $page.allXDOTA.edges" :key="item.id" class="item-container grid-item">
+    <li v-for="(item, index) in $page.allXDOTA.edges" :key="item.id" class="item-container grid-item" v-if="item.node.primaryAttr === filter || filter === 'All'">
       <g-link :to="item.node.path">
         <!-- <div class="hero-number">{{ item.node.id }}</div> -->
         <!-- <img src="../assets/Agility_attribute_symbol.png" width="20" /> -->
@@ -90,7 +97,6 @@ export default {
       item: 'click test',
       filterByAttr: 'test filter attr',
       fkey: 'primaryAttr',
-      filterListAttr: ['str', 'agi', 'int'],
       filterListAttr: [{
           'shortName': 'STR',
           'dotaName': 'DOTA_ATTRIBUTE_STRENGTH'
@@ -135,6 +141,7 @@ export default {
 
 <style lang="scss" scoped>
 @import "./../assets/colors.scss";
+@import "./../assets/elements.scss";
 
 .site-container {
   background: #252525;
@@ -188,7 +195,7 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 140px;
+  width: 200px;
   margin: 0;
   padding: 0;
 }
