@@ -351,6 +351,9 @@ module.exports = function(api) {
                 console.log(`Error in taskComments ${err.response}`);
               });
           }
+        })
+        .catch(err => {
+          console.log(`Error in getSync ${err.response}`);
         });
     }
     getSync();

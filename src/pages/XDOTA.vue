@@ -244,9 +244,6 @@ export default {
   font-size: 14px;
   // background: rgba(255, 255, 255, 0.1);
   padding: 2px;
-<<<<<<< HEAD
-  border: 1px solid rgba(155, 255, 205, 1);
-=======
   border: 1px solid rgba(155,255,205,1);
 
   &.DOTA_ATTRIBUTE_STRENGTH {
@@ -258,7 +255,6 @@ export default {
     &.DOTA_ATTRIBUTE_INTELLECT {
     color: $primary-blue;
   }
->>>>>>> a8db8e960416f6a94d7a02ca2a1c2a85b4882d3a
 }
 
 .hero-list {
