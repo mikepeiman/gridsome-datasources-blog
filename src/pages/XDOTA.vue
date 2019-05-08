@@ -5,12 +5,13 @@
       <ul class="hero-list" v-for="(item, index) in $page.allXDOTA.edges" :key="item.id">
         <g-link :to="item.node.path">
           <li class="item-container grid-item">
-            <div class="hero-number">{{ item.node.id }}</div>
+            <!-- <div class="hero-number">{{ item.node.id }}</div> -->
+            <img src="../assets/Agility_attribute_symbol.png" width="20" />
             <div class="hero-number-bg">
               <h2 class="hero-name">{{ item.node.name }}</h2>
             </div>
           </li>
-          <div class="attribute-container" :class="primaryAttr">
+          <div class="attribute-container">
             <span class="attribute-name">STR</span>
             <span class="attribute-name">AGI</span>
             <span class="attribute-name">INT</span>
@@ -20,7 +21,7 @@
             <span class="attribute">{{ item.node.agiGain }}</span>
             <span class="attribute">{{ item.node.intGain }}</span>
           </div>
-          <p class="total-attribute-gain">{{ item.node.totalAttrGain.toFixed(1) }}</p>
+          <p class="total-attribute-gain" :class="item.node.primaryAttr">{{ item.node.totalAttrGain.toFixed(1) }}</p>
           <!-- <p>{{ attrSum }}</p> -->
         </g-link>
       </ul>
@@ -189,6 +190,16 @@ export default {
   // background: rgba(255, 255, 255, 0.1);
   padding: 2px;
   border: 1px solid rgba(155,255,205,1);
+
+  &.DOTA_ATTRIBUTE_STRENGTH {
+    color: $primary-red;
+  }
+    &.DOTA_ATTRIBUTE_AGILITY {
+    color: $primary-green;
+  }
+    &.DOTA_ATTRIBUTE_INTELLECT {
+    color: $primary-blue;
+  }
 }
 
 .primary-attribute {
