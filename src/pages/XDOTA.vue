@@ -1,32 +1,33 @@
 <template>
-<DSLayout :pageName="pageName">
-  <h1 class="page-title">DOTA2 Heroes</h1>
-  <div class="grid-main">
-    <ul class="hero-list" v-for="(item, index) in $page.allXDOTA.edges" :key="item.id">
-      <g-link :to="item.node.path">
-        <li class="item-container grid-item">
-          <img :src="" width="40" />
-          <div class="hero-number">{{ item.node.id }}</div>
-          <div class="hero-number-bg">
-            <h2 class="hero-name">{{ item.node.name }}</h2>
+  <DSLayout :pageName="pageName">
+    <h1 class="page-title">DOTA2 Heroes</h1>
+    <div class="grid-main">
+      <ul class="hero-list" v-for="(item, index) in $page.allXDOTA.edges" :key="item.id">
+        <g-link :to="item.node.path">
+          <li class="item-container grid-item">
+            <!-- <div class="hero-number">{{ item.node.id }}</div> -->
+            <!-- <img src="../assets/Agility_attribute_symbol.png" width="20" /> -->
+            <div class="icon-box attrIcon" :class="item.node.primaryAttr"></div>
+            <div class="hero-number-bg">
+              <h2 class="hero-name">{{ item.node.name }}</h2>
+            </div>
+          </li>
+          <div class="attribute-container">
+            <span class="attribute-name">STR</span>
+            <span class="attribute-name">AGI</span>
+            <span class="attribute-name">INT</span>
           </div>
-        </li>
-        <div class="attribute-container" :on="setPrimaryAttribute">
-          <span class="attribute-name">STR</span>
-          <span class="attribute-name">AGI</span>
-          <span class="attribute-name">INT</span>
-        </div>
-        <div class="attribute-container">
-          <span class="attribute">{{ item.node.strGain }}</span>
-          <span class="attribute">{{ item.node.agiGain }}</span>
-          <span class="attribute">{{ item.node.intGain }}</span>
-        </div>
-        <p class="total-attribute-gain" :class="item.node.primaryAttr">{{ item.node.totalAttrGain.toFixed(1) }}</p>
-        <!-- <p>{{ attrSum }}</p> -->
-      </g-link>
-    </ul>
-  </div>
-</DSLayout>
+          <div class="attribute-container">
+            <span class="attribute">{{ item.node.strGain }}</span>
+            <span class="attribute">{{ item.node.agiGain }}</span>
+            <span class="attribute">{{ item.node.intGain }}</span>
+          </div>
+          <p class="total-attribute-gain" :class="item.node.primaryAttr">{{ item.node.totalAttrGain.toFixed(1) }}</p>
+          <!-- <p>{{ attrSum }}</p> -->
+        </g-link>
+      </ul>
+    </div>
+  </DSLayout>
 </template>
 
 <page-query>
@@ -163,6 +164,36 @@ export default {
   margin: 0 0 1em 0;
 }
 
+.attrIcon {
+  
+  width: 20px;
+  height: 20px;
+  &.DOTA_ATTRIBUTE_STRENGTH {
+    background: no-repeat center/100% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Strength_attribute_symbol.png");
+  }
+    &.DOTA_ATTRIBUTE_AGILITY {
+    background: no-repeat center/100% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Agility_attribute_symbol.png");
+  }
+    &.DOTA_ATTRIBUTE_INTELLECT {
+    background: no-repeat center/100% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Intelligence_attribute_symbol.png");
+  }
+}
+
+.icon-box {
+  font-size: 0.5em;
+  font-weight: 300;
+  // margin: 5px 0 0 0;
+  padding: 5px 0 5px 0;
+  position: relative;
+  top: 26px;
+  left: 5px;
+  height: 18px;
+  width: 18px;
+  background: $primary-graphite;
+  z-index: 2;
+  color: rgba($primary-white, 0.5);
+}
+
 .attribute-container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -213,7 +244,21 @@ export default {
   font-size: 14px;
   // background: rgba(255, 255, 255, 0.1);
   padding: 2px;
+<<<<<<< HEAD
   border: 1px solid rgba(155, 255, 205, 1);
+=======
+  border: 1px solid rgba(155,255,205,1);
+
+  &.DOTA_ATTRIBUTE_STRENGTH {
+    color: $primary-red;
+  }
+    &.DOTA_ATTRIBUTE_AGILITY {
+    color: $primary-green;
+  }
+    &.DOTA_ATTRIBUTE_INTELLECT {
+    color: $primary-blue;
+  }
+>>>>>>> a8db8e960416f6a94d7a02ca2a1c2a85b4882d3a
 }
 
 .hero-list {
