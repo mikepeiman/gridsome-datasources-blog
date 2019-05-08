@@ -1,33 +1,49 @@
 <template>
-  <DSLayout :pageName="pageName">
-    <h1 class="page-title">DOTA2 Heroes</h1>
-    <div class="grid-main">
-      <ul class="hero-list" v-for="(item, index) in $page.allXDOTA.edges" :key="item.id">
-        <g-link :to="item.node.path">
-          <li class="item-container grid-item">
-            <!-- <div class="hero-number">{{ item.node.id }}</div> -->
-            <!-- <img src="../assets/Agility_attribute_symbol.png" width="20" /> -->
-            <div class="icon-box attrIcon" :class="item.node.primaryAttr"></div>
-            <div class="hero-number-bg">
-              <h2 class="hero-name">{{ item.node.name }}</h2>
-            </div>
-          </li>
-          <div class="attribute-container">
-            <span class="attribute-name">STR</span>
-            <span class="attribute-name">AGI</span>
-            <span class="attribute-name">INT</span>
-          </div>
-          <div class="attribute-container">
-            <span class="attribute">{{ item.node.strGain }}</span>
-            <span class="attribute">{{ item.node.agiGain }}</span>
-            <span class="attribute">{{ item.node.intGain }}</span>
-          </div>
-          <p class="total-attribute-gain" :class="item.node.primaryAttr">{{ item.node.totalAttrGain.toFixed(1) }}</p>
-          <!-- <p>{{ attrSum }}</p> -->
-        </g-link>
+<DSLayout :pageName="pageName">
+  <h1 class="page-title">DOTA2 Heroes</h1>
+  <div class="filter-container">
+    <div class="attribute-filter-container">
+      <p>FILTER BY ATTR:</p>
+      <ul class="filter-container-inner">
+        <!-- <li @click="attrFilter('str')" class="filter-item attr-icon attr-icon-large DOTA_ATTRIBUTE_STRENGTH"></li>
+        <li @click="attrFilter('agi')" class="filter-item attr-icon attr-icon-large DOTA_ATTRIBUTE_AGILITY"></li>
+        <li @click="attrFilter('int')" class="filter-item attr-icon attr-icon-large DOTA_ATTRIBUTE_INTELLECT"></li> -->
+        <button
+          v-for="(entry, index) in filterListAttr"
+          :item="entry.dotaName"
+          :key="index"
+          @click="filter = entry.shortName;"
+          :class="[ entry.dotaName, {active: entry.shortName == filter} ]"
+          class="filter-item attr-icon attr-icon-large"
+        ></button>
       </ul>
     </div>
-  </DSLayout>
+
+  </div>
+  <ul class="grid-main hero-list">
+    <li v-for="(item, index) in $page.allXDOTA.edges" :key="item.id" class="item-container grid-item">
+      <g-link :to="item.node.path">
+        <!-- <div class="hero-number">{{ item.node.id }}</div> -->
+        <!-- <img src="../assets/Agility_attribute_symbol.png" width="20" /> -->
+        <div class="icon-box attr-icon" :class="item.node.primaryAttr"></div>
+        <div class="hero-number-bg">
+          <h2 class="hero-name">{{ item.node.name }}</h2>
+        </div>
+        <div class="attribute-container">
+          <span class="attribute-name">STR</span>
+          <span class="attribute-name">AGI</span>
+          <span class="attribute-name">INT</span>
+        </div>
+        <div class="attribute-container">
+          <span class="attribute">{{ item.node.strGain }}</span>
+          <span class="attribute">{{ item.node.agiGain }}</span>
+          <span class="attribute">{{ item.node.intGain }}</span>
+        </div>
+        <p class="total-attribute-gain" :class="item.node.primaryAttr">{{ item.node.totalAttrGain.toFixed(1) }}</p>
+      </g-link>
+    </li>
+  </ul>
+</DSLayout>
 </template>
 
 <page-query>
@@ -70,30 +86,32 @@ export default {
   data: function () {
     return {
       pageName: "DOTA2 Heroes",
-      primaryAttr: 'test'
+      primaryAttr: 'test',
+      item: 'click test',
+      filterByAttr: 'test filter attr',
+      fkey: 'primaryAttr',
+      filterListAttr: ['str', 'agi', 'int'],
+      filterListAttr: [{
+          'shortName': 'STR',
+          'dotaName': 'DOTA_ATTRIBUTE_STRENGTH'
+        },
+        {
+          'shortName': 'AGI',
+          'dotaName': 'DOTA_ATTRIBUTE_AGILITY'
+        },
+        {
+          'shortName': 'INT',
+          'dotaName': 'DOTA_ATTRIBUTE_INTELLECT'
+        }
+      ],
+      filter: 'All'
     };
   },
-  computed: {
-    // getAttrIcon() {
-    //   console.log('setAttrIcon:')
-    //   console.log(this)
-    // },
-    // setPrimaryAttribute() {
-    //   // let x = this.$page.allXDOTA.edges
-    //   // x.forEach(hero => {
-    //   //   console.log(hero.node.primaryAttr)
-    //   // })
-    //   // console.log(this.$page.allXDOTA.edges)
-    //   // if (this.$page.allXDOTA.edges.node.primaryAttr === "DOTA_ATTRIBUTE_INTELLECT") {
-    //   //   console.log("return this.primaryAttr = 'primary-attribute-int'")
-    //   // }
-    //   //       if (this.$page.allXDOTA.edges.node.primaryAttr === "DOTA_ATTRIBUTE_STRENGTH") {
-    //   //   console.log("return this.primaryAttr = 'primary-attribute-str'")
-    //   // }
-    //   //       if (this.$page.allXDOTA.edges.node.primaryAttr === "DOTA_ATTRIBUTE_AGILITY") {
-    //   //   console.log("return this.primaryAttr = 'primary-attribute-agi'")
-    //   // }
-    // },
+  methods: {
+    attrFilter: function (e) {
+      console.log(`attrFilter click`)
+      console.log(e)
+    }
   },
   mounted() {
     this.$emit(this.pageName);
@@ -164,19 +182,80 @@ export default {
   margin: 0 0 1em 0;
 }
 
-.attrIcon {
-  
+.attribute-filter-container {}
+
+.filter-container-inner {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 140px;
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  border: none;
+}
+
+.filter-item {
+  cursor: pointer;
+
+  &.DOTA_ATTRIBUTE_STRENGTH {
+    background: no-repeat center/95% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Strength_attribute_symbol.png");
+    // padding-top: 5px;
+
+    &:hover {
+      border-radius: 40px;
+      box-shadow: 0 0 5px 0px $dota-str;
+      width: 41px;
+    }
+  }
+
+  &.DOTA_ATTRIBUTE_AGILITY {
+    background: no-repeat center/100% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Agility_attribute_symbol.png");
+
+    &:hover {
+      // background-color: rgba(255,255,255,0.5);
+      border-radius: 40px;
+      box-shadow: 0 0 5px 0px $dota-agi;
+      width: 42px;
+    }
+  }
+
+  &.DOTA_ATTRIBUTE_INTELLECT {
+    background: no-repeat center/100% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Intelligence_attribute_symbol.png");
+
+    &:hover {
+      // background-color: rgba(255,255,255,0.5);
+      border-radius: 40px;
+      box-shadow: 0 0 5px 0px $dota-int;
+      width: 42px;
+    }
+  }
+}
+
+.attr-icon {
   width: 20px;
   height: 20px;
+
   &.DOTA_ATTRIBUTE_STRENGTH {
-    background: no-repeat center/100% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Strength_attribute_symbol.png");
+    background: no-repeat center/95% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Strength_attribute_symbol.png");
+
   }
-    &.DOTA_ATTRIBUTE_AGILITY {
+
+  &.DOTA_ATTRIBUTE_AGILITY {
     background: no-repeat center/100% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Agility_attribute_symbol.png");
+
   }
-    &.DOTA_ATTRIBUTE_INTELLECT {
+
+  &.DOTA_ATTRIBUTE_INTELLECT {
     background: no-repeat center/100% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Intelligence_attribute_symbol.png");
   }
+}
+
+.attr-icon-large {
+  width: 40px;
+  height: 40px;
 }
 
 .icon-box {
@@ -225,7 +304,7 @@ export default {
   text-align: center;
   background: rgba(255, 255, 255, 0.1);
   font-size: 12px;
-  
+
   &.DOTA_ATTRIBUTE_STRENGTH {
     color: $primary-red;
   }
@@ -244,15 +323,17 @@ export default {
   font-size: 14px;
   // background: rgba(255, 255, 255, 0.1);
   padding: 2px;
-  border: 1px solid rgba(155,255,205,1);
+  border: 1px solid rgba(155, 255, 205, 1);
 
   &.DOTA_ATTRIBUTE_STRENGTH {
     color: $primary-red;
   }
-    &.DOTA_ATTRIBUTE_AGILITY {
+
+  &.DOTA_ATTRIBUTE_AGILITY {
     color: $primary-green;
   }
-    &.DOTA_ATTRIBUTE_INTELLECT {
+
+  &.DOTA_ATTRIBUTE_INTELLECT {
     color: $primary-blue;
   }
 }
