@@ -6,7 +6,8 @@
         <g-link :to="item.node.path">
           <li class="item-container grid-item">
             <!-- <div class="hero-number">{{ item.node.id }}</div> -->
-            <img src="../assets/Agility_attribute_symbol.png" width="20" />
+            <!-- <img src="../assets/Agility_attribute_symbol.png" width="20" /> -->
+            <div class="icon-box attrIcon" :class="item.node.primaryAttr"></div>
             <div class="hero-number-bg">
               <h2 class="hero-name">{{ item.node.name }}</h2>
             </div>
@@ -165,6 +166,36 @@ export default {
   text-align: center;
   padding: 0;
   margin: 0 0 1em 0;
+}
+
+.attrIcon {
+  
+  width: 20px;
+  height: 20px;
+  &.DOTA_ATTRIBUTE_STRENGTH {
+    background: no-repeat center/100% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Strength_attribute_symbol.png");
+  }
+    &.DOTA_ATTRIBUTE_AGILITY {
+    background: no-repeat center/100% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Agility_attribute_symbol.png");
+  }
+    &.DOTA_ATTRIBUTE_INTELLECT {
+    background: no-repeat center/100% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Intelligence_attribute_symbol.png");
+  }
+}
+
+.icon-box {
+  font-size: 0.5em;
+  font-weight: 300;
+  // margin: 5px 0 0 0;
+  padding: 5px 0 5px 0;
+  position: relative;
+  top: 26px;
+  left: 5px;
+  height: 18px;
+  width: 18px;
+  background: $primary-graphite;
+  z-index: 2;
+  color: rgba($primary-white, 0.5);
 }
 
 .attribute-container {
