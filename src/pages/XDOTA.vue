@@ -10,7 +10,7 @@
       <div class="attribute-filter-container">
         <!-- <p class="attribute-filter-heading">Filter By Primary Attribute</p> -->
         <div class="attribute-filters">
-        <button
+          <button
           v-for="(entry, index) in filterListAttr"
           :item="entry.dotaName"
           :key="index"
@@ -18,12 +18,12 @@
           :class="[ entry.dotaName, {active: entry.dotaName == filter} ]"
           class="filter-item attr-icon attr-icon-large"
         ></button>
-        <button
+          <button
           @click="filter = 'All';"
           :class="[ 'show-all filter-item', {active: 'All' == filter} ]"
         >
         Show All</button>
-      </div>
+        </div>
       </div>
     </div>
 
@@ -36,18 +36,21 @@
           <div class="hero-number-bg">
             <h2 class="hero-name">{{ item.node.name }}</h2>
           </div>
-          <div class="attribute-container">
-            <span class="attribute-name">STR</span>
-            <span class="attribute-name">AGI</span>
-            <span class="attribute-name">INT</span>
+          <div class="attribute-gain-container">
+            <p class="attribute-gain-heading">Attribute Gain</p>
+            <div class="attribute-container">
+              <span class="attribute-name" :class="{'DOTA_ATTRIBUTE_STRENGTH': item.node.primaryAttr == 'DOTA_ATTRIBUTE_STRENGTH'}">STR</span>
+              <span class="attribute-name" :class="{'DOTA_ATTRIBUTE_AGILITY': item.node.primaryAttr == 'DOTA_ATTRIBUTE_AGILITY'}">AGI</span>
+              <span class="attribute-name" :class="{'DOTA_ATTRIBUTE_INTELLECT': item.node.primaryAttr == 'DOTA_ATTRIBUTE_INTELLECT'}">INT</span>
+            </div>
+            <div class="attribute-container">
+              <span class="attribute" :class="{'DOTA_ATTRIBUTE_STRENGTH': item.node.primaryAttr == 'DOTA_ATTRIBUTE_STRENGTH'}">{{ item.node.strGain }}</span>
+              <span class="attribute" :class="{'DOTA_ATTRIBUTE_AGILITY': item.node.primaryAttr == 'DOTA_ATTRIBUTE_AGILITY'}">{{ item.node.agiGain }}</span>
+              <span class="attribute"  :class="{'DOTA_ATTRIBUTE_INTELLECT': item.node.primaryAttr == 'DOTA_ATTRIBUTE_INTELLECT'}">{{ item.node.intGain }}</span>
+            </div>
+            <p class="total-attribute-gain" :class="item.node.primaryAttr">{{ item.node.totalAttrGain.toFixed(1) }}</p>
           </div>
-          <div class="attribute-container">
-            <span class="attribute">{{ item.node.strGain }}</span>
-            <span class="attribute">{{ item.node.agiGain }}</span>
-            <span class="attribute">{{ item.node.intGain }}</span>
-          </div>
-          <p class="total-attribute-gain-text" :class="item.node.primaryAttr">Total Attr Gain:</p>
-          <p class="total-attribute-gain" :class="item.node.primaryAttr">{{ item.node.totalAttrGain.toFixed(1) }}</p>
+
         </g-link>
       </li>
     </ul>
@@ -229,11 +232,13 @@ export default {
   margin-left: 10px;
   // line-height: 20px;
 }
+
 .attribute-filter-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
+
 .attribute-filter-heading {
   font-size: 12px;
   font-weight: 300;
@@ -242,6 +247,7 @@ export default {
   margin: 0 0 5px 0;
   // border-bottom: 1px solid white;
 }
+
 .attribute-filters {
   display: flex;
   flex-direction: row;
@@ -379,16 +385,27 @@ button {
 }
 
 .attribute-name {
-  color: rgba(100, 200, 255, 1);
+  color: rgba(white, .5);
   font-size: 10px;
   text-align: center;
+  background: rgba(255, 255, 255, 0.1);
+    &.DOTA_ATTRIBUTE_STRENGTH {
+    color: $primary-red;
+  }
+
+  &.DOTA_ATTRIBUTE_AGILITY {
+    color: $primary-green;
+  }
+
+  &.DOTA_ATTRIBUTE_INTELLECT {
+    color: $primary-blue;
+  }
 }
 
 .attribute,
-.total-attribute-gain,
-.total-attribute-gain-text {
+.total-attribute-gain {
   color: white;
-  border: 1px solid black;
+  // border: 1px solid black;
   text-align: center;
   background: rgba(255, 255, 255, 0.1);
   margin: 0;
@@ -407,19 +424,42 @@ button {
   }
 }
 
+.attribute {
+  background: none;
+  border: none;
+  &:first-child {
+    border-right: 1px solid rgba(white, 0.1);
+  }
+  &:last-child {
+    border-left: 1px solid rgba(white, 0.1);
+  }
+}
+
 .total-attribute-gain-text {
   font-size: 10px;
-  border: 1px solid rgba(155, 255, 205, 1);
+  border: 1px solid rgba($primary-purple, 1);
   border-bottom: none;
+}
+
+.attribute-gain-container {
+  border: 1px solid rgba(white, .25)
+}
+.attribute-gain-heading {
+    font-size: 10px;
+    margin: 0;
+    padding: 0;
+    color: white;
+  border-bottom: 1px solid rgba(white, .25);
+  background: none;
 }
 
 .total-attribute-gain {
   font-weight: 500;
   font-size: 14px;
-  // background: rgba(255, 255, 255, 0.1);
-  // padding: 2px;
-  border: 1px solid rgba(155, 255, 205, 1);
-  border-top: none;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1px;
+  border-top: 1px solid rgba(255, 255, 255, .25);
+  // border-top: none;
 
   &.DOTA_ATTRIBUTE_STRENGTH {
     color: $primary-red;
