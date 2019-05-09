@@ -1,6 +1,7 @@
 <template>
 <DSLayout :pageName="pageName">
   <h1 class="page-title">DOTA2 Heroes</h1>
+  {{ showQuery }}
 
   <div class="filter-container">
     <div class="search-container">
@@ -24,14 +25,31 @@
         >
         Show All</button>
         </div>
+        <div class="filter-attribute-toggle">
+          <p class="select-heading">Sort By Attribute:</p>
+
+          <select id="sort-by-attributes">
+            <option 
+            class="select-item"
+            v-for="entry in sortByAttrList"
+            style="font-family: Montserrat; background: #222222;"
+            :value="entry.value"
+            >{{ entry.text }}
+            </option>
+            <!-- <option value="total" style="font-family: Montserrat;">Total Attribute Gain</option>
+            <option value="str" style="font-family: Montserrat;">Strength Gain</option>
+            <option value="agi" style="font-family: Montserrat;">Agility Gain</option>
+            <option value="int" style="font-family: Montserrat;">Intelligence Gain</option> -->
+          </select>
+
+
+        </div>
       </div>
     </div>
 
     <ul class="grid-main hero-list">
-      <li v-for="item in filteredResources" :key="item.id" class="item-container grid-item" v-if="item.node.primaryAttr === filter || filter === 'All'">
+      <li v-for="item in searchFilter" :key="item.id" class="item-container grid-item" v-show="item.node.primaryAttr === filter || filter === 'All'">
         <g-link :to="item.node.path">
-          <!-- <div class="hero-number">{{ item.node.id }}</div> -->
-          <!-- <img src="../assets/Agility_attribute_symbol.png" width="20" /> -->
           <div class="icon-box attr-icon" :class="item.node.primaryAttr"></div>
           <div class="hero-number-bg">
             <h2 class="hero-name">{{ item.node.name }}</h2>
@@ -116,6 +134,24 @@ export default {
       ],
       filter: 'All',
       searchQuery: '',
+      sortByAttrList: [
+        {
+          'value': 'Value1',
+          'text': 'Text1'
+        },
+                {
+          'value': 'Value2',
+          'text': 'Text2'
+        },
+                {
+          'value': 'Value3',
+          'text': 'Text3'
+        },
+                {
+          'value': 'Value4',
+          'text': 'Text4'
+        },
+        ],
       data: []
     };
   },
@@ -126,27 +162,32 @@ export default {
   //   }
   // },
   mounted() {
-    this.$emit(this.pageName);
-    let attrs = ''
     let x = this.$page.allXDOTA.edges
     x.forEach(hero => {
-      attrs = (parseFloat(hero.node.strGain) + parseFloat(hero.node.agiGain) + parseFloat(hero.node.intGain)).toFixed(1)
       this.data.push(hero)
     })
   },
   computed: {
-    filteredResources() {
-      console.log(this.searchQuery)
+    searchFilter() {
       let searchQueryLower = this.searchQuery.toLowerCase()
       if (this.searchQuery) {
-        console.log(this.searchQuery)
         return this.data.filter(item => {
           return item.node.name.toLowerCase().includes(this.searchQuery);
         })
       } else {
         return this.data;
       }
-    }
+    },
+    sortByPrimaryAttrGain() {
+      let searchQueryLower = this.searchQuery.toLowerCase()
+      if (this.searchQuery) {
+        return this.data.filter(item => {
+          return item.node.name.toLowerCase().includes(this.searchQuery);
+        })
+      } else {
+        return this.data;
+      }
+    },
   },
   metaInfo() {
     return {
@@ -235,8 +276,78 @@ export default {
 
 .attribute-filter-container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
+  align-items: center;
+}
+
+.checkbox {
+  cursor: pointer;
+}
+
+#toggle-label {
+  cursor: pointer;
+  margin-left: 2em;
+}
+
+.filter-attribute-toggle {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  margin-left: 2em;
+  color: white;
+
+  & select {
+    margin: 0;
+    font-family: 'Montserrat';
+    background: grey;
+    border: none;
+    padding: 8px;
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    color: white;
+
+    & option {
+      font-family: 'Montserrat';
+      background: grey;
+    }
+  }
+}
+
+.select-heading {
+  margin: 0;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  // border-bottom: 1px solid white;
+}
+
+.select-item {
+  background: pink;
+  color: pink;
+  font-family: 'Montserrat';
+  &#sort-by-attributes:hover {
+    background: red;
+  }
+  &:hover {
+    background: red;
+  }
+  &div:hover {
+    background: red;
+  }
+}
+
+#sort-by-attributes {
+  border: 2px solid $primary-blue;
+  background: #333;
+  transition: .25s all;
+  &:hover {
+    border: 2px solid $primary-blue;
+    cursor: pointer;
+    background: $primary-blue;
+    color: #222;
+    transition: .25s all;
+  }
 }
 
 .attribute-filter-heading {
@@ -389,16 +500,17 @@ button {
   font-size: 10px;
   text-align: center;
   background: rgba(255, 255, 255, 0.1);
-    &.DOTA_ATTRIBUTE_STRENGTH {
-    color: $primary-red;
+
+  &.DOTA_ATTRIBUTE_STRENGTH {
+    color: $dota-str;
   }
 
   &.DOTA_ATTRIBUTE_AGILITY {
-    color: $primary-green;
+    color: $dota-agi;
   }
 
   &.DOTA_ATTRIBUTE_INTELLECT {
-    color: $primary-blue;
+    color: $dota-int;
   }
 }
 
@@ -412,24 +524,26 @@ button {
   font-size: 12px;
 
   &.DOTA_ATTRIBUTE_STRENGTH {
-    color: $primary-red;
+    color: $dota-str;
   }
 
   &.DOTA_ATTRIBUTE_AGILITY {
-    color: $primary-green;
+    color: $dota-agi;
   }
 
   &.DOTA_ATTRIBUTE_INTELLECT {
-    color: $primary-blue;
+    color: $dota-int;
   }
 }
 
 .attribute {
   background: none;
   border: none;
+
   &:first-child {
     border-right: 1px solid rgba(white, 0.1);
   }
+
   &:last-child {
     border-left: 1px solid rgba(white, 0.1);
   }
@@ -444,11 +558,12 @@ button {
 .attribute-gain-container {
   border: 1px solid rgba(white, .25)
 }
+
 .attribute-gain-heading {
-    font-size: 10px;
-    margin: 0;
-    padding: 0;
-    color: white;
+  font-size: 10px;
+  margin: 0;
+  padding: 0;
+  color: white;
   border-bottom: 1px solid rgba(white, .25);
   background: none;
 }
@@ -462,15 +577,15 @@ button {
   // border-top: none;
 
   &.DOTA_ATTRIBUTE_STRENGTH {
-    color: $primary-red;
+    color: $dota-str;
   }
 
   &.DOTA_ATTRIBUTE_AGILITY {
-    color: $primary-green;
+    color: $dota-agi;
   }
 
   &.DOTA_ATTRIBUTE_INTELLECT {
-    color: $primary-blue;
+    color: $dota-int;
   }
 }
 
@@ -487,22 +602,6 @@ button {
   padding: 0;
   margin: 0;
   // justify-self: left;
-}
-
-.hero-number {
-  font-size: 0.5em;
-  font-weight: 300;
-  margin: 0;
-  padding: 0 0 5px 0;
-  position: relative;
-  top: 21px;
-  left: 5px;
-  height: 10px;
-  width: 18px;
-  border: 1px solid rgba($primary-blue, 0.5);
-  background: $primary-graphite;
-  z-index: 2;
-  color: rgba($primary-white, 0.5);
 }
 
 .hero-number-bg {
