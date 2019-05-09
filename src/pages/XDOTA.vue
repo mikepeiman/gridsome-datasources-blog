@@ -13,12 +13,12 @@
           :item="entry.dotaName"
           :key="index"
           @click="filter = entry.dotaName;"
-          :class="[ entry.dotaName, {active: entry.shortName == filter} ]"
+          :class="[ entry.dotaName, {active: entry.dotaName == filter} ]"
           class="filter-item attr-icon attr-icon-large"
         ></button>
         <button
           @click="filter = 'All';"
-          class=""
+          :class="[ 'show-all filter-item', {active: 'All' == filter} ]"
         >
         Show All</button>
       </ul>
@@ -220,6 +220,25 @@ button {
 .filter-item {
   cursor: pointer;
 
+    &.show-all {
+      padding: 0;      
+      border-radius: 4px;
+      width: 40px;
+      background:  no-repeat center/75% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/dota2-venn-2.png");
+      transition: all .25s;
+      &:hover {
+        
+        box-shadow: 0 0 5px 0px white;
+        transition: all .25s;        
+      }
+      &.active {
+      background: rgba(255, 255, 255, 0.1) no-repeat center/75% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/dota2-venn-2.png");
+      box-shadow: 0 0 2px 1px white;
+      
+      color: white;
+      }
+    }
+
   &.DOTA_ATTRIBUTE_STRENGTH {
     background: no-repeat center/95% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Strength_attribute_symbol.png");
     // padding-top: 5px;
@@ -227,7 +246,14 @@ button {
     &:hover {
       border-radius: 40px;
       box-shadow: 0 0 5px 0px $dota-str;
-      width: 41px;
+      
+    }
+
+    &.active {
+      box-shadow: 0 0 2px 1px white;
+      background: rgba(255, 255, 255, 0.1) no-repeat center/95% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Strength_attribute_symbol.png");
+      border-radius: 4px;
+      
     }
   }
 
@@ -238,7 +264,13 @@ button {
       // background-color: rgba(255,255,255,0.5);
       border-radius: 40px;
       box-shadow: 0 0 5px 0px $dota-agi;
-      width: 42px;
+      
+    }
+        &.active {
+      box-shadow: 0 0 2px 1px white;
+      background: rgba(255, 255, 255, 0.1) no-repeat center/95% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Agility_attribute_symbol.png");
+      border-radius: 4px;
+      
     }
   }
 
@@ -249,7 +281,13 @@ button {
       // background-color: rgba(255,255,255,0.5);
       border-radius: 40px;
       box-shadow: 0 0 5px 0px $dota-int;
-      width: 42px;
+      
+    }
+        &.active {
+      box-shadow: 0 0 2px 1px white;
+      background: rgba(255, 255, 255, 0.1) no-repeat center/95% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Intelligence_attribute_symbol.png");
+      border-radius: 4px;
+      
     }
   }
 }
