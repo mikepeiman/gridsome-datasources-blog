@@ -3,13 +3,11 @@
   <h1 class="page-title">DOTA2 Heroes</h1>
   <div class="filter-container">
     <div class="attribute-filter-container">
+      <input class="form-control" type="text" v-model="searchQuery" placeholder="Search" />
       <div>FILTER BY ATTR:
 
       </div>
       <ul class="filter-container-inner">
-        <!-- <li @click="attrFilter('str')" class="filter-item attr-icon attr-icon-large DOTA_ATTRIBUTE_STRENGTH"></li>
-        <li @click="attrFilter('agi')" class="filter-item attr-icon attr-icon-large DOTA_ATTRIBUTE_AGILITY"></li>
-        <li @click="attrFilter('int')" class="filter-item attr-icon attr-icon-large DOTA_ATTRIBUTE_INTELLECT"></li> -->
         <button
           v-for="(entry, index) in filterListAttr"
           :item="entry.dotaName"
@@ -28,7 +26,7 @@
 
   </div>
   <ul class="grid-main hero-list">
-    <li v-for="(item, index) in $page.allXDOTA.edges" :key="item.id" class="item-container grid-item" v-if="item.node.primaryAttr === filter || filter === 'All'">
+    <li v-for="item in filteredResources" :key="item.id" class="item-container grid-item" v-if="item.node.primaryAttr === filter || filter === 'All'">
       <g-link :to="item.node.path">
         <!-- <div class="hero-number">{{ item.node.id }}</div> -->
         <!-- <img src="../assets/Agility_attribute_symbol.png" width="20" /> -->
@@ -110,24 +108,39 @@ export default {
           'dotaName': 'DOTA_ATTRIBUTE_INTELLECT'
         }
       ],
-      filter: 'All'
+      filter: 'All',
+      searchQuery: '',
+      data: []
     };
   },
-  methods: {
-    attrFilter: function (e) {
-      console.log(`attrFilter click`)
-      console.log(e)
-    }
-  },
+  // methods: {
+  //   attrFilter: function (e) {
+  //     console.log(`attrFilter click`)
+  //     console.log(e)
+  //   }
+  // },
   mounted() {
     this.$emit(this.pageName);
     let attrs = ''
     let x = this.$page.allXDOTA.edges
     x.forEach(hero => {
       attrs = (parseFloat(hero.node.strGain) + parseFloat(hero.node.agiGain) + parseFloat(hero.node.intGain)).toFixed(1)
-      // console.log(attrs)
+      this.data.push(hero)
     })
-
+  },
+  computed: {
+    filteredResources() {
+      console.log(this.searchQuery)
+      let searchQueryLower = this.searchQuery.toLowerCase()
+      if (this.searchQuery) {
+        console.log(this.searchQuery)
+        return this.data.filter(item => {
+          return item.node.name.toLowerCase().includes(this.searchQuery);
+        })
+      } else {
+        return this.data;
+      }
+    }
   },
   metaInfo() {
     return {
