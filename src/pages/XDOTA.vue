@@ -2,7 +2,30 @@
 <DSLayout :pageName="pageName">
   <h1 class="page-title">DOTA2 Heroes</h1>
 
-  <apexchart id="vuechart-example" width="500" type="bar" :options="chartOptions" :series="series"></apexchart>
+  <!-- <apexchart id="vuechart-example" width="500" type="bar" :options="chartOptions" :series="series"></apexchart> -->
+  <h1>BREAK</h1>
+  
+<figure>
+  <figcaption>A graph that shows the number of fruit collected</figcaption>
+  <svg class="chart" width="420" height="150" aria-labelledby="title desc" role="img">
+  <g class="bar">
+    <rect id="rect1" width="80" height="19" style="fill: red;"></rect>
+    <i class="fas fa-arrow" x="90"></i>
+    <rect id="rect2" width="40" height="19"></rect>
+    <text x="45" y="9.5" dy=".35em">4 apples</text>
+  </g>
+  </svg>
+</figure>
+
+  <title id="title">A bar chart showing information</title>
+  <desc id="desc" style="color: white;">4 apples; 8 bananas; 15 kiwis; 16 oranges; 23 lemons</desc>
+  <g class="bar">
+    <rect width="40" height="19"></rect>
+    <text x="45" y="9.5" dy=".35em">4 apples</text>
+  </g>
+  </svg>
+  <h1>SVG library</h1>
+  <div id="drawing"></div>
 
   <div class="filter-container">
     <div class="search-container">
@@ -113,6 +136,7 @@
 import DSLayout from "~/layouts/DSLayout.vue";
 import DSSideBar from "~/components/DSSideBar.vue";
 import Multiselect from 'vue-multiselect';
+import SVG from 'svg.js';
 
 export default {
   components: {
@@ -171,17 +195,17 @@ export default {
       e: '',
 
       chartOptions: {
-          chart: {
-            id: 'vuechart-example'
-          },
-          xaxis: {
-            categories: ['|','|','|','|']
-          }
+        chart: {
+          id: 'vuechart-example'
         },
-        series: [{
-          name: 'series-1',
-          data: [30, 40, 35, 50, 49, 60, 70, 91]
-        }]
+        xaxis: {
+          categories: ['|', '|', '|', '|']
+        }
+      },
+      series: [{
+        name: 'series-1',
+        data: [30, 40, 35, 50, 49, 60, 70, 91]
+      }]
     };
   },
   methods: {
@@ -234,6 +258,8 @@ export default {
       this.data.push(hero)
     })
     this.attrSortData = this.data
+    var draw = SVG('drawing').size(300, 300)
+    var rect = draw.rect(100, 100).attr({ fill: '#f06' })
   },
   computed: {
     searchFilter() {
