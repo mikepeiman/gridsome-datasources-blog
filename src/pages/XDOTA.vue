@@ -67,7 +67,7 @@
         </g-link>
       </li>
     </ul>
-    <h1>BREAK</h1>
+    <!-- <h1>BREAK</h1>
     <ul class="grid-main hero-list">
       <li v-for="item in sortByAttrGain" :key="item.id" class="item-container grid-item" v-show="item.node.primaryAttr === filter || filter === 'All'">
         <g-link :to="item.node.path">
@@ -92,7 +92,7 @@
 
         </g-link>
       </li>
-    </ul>
+    </ul> -->
 </DSLayout>
 </template>
 
@@ -144,7 +144,7 @@ export default {
       strKey: 'strGain',
       agiKey: 'agiGain',
       intKey: 'intGain',
-      sortSelected: '4',
+      sortSelected: '1',
 
       fkey: 'primaryAttr',
       filter: 'All',
@@ -207,26 +207,7 @@ export default {
       }
 
     },
-  },
-  mounted() {
-    let x = this.$page.allXDOTA.edges
-    x.forEach(hero => {
-      this.data.push(hero)
-    })
-  },
-  computed: {
-    searchFilter() {
-      this.searchData = this.attrSortData
-      let searchQueryLower = this.searchQuery.toLowerCase()
-      if (this.searchQuery) {
-        return this.attrSortData.filter(item => {
-          return item.node.name.toLowerCase().includes(this.searchQuery);
-        })
-      } else {
-        return this.attrSortData;
-      }
-    },
-    sortByAttrGain() {
+        sortByAttrGain() {
       console.log('sortByAttrGain')
       console.log(this.sortSelected)
       if (this.sortSelected === "2") {
@@ -244,14 +225,37 @@ export default {
         // this.data.sort((a, b) => (a.intGain > b.intGain) ? 1 : (a.intGain === b.intGain) ? ((a.name > b.name) ? 1 : -1) : -1)
         // return this.data
       } else {
-        // let x = this.$page.allXDOTA.edges
-        // x.forEach(hero => {
-        //   this.data.push(hero)
-        // })
         return  this.attrSortData = this.data
-        console.log('sortByAttrGain else')
       }
     },
+  },
+  mounted() {
+    let x = this.$page.allXDOTA.edges
+    x.forEach(hero => {
+      this.data.push(hero)
+    })
+    this.attrSortData = this.data
+  },
+  computed: {
+    searchFilter() {
+      // this.attrSortData = sortByAttrGain()
+      this.searchData = this.attrSortData // this.attrSortData
+      let searchQueryLower = this.searchQuery.toLowerCase()
+      if (this.searchQuery) {
+        return this.attrSortData.filter(item => {
+          return item.node.name.toLowerCase().includes(this.searchQuery);
+        })
+      } else {
+        return this.attrSortData;
+      }
+    },
+
+  },
+  watch: {
+    sortSelected() {
+      console.log(this.sortSelected)
+      this.sortByAttrGain()
+    }
   },
   metaInfo() {
     return {
