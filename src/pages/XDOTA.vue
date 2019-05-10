@@ -2,6 +2,8 @@
 <DSLayout :pageName="pageName">
   <h1 class="page-title">DOTA2 Heroes</h1>
 
+  <apexchart id="vuechart-example" width="500" type="bar" :options="chartOptions" :series="series"></apexchart>
+
   <div class="filter-container">
     <div class="search-container">
       <input class="form-control search-bar" type="text" v-model="searchQuery" placeholder="Search" />
@@ -167,6 +169,19 @@ export default {
       searchData: [],
       attrSortData: [],
       e: '',
+
+      chartOptions: {
+          chart: {
+            id: 'vuechart-example'
+          },
+          xaxis: {
+            categories: ['|','|','|','|']
+          }
+        },
+        series: [{
+          name: 'series-1',
+          data: [30, 40, 35, 50, 49, 60, 70, 91]
+        }]
     };
   },
   methods: {
@@ -211,31 +226,18 @@ export default {
         return this.attrSortData = this.data
       }
     },
-    setAttackIcon(e) {
-      console.log('set attack icon')
-      console.log(e)
-      console.log(this)
-    }
   },
   mounted() {
     let x = this.$page.allXDOTA.edges
     x.forEach(hero => {
-      // if (hero.node.attackType == 'Melee') {
-      //   console.log(`hero is melee`)
-      // }
-      // if (hero.node.attackType == 'Ranged') {
-      //   console.log(`hero is ranged`)
-      // }
       hero.node.attackIcon = hero.node.attackType == 'Melee' ? 'fas fa-axe-battle' : 'fas fa-bow-arrow'
-      console.log(`${hero.node.name} is ${hero.node.attackIcon}`)
       this.data.push(hero)
     })
     this.attrSortData = this.data
   },
   computed: {
     searchFilter() {
-      // this.attrSortData = sortByAttrGain()
-      this.searchData = this.attrSortData // this.attrSortData
+      this.searchData = this.attrSortData
       let searchQueryLower = this.searchQuery.toLowerCase()
       if (this.searchQuery) {
         return this.attrSortData.filter(item => {
@@ -245,16 +247,9 @@ export default {
         return this.attrSortData;
       }
     },
-    attackType() {
-      console.log('attackType')
-      console.log(e)
-      this.setAttackIcon()
-      return  'fas fa-axe-battle'
-    }
   },
   watch: {
     sortSelected() {
-      console.log(this.sortSelected)
       this.sortByAttrGain()
     }
   },
@@ -683,7 +678,7 @@ button {
 .hero-name-container {
   font-size: 0.5em;
   display: grid;
-  grid-template-columns: 1fr 1fr 3fr;
+  grid-template-columns: 1fr 7fr;
   font-weight: 300;
   margin: 0;
   padding: 0px 3px;
@@ -733,11 +728,12 @@ button {
   display: flex;
   color: white;
   font-size: 12px;
-  padding: 3px 0;
+  // padding: 3px 0;
   justify-content: space-around;
 
   p {
     margin: 0;
+    padding: 2px 0;
 
     &:first-child {
       padding-left: 3px;
@@ -747,10 +743,12 @@ button {
       padding-right: 3px;
     }
   }
+}
 
-  &.attack-icon {
-    line-height: 0;
-  }
+.attack-icon {
+  line-height: 1.5em;
+  padding: 2px 7px 2px 0;
+  border-right: 1px solid rgba(white, .25);
 }
 
 .DOTA_ATTRIBUTE_STRENGTH {
