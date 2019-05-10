@@ -1,8 +1,6 @@
 <template>
 <DSLayout :pageName="pageName">
   <h1 class="page-title">DOTA2 Heroes</h1>
-  {{ showQuery }}
-
   <div class="filter-container">
     <div class="search-container">
       <input class="form-control search-bar" type="text" v-model="searchQuery" placeholder="Search" />
@@ -27,28 +25,51 @@
         </div>
         <div class="filter-attribute-toggle">
           <p class="select-heading">Sort By Attribute:</p>
-
+          <!-- <multiselect v-model="selected" :options="options"  :show-labels="false" :close-on-select="true"> -->
           <select id="sort-by-attributes">
             <option 
             class="select-item"
             v-for="entry in sortByAttrList"
-            style="font-family: Montserrat; background: #222222;"
+            @click="sortSelected = entry.value"
+            style="font-family: 'Montserrat'; font-weight: 300; background: #222222; color: #eee;"
             :value="entry.value"
             >{{ entry.text }}
             </option>
-            <!-- <option value="total" style="font-family: Montserrat;">Total Attribute Gain</option>
-            <option value="str" style="font-family: Montserrat;">Strength Gain</option>
-            <option value="agi" style="font-family: Montserrat;">Agility Gain</option>
-            <option value="int" style="font-family: Montserrat;">Intelligence Gain</option> -->
           </select>
 
+          <!-- </multiselect> -->
 
         </div>
       </div>
     </div>
-
     <ul class="grid-main hero-list">
       <li v-for="item in searchFilter" :key="item.id" class="item-container grid-item" v-show="item.node.primaryAttr === filter || filter === 'All'">
+        <g-link :to="item.node.path">
+          <div class="icon-box attr-icon" :class="item.node.primaryAttr"></div>
+          <div class="hero-number-bg">
+            <h2 class="hero-name">{{ item.node.name }}</h2>
+          </div>
+          <div class="attribute-gain-container">
+            <p class="attribute-gain-heading">Attribute Gain</p>
+            <div class="attribute-container">
+              <span class="attribute-name" :class="{'DOTA_ATTRIBUTE_STRENGTH': item.node.primaryAttr == 'DOTA_ATTRIBUTE_STRENGTH'}">STR</span>
+              <span class="attribute-name" :class="{'DOTA_ATTRIBUTE_AGILITY': item.node.primaryAttr == 'DOTA_ATTRIBUTE_AGILITY'}">AGI</span>
+              <span class="attribute-name" :class="{'DOTA_ATTRIBUTE_INTELLECT': item.node.primaryAttr == 'DOTA_ATTRIBUTE_INTELLECT'}">INT</span>
+            </div>
+            <div class="attribute-container">
+              <span class="attribute" :class="{'DOTA_ATTRIBUTE_STRENGTH': item.node.primaryAttr == 'DOTA_ATTRIBUTE_STRENGTH'}">{{ item.node.strGain }}</span>
+              <span class="attribute" :class="{'DOTA_ATTRIBUTE_AGILITY': item.node.primaryAttr == 'DOTA_ATTRIBUTE_AGILITY'}">{{ item.node.agiGain }}</span>
+              <span class="attribute"  :class="{'DOTA_ATTRIBUTE_INTELLECT': item.node.primaryAttr == 'DOTA_ATTRIBUTE_INTELLECT'}">{{ item.node.intGain }}</span>
+            </div>
+            <p class="total-attribute-gain" :class="item.node.primaryAttr">{{ item.node.totalAttrGain.toFixed(1) }}</p>
+          </div>
+
+        </g-link>
+      </li>
+    </ul>
+    <h1>BREAK</h1>
+    <ul class="grid-main hero-list">
+      <li v-for="item in sortByAttrGain" :key="item.id" class="item-container grid-item" v-show="item.node.primaryAttr === filter || filter === 'All'">
         <g-link :to="item.node.path">
           <div class="icon-box attr-icon" :class="item.node.primaryAttr"></div>
           <div class="hero-number-bg">
@@ -106,19 +127,27 @@
 <script>
 import DSLayout from "~/layouts/DSLayout.vue";
 import DSSideBar from "~/components/DSSideBar.vue";
+import Multiselect from 'vue-multiselect'
 
 export default {
   components: {
     DSLayout,
-    DSSideBar
+    DSSideBar,
+    Multiselect
   },
   data: function () {
     return {
       pageName: "DOTA2 Heroes",
-      primaryAttr: 'test',
-      item: 'click test',
-      filterByAttr: 'test filter attr',
+      selected: null,
+      options: ['Total Attribute Gain', 'Strength Gain', 'Agility Gain', 'Intelligence Gain'],
+
+      strKey: 'strGain',
+      agiKey: 'agiGain',
+      intKey: 'intGain',
+      sortSelected: '4',
+
       fkey: 'primaryAttr',
+      filter: 'All',
       filterListAttr: [{
           'shortName': 'STR',
           'dotaName': 'DOTA_ATTRIBUTE_STRENGTH'
@@ -132,35 +161,52 @@ export default {
           'dotaName': 'DOTA_ATTRIBUTE_INTELLECT'
         }
       ],
-      filter: 'All',
+
       searchQuery: '',
-      sortByAttrList: [
+      sortByAttrList: [{
+          'value': '1',
+          'text': 'Total Attribute Gain'
+        },
         {
-          'value': 'Value1',
-          'text': 'Text1'
+          'value': '2',
+          'text': 'Strength Gain'
         },
-                {
-          'value': 'Value2',
-          'text': 'Text2'
+        {
+          'value': '3',
+          'text': 'Agility Gain'
         },
-                {
-          'value': 'Value3',
-          'text': 'Text3'
+        {
+          'value': '4',
+          'text': 'Intelligence Gain'
         },
-                {
-          'value': 'Value4',
-          'text': 'Text4'
-        },
-        ],
-      data: []
+      ],
+      data: [],
+      searchData: [],
+
     };
   },
-  // methods: {
-  //   attrFilter: function (e) {
-  //     console.log(`attrFilter click`)
-  //     console.log(e)
-  //   }
-  // },
+  methods: {
+    checkSelect(entry) {
+      console.log(entry)
+      if (entry.value === "2") {
+        this.data.sort((a, b) => (a.strGain > b.strGain) ? 1 : (a.strGain === b.strGain) ? ((a.name > b.name) ? 1 : -1) : -1)
+        return this.data
+      } else if (entry.vaue === 3) {
+        this.data.sort((a, b) => (a.agiGain > b.agiGain) ? 1 : (a.agiGain === b.agiGain) ? ((a.name > b.name) ? 1 : -1) : -1)
+        return this.data
+      } else if (entry.vaue === 4) {
+        this.data.sort((a, b) => (a.intGain > b.intGain) ? 1 : (a.intGain === b.intGain) ? ((a.name > b.name) ? 1 : -1) : -1)
+        return this.data
+      } else {
+        let x = this.$page.allXDOTA.edges
+        x.forEach(hero => {
+          this.data.push(hero)
+        })
+        return this.data
+      }
+
+    },
+  },
   mounted() {
     let x = this.$page.allXDOTA.edges
     x.forEach(hero => {
@@ -178,14 +224,30 @@ export default {
         return this.data;
       }
     },
-    sortByPrimaryAttrGain() {
-      let searchQueryLower = this.searchQuery.toLowerCase()
-      if (this.searchQuery) {
-        return this.data.filter(item => {
-          return item.node.name.toLowerCase().includes(this.searchQuery);
-        })
+    sortByAttrGain() {
+      console.log('sortByAttrGain')
+      console.log(this.sortSelected)
+      if (this.sortSelected === "2") {
+        return this.data.slice().sort(function (a, b) {
+          return a.node.strGain < b.node.strGain
+        });
+      } else if (this.sortSelected === "3") {
+        return this.data.slice().sort(function (a, b) {
+          return a.node.agiGain < b.node.agiGain
+        });
+      } else if (this.sortSelected === "4") {
+        return this.data.slice().sort(function (a, b) {
+          return a.node.intGain < b.node.intGain
+        });
+        // this.data.sort((a, b) => (a.intGain > b.intGain) ? 1 : (a.intGain === b.intGain) ? ((a.name > b.name) ? 1 : -1) : -1)
+        // return this.data
       } else {
-        return this.data;
+        // let x = this.$page.allXDOTA.edges
+        // x.forEach(hero => {
+        //   this.data.push(hero)
+        // })
+        return this.data
+        console.log('sortByAttrGain else')
       }
     },
   },
@@ -202,6 +264,7 @@ export default {
 <style lang="scss" scoped>
 @import "./../assets/colors.scss";
 @import "./../assets/elements.scss";
+@import "./../assets/vue-multiselect.css";
 
 .site-container {
   background: #252525;
@@ -314,6 +377,10 @@ export default {
   }
 }
 
+option {
+  font-family: 'Montserrat';
+}
+
 .select-heading {
   margin: 0;
   font-size: 14px;
@@ -323,30 +390,24 @@ export default {
 }
 
 .select-item {
-  background: pink;
-  color: pink;
   font-family: 'Montserrat';
-  &#sort-by-attributes:hover {
-    background: red;
-  }
-  &:hover {
-    background: red;
-  }
-  &div:hover {
-    background: red;
-  }
 }
 
 #sort-by-attributes {
   border: 2px solid $primary-blue;
   background: #333;
   transition: .25s all;
+
   &:hover {
     border: 2px solid $primary-blue;
     cursor: pointer;
     background: $primary-blue;
     color: #222;
     transition: .25s all;
+  }
+
+  &.select-item {
+    background: pink;
   }
 }
 
