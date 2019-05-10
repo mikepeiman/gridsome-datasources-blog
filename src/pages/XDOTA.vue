@@ -1,7 +1,7 @@
 <template>
 <DSLayout :pageName="pageName">
   <h1 class="page-title">DOTA2 Heroes</h1>
-  <font-awesome-icon icon="axe-battle" />
+
   <div class="filter-container">
     <div class="search-container">
       <input class="form-control search-bar" type="text" v-model="searchQuery" placeholder="Search" />
@@ -46,8 +46,9 @@
     <ul class="grid-main hero-list">
       <li v-for="item in searchFilter" :key="item.id" class="item-container grid-item" v-show="item.node.primaryAttr === filter || filter === 'All'">
         <g-link :to="item.node.path">
-          <div class="icon-box attr-icon" :class="item.node.primaryAttr"></div>
-          <div class="hero-number-bg">
+
+          <div class="hero-name-container">
+            <div class="icon-box attr-icon" :class="item.node.primaryAttr"></div>
             <h2 class="hero-name">{{ item.node.name }}</h2>
           </div>
           <div class="attribute-gain-container">
@@ -63,8 +64,9 @@
               <span class="attribute"  :class="{'DOTA_ATTRIBUTE_INTELLECT': item.node.primaryAttr == 'DOTA_ATTRIBUTE_INTELLECT'}">{{ item.node.intGain }}</span>
             </div>
             <p class="total-attribute-gain" :class="item.node.primaryAttr">{{ item.node.totalAttrGain.toFixed(1) }}</p>
-            <div class="attack-range-container">
-              <p class="attack-range" :class="item.node.attackRange">Attack Range: </p>
+            <div class="attack-range-container" :class="item.node.primaryAttr">
+              <i class="attack-icon" :class="item.node.attackIcon" ></i>
+              <p class="attack-range" :class="item.node.attackRange">Range: </p>
               <p class="attack-range" :class="item.node.attackRange">{{ item.node.attackRange }}</p>
             </div>
 
@@ -84,6 +86,7 @@
         id
         name
         primaryAttr
+        attackType
         strBase
         strGain
         intBase
@@ -163,7 +166,7 @@ export default {
       data: [],
       searchData: [],
       attrSortData: [],
-
+      e: '',
     };
   },
   methods: {
@@ -208,10 +211,23 @@ export default {
         return this.attrSortData = this.data
       }
     },
+    setAttackIcon(e) {
+      console.log('set attack icon')
+      console.log(e)
+      console.log(this)
+    }
   },
   mounted() {
     let x = this.$page.allXDOTA.edges
     x.forEach(hero => {
+      // if (hero.node.attackType == 'Melee') {
+      //   console.log(`hero is melee`)
+      // }
+      // if (hero.node.attackType == 'Ranged') {
+      //   console.log(`hero is ranged`)
+      // }
+      hero.node.attackIcon = hero.node.attackType == 'Melee' ? 'fas fa-axe-battle' : 'fas fa-bow-arrow'
+      console.log(`${hero.node.name} is ${hero.node.attackIcon}`)
       this.data.push(hero)
     })
     this.attrSortData = this.data
@@ -229,7 +245,12 @@ export default {
         return this.attrSortData;
       }
     },
-
+    attackType() {
+      console.log('attackType')
+      console.log(e)
+      this.setAttackIcon()
+      return  'fas fa-axe-battle'
+    }
   },
   watch: {
     sortSelected() {
@@ -242,12 +263,13 @@ export default {
       title: "DOTA.vue", // this.$route.name,
       titleTemplate: "%s | DOTA2 Heroes",
       breadCrumb: this.$route.name,
-      link: [
-        {rel: 'stylesheet', href: './../assets/fontawesome/all.css'}
-      ],
-      script: [
-        {href: './../assets/fontawesome/all.js'}
-      ]
+      link: [{
+        rel: 'stylesheet',
+        href: './../assets/fontawesome/all.css'
+      }],
+      script: [{
+        href: './../assets/fontawesome/all.js'
+      }]
     };
   },
 };
@@ -257,6 +279,7 @@ export default {
 @import "./../assets/colors.scss";
 @import "./../assets/elements.scss";
 @import "./../assets/vue-multiselect.css";
+@import "./../assets/fontawesome/css/all.css";
 
 .site-container {
   background: #252525;
@@ -348,7 +371,7 @@ export default {
 .filter-attribute-toggle {
   display: flex;
   flex-direction: column;
-  justify-content: start;
+  justify-content: flex-start;
   margin-left: 2em;
   color: white;
 
@@ -521,6 +544,14 @@ button {
   &.DOTA_ATTRIBUTE_INTELLECT {
     background: no-repeat center/100% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Intelligence_attribute_symbol.png");
   }
+
+  &.Melee {
+    background: no-repeat center/100% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Intelligence_attribute_symbol.png");
+  }
+
+  &.Ranged {
+    background: no-repeat center/100% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Intelligence_attribute_symbol.png");
+  }
 }
 
 .attr-icon-large {
@@ -529,15 +560,7 @@ button {
 }
 
 .icon-box {
-  font-size: 0.5em;
-  font-weight: 300;
-  // margin: 5px 0 0 0;
   padding: 5px 0 5px 0;
-  position: relative;
-  top: 26px;
-  left: 5px;
-  height: 18px;
-  width: 18px;
   background: $primary-graphite;
   z-index: 2;
   color: rgba($primary-white, 0.5);
@@ -657,8 +680,10 @@ button {
   // justify-self: left;
 }
 
-.hero-number-bg {
+.hero-name-container {
   font-size: 0.5em;
+  display: grid;
+  grid-template-columns: 1fr 1fr 3fr;
   font-weight: 300;
   margin: 0;
   padding: 0px 3px;
@@ -708,15 +733,43 @@ button {
   display: flex;
   color: white;
   font-size: 12px;
+  padding: 3px 0;
   justify-content: space-around;
+
   p {
     margin: 0;
+
     &:first-child {
       padding-left: 3px;
     }
+
     &:last-child {
       padding-right: 3px;
     }
   }
+
+  &.attack-icon {
+    line-height: 0;
+  }
+}
+
+.DOTA_ATTRIBUTE_STRENGTH {
+  color: $dota-str;
+}
+
+.DOTA_ATTRIBUTE_AGILITY {
+  color: $dota-agi;
+}
+
+.DOTA_ATTRIBUTE_INTELLECT {
+  color: $dota-int;
+}
+
+i.Ranged:before {
+  content: "\f6b9";
+}
+
+i.Melee:before {
+  content: "\f6b3";
 }
 </style>

@@ -30,6 +30,13 @@ module.exports = function(api) {
         return node.fields.name;
       }
     }));
+    contentType.addSchemaField("attackType", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      allowNull: false,
+      resolve(node) {
+        return node.fields.attackType;
+      }
+    }));
     contentType.addSchemaField("primaryAttr", ({ graphql }) => ({
       type: graphql.GraphQLString,
       allowNull: false,
@@ -175,12 +182,23 @@ module.exports = function(api) {
         //   projectileSpeed,
         //   movementSpeed,
         //   turnRate,
-        
 
         for (var i in data) {
           hero = data[i];
           if (hero.workshop_guide_name !== undefined) {
-            let totalAttrGain = hero.AttributeStrengthGain + hero.AttributeAgilityGain + hero.AttributeIntelligenceGain
+            let totalAttrGain =
+              hero.AttributeStrengthGain +
+              hero.AttributeAgilityGain +
+              hero.AttributeIntelligenceGain;
+
+            hero.attackType = hero.AttackCapabilities.toLowerCase().includes(
+              "melee"
+            )
+              ? "Melee"
+              : "Ranged";
+            console.log(
+              `hero ${hero.workshop_guide_name} attack type: ${hero.attackType}`
+            );
             contentType.addNode({
               id: hero.HeroID,
               fields: {
@@ -194,7 +212,7 @@ module.exports = function(api) {
                 totalAttrGain: totalAttrGain,
                 primaryAttr: hero.AttributePrimary,
                 armor: hero.ArmorPhysical,
-                attackType: hero.AttackCapabilities,
+                attackType: hero.attackType,
                 attackDamageMin: hero.AttackDamageMin,
                 attackDamageMax: hero.AttackDamageMax,
                 attackRate: hero.AttackRate,
