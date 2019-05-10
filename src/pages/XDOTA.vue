@@ -182,6 +182,7 @@ export default {
       ],
       data: [],
       searchData: [],
+      attrSortData: [],
 
     };
   },
@@ -215,28 +216,29 @@ export default {
   },
   computed: {
     searchFilter() {
+      this.searchData = this.attrSortData
       let searchQueryLower = this.searchQuery.toLowerCase()
       if (this.searchQuery) {
-        return this.data.filter(item => {
+        return this.attrSortData.filter(item => {
           return item.node.name.toLowerCase().includes(this.searchQuery);
         })
       } else {
-        return this.data;
+        return this.attrSortData;
       }
     },
     sortByAttrGain() {
       console.log('sortByAttrGain')
       console.log(this.sortSelected)
       if (this.sortSelected === "2") {
-        return this.data.slice().sort(function (a, b) {
+        return this.attrSortData = this.data.slice().sort(function (a, b) {
           return a.node.strGain < b.node.strGain
         });
       } else if (this.sortSelected === "3") {
-        return this.data.slice().sort(function (a, b) {
+        return  this.attrSortData = this.data.slice().sort(function (a, b) {
           return a.node.agiGain < b.node.agiGain
         });
       } else if (this.sortSelected === "4") {
-        return this.data.slice().sort(function (a, b) {
+        return  this.attrSortData = this.data.slice().sort(function (a, b) {
           return a.node.intGain < b.node.intGain
         });
         // this.data.sort((a, b) => (a.intGain > b.intGain) ? 1 : (a.intGain === b.intGain) ? ((a.name > b.name) ? 1 : -1) : -1)
@@ -246,7 +248,7 @@ export default {
         // x.forEach(hero => {
         //   this.data.push(hero)
         // })
-        return this.data
+        return  this.attrSortData = this.data
         console.log('sortByAttrGain else')
       }
     },
