@@ -1,6 +1,7 @@
 <template>
 <DSLayout :pageName="pageName">
   <h1 class="page-title">DOTA2 Heroes</h1>
+  <font-awesome-icon icon="axe-battle" />
   <div class="filter-container">
     <div class="search-container">
       <input class="form-control search-bar" type="text" v-model="searchQuery" placeholder="Search" />
@@ -62,37 +63,16 @@
               <span class="attribute"  :class="{'DOTA_ATTRIBUTE_INTELLECT': item.node.primaryAttr == 'DOTA_ATTRIBUTE_INTELLECT'}">{{ item.node.intGain }}</span>
             </div>
             <p class="total-attribute-gain" :class="item.node.primaryAttr">{{ item.node.totalAttrGain.toFixed(1) }}</p>
+            <div class="attack-range-container">
+              <p class="attack-range" :class="item.node.attackRange">Attack Range: </p>
+              <p class="attack-range" :class="item.node.attackRange">{{ item.node.attackRange }}</p>
+            </div>
+
           </div>
 
         </g-link>
       </li>
     </ul>
-    <!-- <h1>BREAK</h1>
-    <ul class="grid-main hero-list">
-      <li v-for="item in sortByAttrGain" :key="item.id" class="item-container grid-item" v-show="item.node.primaryAttr === filter || filter === 'All'">
-        <g-link :to="item.node.path">
-          <div class="icon-box attr-icon" :class="item.node.primaryAttr"></div>
-          <div class="hero-number-bg">
-            <h2 class="hero-name">{{ item.node.name }}</h2>
-          </div>
-          <div class="attribute-gain-container">
-            <p class="attribute-gain-heading">Attribute Gain</p>
-            <div class="attribute-container">
-              <span class="attribute-name" :class="{'DOTA_ATTRIBUTE_STRENGTH': item.node.primaryAttr == 'DOTA_ATTRIBUTE_STRENGTH'}">STR</span>
-              <span class="attribute-name" :class="{'DOTA_ATTRIBUTE_AGILITY': item.node.primaryAttr == 'DOTA_ATTRIBUTE_AGILITY'}">AGI</span>
-              <span class="attribute-name" :class="{'DOTA_ATTRIBUTE_INTELLECT': item.node.primaryAttr == 'DOTA_ATTRIBUTE_INTELLECT'}">INT</span>
-            </div>
-            <div class="attribute-container">
-              <span class="attribute" :class="{'DOTA_ATTRIBUTE_STRENGTH': item.node.primaryAttr == 'DOTA_ATTRIBUTE_STRENGTH'}">{{ item.node.strGain }}</span>
-              <span class="attribute" :class="{'DOTA_ATTRIBUTE_AGILITY': item.node.primaryAttr == 'DOTA_ATTRIBUTE_AGILITY'}">{{ item.node.agiGain }}</span>
-              <span class="attribute"  :class="{'DOTA_ATTRIBUTE_INTELLECT': item.node.primaryAttr == 'DOTA_ATTRIBUTE_INTELLECT'}">{{ item.node.intGain }}</span>
-            </div>
-            <p class="total-attribute-gain" :class="item.node.primaryAttr">{{ item.node.totalAttrGain.toFixed(1) }}</p>
-          </div>
-
-        </g-link>
-      </li>
-    </ul> -->
 </DSLayout>
 </template>
 
@@ -127,13 +107,13 @@
 <script>
 import DSLayout from "~/layouts/DSLayout.vue";
 import DSSideBar from "~/components/DSSideBar.vue";
-import Multiselect from 'vue-multiselect'
+import Multiselect from 'vue-multiselect';
 
 export default {
   components: {
     DSLayout,
     DSSideBar,
-    Multiselect
+    Multiselect,
   },
   data: function () {
     return {
@@ -207,7 +187,7 @@ export default {
       }
 
     },
-        sortByAttrGain() {
+    sortByAttrGain() {
       console.log('sortByAttrGain')
       console.log(this.sortSelected)
       if (this.sortSelected === "2") {
@@ -215,17 +195,17 @@ export default {
           return a.node.strGain < b.node.strGain
         });
       } else if (this.sortSelected === "3") {
-        return  this.attrSortData = this.data.slice().sort(function (a, b) {
+        return this.attrSortData = this.data.slice().sort(function (a, b) {
           return a.node.agiGain < b.node.agiGain
         });
       } else if (this.sortSelected === "4") {
-        return  this.attrSortData = this.data.slice().sort(function (a, b) {
+        return this.attrSortData = this.data.slice().sort(function (a, b) {
           return a.node.intGain < b.node.intGain
         });
         // this.data.sort((a, b) => (a.intGain > b.intGain) ? 1 : (a.intGain === b.intGain) ? ((a.name > b.name) ? 1 : -1) : -1)
         // return this.data
       } else {
-        return  this.attrSortData = this.data
+        return this.attrSortData = this.data
       }
     },
   },
@@ -261,7 +241,13 @@ export default {
     return {
       title: "DOTA.vue", // this.$route.name,
       titleTemplate: "%s | DOTA2 Heroes",
-      breadCrumb: this.$route.name
+      breadCrumb: this.$route.name,
+      link: [
+        {rel: 'stylesheet', href: './../assets/fontawesome/all.css'}
+      ],
+      script: [
+        {href: './../assets/fontawesome/all.js'}
+      ]
     };
   },
 };
@@ -297,7 +283,7 @@ export default {
   // max-width: 84vw;
   // margin-right: 8vw;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   grid-template-rows: auto;
   grid-gap: 5px;
   line-height: 1em;
@@ -716,5 +702,21 @@ button {
   background-size: contain;
   align-self: flex-end;
   justify-self: center;
+}
+
+.attack-range-container {
+  display: flex;
+  color: white;
+  font-size: 12px;
+  justify-content: space-around;
+  p {
+    margin: 0;
+    &:first-child {
+      padding-left: 3px;
+    }
+    &:last-child {
+      padding-right: 3px;
+    }
+  }
 }
 </style>
