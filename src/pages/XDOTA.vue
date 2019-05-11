@@ -44,7 +44,10 @@
             >{{ entry.text }}</option>
           </select>
 
+<<<<<<< HEAD
           <!-- </multiselect> -->
+=======
+>>>>>>> temp
         </div>
       </div>
     </div>
@@ -95,8 +98,12 @@
               :class="item.node.primaryAttr"
             >{{ item.node.totalAttrGain.toFixed(1) }}</p>
             <div class="attack-range-container" :class="item.node.primaryAttr">
+<<<<<<< HEAD
               <i class="attack-icon" :class="item.node.attackIcon"></i>
               <div :id="`hero-${item.node.id}`"></div>
+=======
+              <i class="attack-icon" :class="item.node.attackIcon" ></i>
+>>>>>>> temp
               <svg class="svg-attack-range" height="20" width="80">
                 <defs>
                   <linearGradient id="myGradient" x1="0" x2="2">
@@ -104,6 +111,7 @@
                     <stop offset="75%" stop-color="red"></stop>
                   </linearGradient>
 
+<<<<<<< HEAD
                   <filter
                     id="fillpartial"
                     primitiveUnits="objectBoundingBox"
@@ -125,6 +133,23 @@
                 </g>
               </svg>
               <!-- <p class="attack-range" :class="item.node.attackRange">Range: </p> -->
+=======
+                  <filter id="fill1" primitiveUnits="objectBoundingBox" x="0%" y="0%" width="100%" height="100%">
+                    <feFlood x="0%" y="0%" width="100%" height="100%" flood-color="red"></feFlood>
+                    <feOffset dx="0.5"></feOffset>
+                  </filter>
+<!-- 
+                  <feMerge>
+                    <feMergeNode in="Rect1" />
+                    <feMergeNode in="Rect2" />
+                  </feMerge> -->
+                </defs>
+                <g class="bar">
+                  <rect filter="url(#fill1)" :width="item.node.attackRange/12" height="7" y="7" fill="url(#myGradient)" result="Rect1"></rect>
+                  <rect filter="url(#fill2)" :width="item.node.attackRange/22" height="7" y="7" fill="blue" result="Rect2"></rect>
+                </g>
+              </svg>
+>>>>>>> temp
               <p class="attack-range" :class="item.node.attackRange">{{ item.node.attackRange }}</p>
             </div>
           </div>
@@ -166,15 +191,23 @@
 <script>
 import DSLayout from "~/layouts/DSLayout.vue";
 import DSSideBar from "~/components/DSSideBar.vue";
+<<<<<<< HEAD
 import Multiselect from "vue-multiselect";
 import SVG from "svg.js";
+=======
+// import Multiselect from 'vue-multiselect';
+>>>>>>> temp
 
 export default {
   components: {
     DSLayout,
     DSSideBar,
+<<<<<<< HEAD
     Multiselect,
     SVG
+=======
+    // Multiselect,
+>>>>>>> temp
   },
   data: function() {
     return {
@@ -231,6 +264,7 @@ export default {
       data: [],
       searchData: [],
       attrSortData: [],
+<<<<<<< HEAD
       e: ""
 
       // chartOptions: {
@@ -245,6 +279,22 @@ export default {
       //   name: 'series-1',
       //   data: [30, 40, 35, 50, 49, 60, 70, 91]
       // }]
+=======
+      e: '',
+
+      chartOptions: {
+        chart: {
+          id: 'vuechart-example'
+        },
+        xaxis: {
+          categories: ['|', '|', '|', '|']
+        }
+      },
+      series: [{
+        name: 'series-1',
+        data: [30, 40, 35, 50, 49, 60, 70, 91]
+      }]
+>>>>>>> temp
     };
   },
   methods: {
@@ -899,6 +949,7 @@ i.Melee:before {
 
 .bar {
   height: 20px;
+<<<<<<< HEAD
   background-image: linear-gradient(
     to right,
     red,
@@ -906,6 +957,13 @@ i.Melee:before {
     rgb(255, 255, 0),
     green
   );
+=======
+  background-image: linear-gradient(to right,
+    red,
+    #f06d06,
+    rgb(255, 255, 0),
+    green);
+>>>>>>> temp
 }
 
 .svg-attack-range {

@@ -8,7 +8,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { faUserSecret } from "@fortawesome/pro-solid-svg-icons";
 import { faAxeBattle } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import VueApexCharts from 'vue-apexcharts';
+// import VueApexCharts from 'vue-apexcharts';
 
 
 library.add(faUserSecret, faAxeBattle);
@@ -20,6 +20,6 @@ export default function (Vue, {router, head, isClient}) {
   // Set default layout as a global component
   Vue.component('Layout', DefaultLayout)
   Vue.component("font-awesome-icon", FontAwesomeIcon);
-  Vue.use(VueApexCharts)
-Vue.component('apexchart', VueApexCharts)
+//   Vue.use(VueApexCharts)
+// Vue.component('apexchart', VueApexCharts)
 }
