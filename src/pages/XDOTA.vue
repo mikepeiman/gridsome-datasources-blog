@@ -1,13 +1,13 @@
 <template>
-  <DSLayout :pageName="pageName">
-    <h1 class="page-title">DOTA2 Heroes</h1>
+<DSLayout :pageName="pageName">
+  <h1 class="page-title">DOTA2 Heroes</h1>
 
-    <h1>SVG library</h1>
-    <div id="drawing"></div>
+  <h1>SVG library</h1>
+  <div id="drawing"></div>
 
-    <div class="filter-container">
-      <div class="search-container">
-        <input
+  <div class="filter-container">
+    <div class="search-container">
+      <input
           class="form-control search-bar"
           type="text"
           v-model="searchQuery"
@@ -48,12 +48,7 @@
       </div>
     </div>
     <ul class="grid-main hero-list">
-      <li
-        v-for="item in searchFilter"
-        :key="item.id"
-        class="item-container grid-item"
-        v-show="item.node.primaryAttr === filter || filter === 'All'"
-      >
+      <li v-for="item in searchFilter" :key="item.id" class="item-container grid-item" v-show="item.node.primaryAttr === filter || filter === 'All'">
         <g-link :to="item.node.path">
           <div class="hero-name-container">
             <div class="icon-box attr-icon" :class="item.node.primaryAttr"></div>
@@ -89,67 +84,55 @@
                 :class="{'DOTA_ATTRIBUTE_INTELLECT': item.node.primaryAttr == 'DOTA_ATTRIBUTE_INTELLECT'}"
               >{{ item.node.intGain }}</span>
             </div>
-            <p
-              class="total-attribute-gain"
-              :class="item.node.primaryAttr"
-            >{{ item.node.totalAttrGain.toFixed(1) }}</p>
-            <div class="attack-range-container" :class="item.node.primaryAttr">
+            <p class="total-attribute-gain" :class="item.node.primaryAttr">{{ item.node.totalAttrGain.toFixed(1) }}</p>
+            <div class="attack-range-container" :class="item.node.primaryAttr" v-if="item.node.attackType !== 'Melee'">
               <i class="attack-icon" :class="item.node.attackIcon" ></i>
               <svg class="svg-attack-range" height="20" width="80">
-                <defs>
-                  <linearGradient id="myGradient" x1="0" x2="2">
-                    <stop offset="25%" stop-color="gold"></stop>
-                    <stop offset="75%" stop-color="red"></stop>
-                  </linearGradient>
-
-                  <filter id="fill1" primitiveUnits="objectBoundingBox" x="0%" y="0%" width="100%" height="100%">
-                    <feFlood x="0%" y="0%" width="100%" height="100%" flood-color="white"></feFlood>
-                    <feOffset dx="0"></feOffset>
-                  </filter>
-                  <filter id="fill2" primitiveUnits="objectBoundingBox" x="0%" y="0%" width="100%" height="100%">
-                    <feFlood x="0%" y="0%" width="100%" height="100%" flood-color="black"></feFlood>
-                    <feOffset dx="0"></feOffset>
-                  </filter>
-                </defs>
                 <g class="bar">
-                  <rect filter="url(#fill2)" :width="1000/12" height="7" y="7" result="Rect2"></rect>
-                                    <rect filter="url(#fill1)" :width="item.node.attackRange/12" height="7" y="7" fill="url(#myGradient)" result="Rect1"></rect>
-
+                  <rect fill="#252525" :width="1000/12" height="7" y="7" result="Rect2"></rect>
+                  <rect class="attack-range-bar" fill="#ccc" :width="(item.node.attackRange-150)/8.5" height="5" y="7" result="Rect1"></rect>
+                  <!-- <text x="70%" y="14" :fill="item.node.color">{{item.node.attackRange}}</text> -->
                 </g>
+
               </svg>
-              <p class="attack-range" :class="item.node.attackRange">{{ item.node.attackRange }}</p>
+              <div class="projectile-speed-container">
+                <p class="attack-range" :class="item.node.attackRange">{{ item.node.attackRange }}</p>
+              </div>
+
             </div>
-                        <div class="projectile-speed-container" :class="item.node.primaryAttr">
+            <div class="projectile-speed-container" :class="item.node.primaryAttr" v-if="item.node.attackType !== 'Melee'">
               <i class="attack-icon" :class="item.node.attackIcon" ></i>
               <svg class="svg-attack-range" height="20" width="80">
-                <defs>
-                  <linearGradient id="myGradient" x1="0" x2="2">
-                    <stop offset="25%" stop-color="gold"></stop>
-                    <stop offset="75%" stop-color="red"></stop>
-                  </linearGradient>
-
+                <!-- <defs>
                   <filter id="fill1" primitiveUnits="objectBoundingBox" x="0%" y="0%" width="100%" height="100%">
-                    <feFlood x="0%" y="0%" width="100%" height="100%" flood-color="white"></feFlood>
+                    <feFlood x="0%" y="0%" width="100%" height="100%" :flood-color="item.node.color"></feFlood>
                     <feOffset dx="0"></feOffset>
                   </filter>
                   <filter id="fill2" primitiveUnits="objectBoundingBox" x="0%" y="0%" width="100%" height="100%">
                     <feFlood x="0%" y="0%" width="100%" height="100%" flood-color="black"></feFlood>
                     <feOffset dx="0"></feOffset>
                   </filter>
-                </defs>
-                <g class="bar">
-                  <rect filter="url(#fill2)" :width="3000/12" height="7" y="7" result="Rect2"></rect>
-                                    <rect filter="url(#fill1)" :width="item.node.projectileSpeed/50" height="7" y="7" fill="url(#myGradient)" result="Rect1"></rect>
-
+                </defs> -->
+                <g>
+                 <rect fill="#252525" :width="1000/12" height="7" y="7" result="Rect2"></rect>
+                  <rect class="attack-range-bar" fill="#ccc" :width="(item.node.projectileSpeed)/36" height="5" y="7" result="Rect1"></rect>
+    
                 </g>
               </svg>
-              <p class="projectile-speed" :class="item.node.projectileSpeed">{{ item.node.projectileSpeed }}</p>
+              <div class="projectile-speed-container">
+                <p class="projectile-speed" :class="item.node.projectileSpeed">{{ item.node.projectileSpeed }}</p>
+              </div>
+
+            </div>
+            <div class="projectile-speed-container" :class="item.node.primaryAttr" v-if="item.node.attackType == 'Melee'">
+              <i class="attack-icon" :class="item.node.attackIcon" ></i>
+              <p>MELEE</p>
             </div>
           </div>
         </g-link>
       </li>
     </ul>
-  </DSLayout>
+</DSLayout>
 </template>
 
 <page-query>
@@ -175,6 +158,7 @@
         turnRate
         attackRange
         projectileSpeed
+        color
       }
     }
   }
@@ -192,7 +176,7 @@ export default {
     DSSideBar,
     // Multiselect,
   },
-  data: function() {
+  data: function () {
     return {
       pageName: "DOTA2 Heroes",
       selected: null,
@@ -210,8 +194,7 @@ export default {
 
       fkey: "primaryAttr",
       filter: "All",
-      filterListAttr: [
-        {
+      filterListAttr: [{
           shortName: "STR",
           dotaName: "DOTA_ATTRIBUTE_STRENGTH"
         },
@@ -226,8 +209,7 @@ export default {
       ],
 
       searchQuery: "",
-      sortByAttrList: [
-        {
+      sortByAttrList: [{
           value: "1",
           text: "Total Attribute Gain"
         },
@@ -247,20 +229,6 @@ export default {
       data: [],
       searchData: [],
       attrSortData: [],
-      e: '',
-
-      chartOptions: {
-        chart: {
-          id: 'vuechart-example'
-        },
-        xaxis: {
-          categories: ['|', '|', '|', '|']
-        }
-      },
-      series: [{
-        name: 'series-1',
-        data: [30, 40, 35, 50, 49, 60, 70, 91]
-      }]
     };
   },
   methods: {
@@ -268,35 +236,35 @@ export default {
       console.log(entry);
       if (entry.value === "2") {
         this.data.sort((a, b) =>
-          a.strGain > b.strGain
-            ? 1
-            : a.strGain === b.strGain
-            ? a.name > b.name
-              ? 1
-              : -1
-            : -1
+          a.strGain > b.strGain ?
+          1 :
+          a.strGain === b.strGain ?
+          a.name > b.name ?
+          1 :
+          -1 :
+          -1
         );
         return this.data;
       } else if (entry.vaue === 3) {
         this.data.sort((a, b) =>
-          a.agiGain > b.agiGain
-            ? 1
-            : a.agiGain === b.agiGain
-            ? a.name > b.name
-              ? 1
-              : -1
-            : -1
+          a.agiGain > b.agiGain ?
+          1 :
+          a.agiGain === b.agiGain ?
+          a.name > b.name ?
+          1 :
+          -1 :
+          -1
         );
         return this.data;
       } else if (entry.vaue === 4) {
         this.data.sort((a, b) =>
-          a.intGain > b.intGain
-            ? 1
-            : a.intGain === b.intGain
-            ? a.name > b.name
-              ? 1
-              : -1
-            : -1
+          a.intGain > b.intGain ?
+          1 :
+          a.intGain === b.intGain ?
+          a.name > b.name ?
+          1 :
+          -1 :
+          -1
         );
         return this.data;
       } else {
@@ -309,37 +277,16 @@ export default {
     },
     sortByAttrGain() {
       console.log("sortByAttrGain:", this.sortSelected);
-
-      // let x = this.$page.allXDOTA.edges;
-      // x.forEach(hero => {
-      //   var draw = SVG(hero.node.id).size(30, 10);
-      //   var rect = draw.rect(20, 10).attr({
-      //     fill: "#FF7800"
-      //   });
-      // });
-
-      // var draw = SVG('hero-53').size(30, 10)
-      // var rect = draw.rect(20, 10).attr({
-      //   fill: '#FF7800'
-      // })
-      //       var draw = SVG('hero-52').size(20, 5)
-      //   var line = draw.line(0, 0, 8, 0); //.move(20, 20)
-      //   line.stroke({
-      //     color: '#FF7800',
-      //     width: 5,
-      //     linecap: 'round'
-      //   })
-
       if (this.sortSelected === "2") {
-        return (this.attrSortData = this.data.slice().sort(function(a, b) {
+        return (this.attrSortData = this.data.slice().sort(function (a, b) {
           return a.node.strGain < b.node.strGain;
         }));
       } else if (this.sortSelected === "3") {
-        return (this.attrSortData = this.data.slice().sort(function(a, b) {
+        return (this.attrSortData = this.data.slice().sort(function (a, b) {
           return a.node.agiGain < b.node.agiGain;
         }));
       } else if (this.sortSelected === "4") {
-        return (this.attrSortData = this.data.slice().sort(function(a, b) {
+        return (this.attrSortData = this.data.slice().sort(function (a, b) {
           return a.node.intGain < b.node.intGain;
         }));
         // this.data.sort((a, b) => (a.intGain > b.intGain) ? 1 : (a.intGain === b.intGain) ? ((a.name > b.name) ? 1 : -1) : -1)
@@ -353,11 +300,11 @@ export default {
     let x = this.$page.allXDOTA.edges;
     x.forEach(hero => {
       hero.node.attackIcon =
-        hero.node.attackType == "Melee"
-          ? "fas fa-axe-battle"
-          : "fas fa-bow-arrow";
+        hero.node.attackType == "Melee" ?
+        "fas fa-axe-battle" :
+        "fas fa-bow-arrow";
       console.log(
-        `Created hook, ${hero.node.id}, attack range ${hero.node.attackRange}`
+        `Created hook, ${hero.node.name} ${hero.node.id}, attack range ${hero.node.attackRange}, color ${hero.node.attrHexCode}`
       );
       this.data.push(hero);
     });
@@ -386,17 +333,13 @@ export default {
       title: "DOTA.vue", // this.$route.name,
       titleTemplate: "%s | DOTA2 Heroes",
       breadCrumb: this.$route.name,
-      link: [
-        {
-          rel: "stylesheet",
-          href: "./../assets/fontawesome/all.css"
-        }
-      ],
-      script: [
-        {
-          href: "./../assets/fontawesome/all.js"
-        }
-      ]
+      link: [{
+        rel: "stylesheet",
+        href: "./../assets/fontawesome/all.css"
+      }],
+      script: [{
+        href: "./../assets/fontawesome/all.js"
+      }]
     };
   }
 };
@@ -586,8 +529,7 @@ button {
     border-radius: 4px;
     // width: 40px;
     color: rgba(255, 255, 255, 0);
-    background: no-repeat center/85%
-      url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/dota2-venn-3.png");
+    background: no-repeat center/85% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/dota2-venn-3.png");
     transition: all 0.25s;
 
     &:hover {
@@ -598,8 +540,7 @@ button {
     }
 
     &.active {
-      background: rgba(255, 255, 255, 0.1) no-repeat center/90%
-        url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/dota2-venn-3.png");
+      background: rgba(255, 255, 255, 0.1) no-repeat center/90% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/dota2-venn-3.png");
       box-shadow: 0 0 2px 1px white;
       // color: white;
     }
@@ -618,15 +559,13 @@ button {
 
     &.active {
       box-shadow: 0 0 2px 1px white;
-      background: rgba(255, 255, 255, 0.1) no-repeat center/95%
-        url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Strength_attribute_symbol.png");
+      background: rgba(255, 255, 255, 0.1) no-repeat center/95% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Strength_attribute_symbol.png");
       border-radius: 4px;
     }
   }
 
   &.DOTA_ATTRIBUTE_AGILITY {
-    background: no-repeat center/90%
-      url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Agility_attribute_symbol.png");
+    background: no-repeat center/90% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Agility_attribute_symbol.png");
 
     &:hover {
       border-radius: 40px;
@@ -636,15 +575,13 @@ button {
 
     &.active {
       box-shadow: 0 0 2px 1px white;
-      background: rgba(255, 255, 255, 0.1) no-repeat center/95%
-        url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Agility_attribute_symbol.png");
+      background: rgba(255, 255, 255, 0.1) no-repeat center/95% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Agility_attribute_symbol.png");
       border-radius: 4px;
     }
   }
 
   &.DOTA_ATTRIBUTE_INTELLECT {
-    background: no-repeat center/90%
-      url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Intelligence_attribute_symbol.png");
+    background: no-repeat center/90% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Intelligence_attribute_symbol.png");
 
     &:hover {
       border-radius: 40px;
@@ -654,8 +591,7 @@ button {
 
     &.active {
       box-shadow: 0 0 2px 1px white;
-      background: rgba(255, 255, 255, 0.1) no-repeat center/95%
-        url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Intelligence_attribute_symbol.png");
+      background: rgba(255, 255, 255, 0.1) no-repeat center/95% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Intelligence_attribute_symbol.png");
       border-radius: 4px;
     }
   }
@@ -666,28 +602,23 @@ button {
   height: 20px;
 
   &.DOTA_ATTRIBUTE_STRENGTH {
-    background: no-repeat center/100%
-      url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Strength_attribute_symbol.png");
+    background: no-repeat center/100% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Strength_attribute_symbol.png");
   }
 
   &.DOTA_ATTRIBUTE_AGILITY {
-    background: no-repeat center/100%
-      url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Agility_attribute_symbol.png");
+    background: no-repeat center/100% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Agility_attribute_symbol.png");
   }
 
   &.DOTA_ATTRIBUTE_INTELLECT {
-    background: no-repeat center/100%
-      url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Intelligence_attribute_symbol.png");
+    background: no-repeat center/100% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Intelligence_attribute_symbol.png");
   }
 
   &.Melee {
-    background: no-repeat center/100%
-      url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Intelligence_attribute_symbol.png");
+    background: no-repeat center/100% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Intelligence_attribute_symbol.png");
   }
 
   &.Ranged {
-    background: no-repeat center/100%
-      url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Intelligence_attribute_symbol.png");
+    background: no-repeat center/100% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Intelligence_attribute_symbol.png");
   }
 }
 
@@ -921,6 +852,10 @@ i.Melee:before {
     #f06d06,
     rgb(255, 255, 0),
     green);
+}
+
+.attack-range-bar {
+  z-index: 10;
 }
 
 .svg-attack-range {

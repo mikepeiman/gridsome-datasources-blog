@@ -148,6 +148,12 @@ module.exports = function(api) {
         return node.fields.turnRate;
       }
     }));
+    contentType.addSchemaField("color", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.fields.color;
+      }
+    }));
 
     let heroesList = [];
 
@@ -164,24 +170,25 @@ module.exports = function(api) {
 
         // console.log(data.npc_dota_hero_grimstroke);
 
-        // let name,
-        //   title,
-        //   strBase,
-        //   strGain,
-        //   agiBase,
-        //   agiGain,
-        //   intBase,
-        //   intGain,
-        //   primaryAttr,
-        //   armor,
-        //   attackType,
-        //   attackDamageMin,
-        //   attackDamageMax,
-        //   attackRate,
-        //   attackRange,
-        //   projectileSpeed,
-        //   movementSpeed,
-        //   turnRate,
+        let name,
+          title,
+          strBase,
+          strGain,
+          agiBase,
+          agiGain,
+          intBase,
+          intGain,
+          primaryAttr,
+          armor,
+          attackType,
+          attackDamageMin,
+          attackDamageMax,
+          attackRate,
+          attackRange,
+          projectileSpeed,
+          movementSpeed,
+          turnRate,
+          color
 
         for (var i in data) {
           hero = data[i];
@@ -204,6 +211,18 @@ module.exports = function(api) {
               console.log(`Hero ${hero.workshop_guide_name} projectileSpeed is null`)
               hero.ProjectileSpeed = 0
             }
+            if (hero.AttributePrimary.toLowerCase().includes('int')) {
+              console.log(`### Hero ${hero.workshop_guide_name} is an INT hero`)
+              hero.color = "#00D9EC"
+            }
+            if (hero.AttributePrimary.toLowerCase().includes('str')) {
+              console.log(`### Hero ${hero.workshop_guide_name} is an STR hero`)
+              hero.color = "#EC3D06"
+            }
+            if (hero.AttributePrimary.toLowerCase().includes('agi')) {
+              console.log(`### Hero ${hero.workshop_guide_name} is an AGI hero`)
+              hero.color = "#26E030"
+            }
             contentType.addNode({
               id: hero.HeroID,
               fields: {
@@ -224,7 +243,8 @@ module.exports = function(api) {
                 attackRange: hero.AttackRange,
                 projectileSpeed: hero.ProjectileSpeed,
                 movementSpeed: hero.MovementSpeed,
-                turnRate: hero.MovementTurnRate
+                turnRate: hero.MovementTurnRate,
+                color: hero.color
               }
             });
           }
@@ -241,6 +261,7 @@ module.exports = function(api) {
           agiGain = hero.AttributeAgilityGain;
           intGain = hero.AttributeIntelligenceGain;
           primaryAttr = hero.AttributePrimary;
+          color = hero.color;
 
           if (name != undefined) {
             title = name.replace(/\s+/g, "");
@@ -253,7 +274,8 @@ module.exports = function(api) {
                   "agiGain": ${agiGain},
                   "intBase": ${intBase},
                   "intGain": ${intGain},
-                  "primaryAttr": "${primaryAttr}"
+                  "primaryAttr": "${primaryAttr}",
+                  "color": "${color}"
                 }}`;
 
             thisHero = thisHero.replace(/\s+/g, "");
