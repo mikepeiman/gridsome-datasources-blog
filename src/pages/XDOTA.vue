@@ -103,18 +103,18 @@
                   </linearGradient>
 
                   <filter id="fill1" primitiveUnits="objectBoundingBox" x="0%" y="0%" width="100%" height="100%">
-                    <feFlood x="0%" y="0%" width="100%" height="100%" flood-color="red"></feFlood>
-                    <feOffset dx="0.5"></feOffset>
+                    <feFlood x="0%" y="0%" width="100%" height="100%" flood-color="white"></feFlood>
+                    <feOffset dx="0"></feOffset>
                   </filter>
-<!-- 
-                  <feMerge>
-                    <feMergeNode in="Rect1" />
-                    <feMergeNode in="Rect2" />
-                  </feMerge> -->
+                  <filter id="fill2" primitiveUnits="objectBoundingBox" x="0%" y="0%" width="100%" height="100%">
+                    <feFlood x="0%" y="0%" width="100%" height="100%" flood-color="black"></feFlood>
+                    <feOffset dx="0"></feOffset>
+                  </filter>
                 </defs>
                 <g class="bar">
-                  <rect filter="url(#fill1)" :width="item.node.attackRange/12" height="7" y="7" fill="url(#myGradient)" result="Rect1"></rect>
-                  <rect filter="url(#fill2)" :width="item.node.attackRange/22" height="7" y="7" fill="blue" result="Rect2"></rect>
+                  <rect filter="url(#fill2)" :width="1000/12" height="7" y="7" result="Rect2"></rect>
+                                    <rect filter="url(#fill1)" :width="item.node.attackRange/12" height="7" y="7" fill="url(#myGradient)" result="Rect1"></rect>
+
                 </g>
               </svg>
               <p class="attack-range" :class="item.node.attackRange">{{ item.node.attackRange }}</p>
