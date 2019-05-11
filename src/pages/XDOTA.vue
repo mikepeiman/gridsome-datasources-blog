@@ -119,6 +119,32 @@
               </svg>
               <p class="attack-range" :class="item.node.attackRange">{{ item.node.attackRange }}</p>
             </div>
+                        <div class="projectile-speed-container" :class="item.node.primaryAttr">
+              <i class="attack-icon" :class="item.node.attackIcon" ></i>
+              <svg class="svg-attack-range" height="20" width="80">
+                <defs>
+                  <linearGradient id="myGradient" x1="0" x2="2">
+                    <stop offset="25%" stop-color="gold"></stop>
+                    <stop offset="75%" stop-color="red"></stop>
+                  </linearGradient>
+
+                  <filter id="fill1" primitiveUnits="objectBoundingBox" x="0%" y="0%" width="100%" height="100%">
+                    <feFlood x="0%" y="0%" width="100%" height="100%" flood-color="white"></feFlood>
+                    <feOffset dx="0"></feOffset>
+                  </filter>
+                  <filter id="fill2" primitiveUnits="objectBoundingBox" x="0%" y="0%" width="100%" height="100%">
+                    <feFlood x="0%" y="0%" width="100%" height="100%" flood-color="black"></feFlood>
+                    <feOffset dx="0"></feOffset>
+                  </filter>
+                </defs>
+                <g class="bar">
+                  <rect filter="url(#fill2)" :width="3000/12" height="7" y="7" result="Rect2"></rect>
+                                    <rect filter="url(#fill1)" :width="item.node.projectileSpeed/50" height="7" y="7" fill="url(#myGradient)" result="Rect1"></rect>
+
+                </g>
+              </svg>
+              <p class="projectile-speed" :class="item.node.projectileSpeed">{{ item.node.projectileSpeed }}</p>
+            </div>
           </div>
         </g-link>
       </li>
@@ -840,7 +866,8 @@ button {
   justify-self: center;
 }
 
-.attack-range-container {
+.attack-range-container,
+.projectile-speed-container {
   display: flex;
   color: white;
   font-size: 12px;

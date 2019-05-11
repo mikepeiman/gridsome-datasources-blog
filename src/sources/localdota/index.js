@@ -199,6 +199,11 @@ module.exports = function(api) {
             console.log(
               `hero ${hero.workshop_guide_name} attack type: ${hero.attackType}`
             );
+
+            if (!hero.ProjectileSpeed) {
+              console.log(`Hero ${hero.workshop_guide_name} projectileSpeed is null`)
+              hero.ProjectileSpeed = 0
+            }
             contentType.addNode({
               id: hero.HeroID,
               fields: {
