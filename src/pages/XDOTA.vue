@@ -1,77 +1,61 @@
 <template>
-<DSLayout :pageName="pageName">
-  <h1 class="page-title">DOTA2 Heroes</h1>
+  <DSLayout :pageName="pageName">
+    <h1 class="page-title">DOTA2 Heroes</h1>
 
-  <!-- <apexchart id="vuechart-example" width="500" type="bar" :options="chartOptions" :series="series"></apexchart> -->
-  <h1>BREAK</h1>
-  
-<figure>
-  <figcaption>A graph that shows the number of fruit collected</figcaption>
-  <svg class="chart" width="420" height="150" aria-labelledby="title desc" role="img">
-  <g class="bar">
-    <rect id="rect1" width="80" height="19" style="fill: red;"></rect>
-    <i class="fas fa-arrow" x="90"></i>
-    <rect id="rect2" width="40" height="19"></rect>
-    <text x="45" y="9.5" dy=".35em">4 apples</text>
-  </g>
-  </svg>
-</figure>
+    <h1>SVG library</h1>
+    <div id="drawing"></div>
 
-  <title id="title">A bar chart showing information</title>
-  <desc id="desc" style="color: white;">4 apples; 8 bananas; 15 kiwis; 16 oranges; 23 lemons</desc>
-  <g class="bar">
-    <rect width="40" height="19"></rect>
-    <text x="45" y="9.5" dy=".35em">4 apples</text>
-  </g>
-  </svg>
-  <h1>SVG library</h1>
-  <div id="drawing"></div>
-
-  <div class="filter-container">
-    <div class="search-container">
-      <input class="form-control search-bar" type="text" v-model="searchQuery" placeholder="Search" />
+    <div class="filter-container">
+      <div class="search-container">
+        <input
+          class="form-control search-bar"
+          type="text"
+          v-model="searchQuery"
+          placeholder="Search"
+        >
       </div>
 
       <div class="attribute-filter-container">
         <!-- <p class="attribute-filter-heading">Filter By Primary Attribute</p> -->
         <div class="attribute-filters">
           <button
-          v-for="(entry, index) in filterListAttr"
-          :item="entry.dotaName"
-          :key="index"
-          @click="filter = entry.dotaName;"
-          :class="[ entry.dotaName, {active: entry.dotaName == filter} ]"
-          class="filter-item attr-icon attr-icon-large"
-        ></button>
+            v-for="(entry, index) in filterListAttr"
+            :item="entry.dotaName"
+            :key="index"
+            @click="filter = entry.dotaName;"
+            :class="[ entry.dotaName, {active: entry.dotaName == filter} ]"
+            class="filter-item attr-icon attr-icon-large"
+          ></button>
           <button
-          @click="filter = 'All';"
-          :class="[ 'show-all filter-item', {active: 'All' == filter} ]"
-        >
-        Show All</button>
+            @click="filter = 'All';"
+            :class="[ 'show-all filter-item', {active: 'All' == filter} ]"
+          >Show All</button>
         </div>
         <div class="filter-attribute-toggle">
           <p class="select-heading">Sort By Attribute:</p>
           <!-- <multiselect v-model="selected" :options="options"  :show-labels="false" :close-on-select="true"> -->
           <select id="sort-by-attributes">
-            <option 
-            class="select-item"
-            v-for="entry in sortByAttrList"
-            @click="sortSelected = entry.value"
-            style="font-family: 'Montserrat'; font-weight: 300; background: #222222; color: #eee;"
-            :value="entry.value"
-            >{{ entry.text }}
-            </option>
+            <option
+              class="select-item"
+              v-for="entry in sortByAttrList"
+              @click="sortSelected = entry.value"
+              style="font-family: 'Montserrat'; font-weight: 300; background: #222222; color: #eee;"
+              :value="entry.value"
+            >{{ entry.text }}</option>
           </select>
 
           <!-- </multiselect> -->
-
         </div>
       </div>
     </div>
     <ul class="grid-main hero-list">
-      <li v-for="item in searchFilter" :key="item.id" class="item-container grid-item" v-show="item.node.primaryAttr === filter || filter === 'All'">
+      <li
+        v-for="item in searchFilter"
+        :key="item.id"
+        class="item-container grid-item"
+        v-show="item.node.primaryAttr === filter || filter === 'All'"
+      >
         <g-link :to="item.node.path">
-
           <div class="hero-name-container">
             <div class="icon-box attr-icon" :class="item.node.primaryAttr"></div>
             <h2 class="hero-name">{{ item.node.name }}</h2>
@@ -79,28 +63,75 @@
           <div class="attribute-gain-container">
             <p class="attribute-gain-heading">Attribute Gain</p>
             <div class="attribute-container">
-              <span class="attribute-name" :class="{'DOTA_ATTRIBUTE_STRENGTH': item.node.primaryAttr == 'DOTA_ATTRIBUTE_STRENGTH'}">STR</span>
-              <span class="attribute-name" :class="{'DOTA_ATTRIBUTE_AGILITY': item.node.primaryAttr == 'DOTA_ATTRIBUTE_AGILITY'}">AGI</span>
-              <span class="attribute-name" :class="{'DOTA_ATTRIBUTE_INTELLECT': item.node.primaryAttr == 'DOTA_ATTRIBUTE_INTELLECT'}">INT</span>
+              <span
+                class="attribute-name"
+                :class="{'DOTA_ATTRIBUTE_STRENGTH': item.node.primaryAttr == 'DOTA_ATTRIBUTE_STRENGTH'}"
+              >STR</span>
+              <span
+                class="attribute-name"
+                :class="{'DOTA_ATTRIBUTE_AGILITY': item.node.primaryAttr == 'DOTA_ATTRIBUTE_AGILITY'}"
+              >AGI</span>
+              <span
+                class="attribute-name"
+                :class="{'DOTA_ATTRIBUTE_INTELLECT': item.node.primaryAttr == 'DOTA_ATTRIBUTE_INTELLECT'}"
+              >INT</span>
             </div>
             <div class="attribute-container">
-              <span class="attribute" :class="{'DOTA_ATTRIBUTE_STRENGTH': item.node.primaryAttr == 'DOTA_ATTRIBUTE_STRENGTH'}">{{ item.node.strGain }}</span>
-              <span class="attribute" :class="{'DOTA_ATTRIBUTE_AGILITY': item.node.primaryAttr == 'DOTA_ATTRIBUTE_AGILITY'}">{{ item.node.agiGain }}</span>
-              <span class="attribute"  :class="{'DOTA_ATTRIBUTE_INTELLECT': item.node.primaryAttr == 'DOTA_ATTRIBUTE_INTELLECT'}">{{ item.node.intGain }}</span>
+              <span
+                class="attribute"
+                :class="{'DOTA_ATTRIBUTE_STRENGTH': item.node.primaryAttr == 'DOTA_ATTRIBUTE_STRENGTH'}"
+              >{{ item.node.strGain }}</span>
+              <span
+                class="attribute"
+                :class="{'DOTA_ATTRIBUTE_AGILITY': item.node.primaryAttr == 'DOTA_ATTRIBUTE_AGILITY'}"
+              >{{ item.node.agiGain }}</span>
+              <span
+                class="attribute"
+                :class="{'DOTA_ATTRIBUTE_INTELLECT': item.node.primaryAttr == 'DOTA_ATTRIBUTE_INTELLECT'}"
+              >{{ item.node.intGain }}</span>
             </div>
-            <p class="total-attribute-gain" :class="item.node.primaryAttr">{{ item.node.totalAttrGain.toFixed(1) }}</p>
+            <p
+              class="total-attribute-gain"
+              :class="item.node.primaryAttr"
+            >{{ item.node.totalAttrGain.toFixed(1) }}</p>
             <div class="attack-range-container" :class="item.node.primaryAttr">
-              <i class="attack-icon" :class="item.node.attackIcon" ></i>
-              <p class="attack-range" :class="item.node.attackRange">Range: </p>
+              <i class="attack-icon" :class="item.node.attackIcon"></i>
+              <div :id="`hero-${item.node.id}`"></div>
+              <svg class="svg-attack-range" height="20" width="80">
+                <defs>
+                  <linearGradient id="myGradient" x1="0" x2="2">
+                    <stop offset="25%" stop-color="gold"></stop>
+                    <stop offset="75%" stop-color="red"></stop>
+                  </linearGradient>
+
+                  <filter
+                    id="fillpartial"
+                    primitiveUnits="objectBoundingBox"
+                    x="0%"
+                    y="0%"
+                    width="100%"
+                    height="100%"
+                  >
+                    <feFlood x="0%" y="0%" width="100%" height="100%" flood-color="red"></feFlood>
+                    <feOffset dx="0.5">
+                      <!-- <animate attributeName="dy" from="1" to=".5" dur="3s"></animate> -->
+                    </feOffset>
+                    <!-- <feComposite operator="in" in2="SourceGraphic"></feComposite>
+                    <feComposite operator="over" in2="SourceGraphic"></feComposite> -->
+                  </filter>
+                </defs>
+                <g class="bar">
+                  <rect filter="url(#fillpartial)" :width="item.node.attackRange/12" height="7" y="7" fill="url(#myGradient)"></rect>
+                </g>
+              </svg>
+              <!-- <p class="attack-range" :class="item.node.attackRange">Range: </p> -->
               <p class="attack-range" :class="item.node.attackRange">{{ item.node.attackRange }}</p>
             </div>
-
           </div>
-
         </g-link>
       </li>
     </ul>
-</DSLayout>
+  </DSLayout>
 </template>
 
 <page-query>
@@ -135,148 +166,203 @@
 <script>
 import DSLayout from "~/layouts/DSLayout.vue";
 import DSSideBar from "~/components/DSSideBar.vue";
-import Multiselect from 'vue-multiselect';
-import SVG from 'svg.js';
+import Multiselect from "vue-multiselect";
+import SVG from "svg.js";
 
 export default {
   components: {
     DSLayout,
     DSSideBar,
     Multiselect,
+    SVG
   },
-  data: function () {
+  data: function() {
     return {
       pageName: "DOTA2 Heroes",
       selected: null,
-      options: ['Total Attribute Gain', 'Strength Gain', 'Agility Gain', 'Intelligence Gain'],
+      options: [
+        "Total Attribute Gain",
+        "Strength Gain",
+        "Agility Gain",
+        "Intelligence Gain"
+      ],
 
-      strKey: 'strGain',
-      agiKey: 'agiGain',
-      intKey: 'intGain',
-      sortSelected: '1',
+      strKey: "strGain",
+      agiKey: "agiGain",
+      intKey: "intGain",
+      sortSelected: "1",
 
-      fkey: 'primaryAttr',
-      filter: 'All',
-      filterListAttr: [{
-          'shortName': 'STR',
-          'dotaName': 'DOTA_ATTRIBUTE_STRENGTH'
+      fkey: "primaryAttr",
+      filter: "All",
+      filterListAttr: [
+        {
+          shortName: "STR",
+          dotaName: "DOTA_ATTRIBUTE_STRENGTH"
         },
         {
-          'shortName': 'AGI',
-          'dotaName': 'DOTA_ATTRIBUTE_AGILITY'
+          shortName: "AGI",
+          dotaName: "DOTA_ATTRIBUTE_AGILITY"
         },
         {
-          'shortName': 'INT',
-          'dotaName': 'DOTA_ATTRIBUTE_INTELLECT'
+          shortName: "INT",
+          dotaName: "DOTA_ATTRIBUTE_INTELLECT"
         }
       ],
 
-      searchQuery: '',
-      sortByAttrList: [{
-          'value': '1',
-          'text': 'Total Attribute Gain'
+      searchQuery: "",
+      sortByAttrList: [
+        {
+          value: "1",
+          text: "Total Attribute Gain"
         },
         {
-          'value': '2',
-          'text': 'Strength Gain'
+          value: "2",
+          text: "Strength Gain"
         },
         {
-          'value': '3',
-          'text': 'Agility Gain'
+          value: "3",
+          text: "Agility Gain"
         },
         {
-          'value': '4',
-          'text': 'Intelligence Gain'
-        },
+          value: "4",
+          text: "Intelligence Gain"
+        }
       ],
       data: [],
       searchData: [],
       attrSortData: [],
-      e: '',
+      e: ""
 
-      chartOptions: {
-        chart: {
-          id: 'vuechart-example'
-        },
-        xaxis: {
-          categories: ['|', '|', '|', '|']
-        }
-      },
-      series: [{
-        name: 'series-1',
-        data: [30, 40, 35, 50, 49, 60, 70, 91]
-      }]
+      // chartOptions: {
+      //   chart: {
+      //     id: 'vuechart-example'
+      //   },
+      //   xaxis: {
+      //     categories: ['|', '|', '|', '|']
+      //   }
+      // },
+      // series: [{
+      //   name: 'series-1',
+      //   data: [30, 40, 35, 50, 49, 60, 70, 91]
+      // }]
     };
   },
   methods: {
     checkSelect(entry) {
-      console.log(entry)
+      console.log(entry);
       if (entry.value === "2") {
-        this.data.sort((a, b) => (a.strGain > b.strGain) ? 1 : (a.strGain === b.strGain) ? ((a.name > b.name) ? 1 : -1) : -1)
-        return this.data
+        this.data.sort((a, b) =>
+          a.strGain > b.strGain
+            ? 1
+            : a.strGain === b.strGain
+            ? a.name > b.name
+              ? 1
+              : -1
+            : -1
+        );
+        return this.data;
       } else if (entry.vaue === 3) {
-        this.data.sort((a, b) => (a.agiGain > b.agiGain) ? 1 : (a.agiGain === b.agiGain) ? ((a.name > b.name) ? 1 : -1) : -1)
-        return this.data
+        this.data.sort((a, b) =>
+          a.agiGain > b.agiGain
+            ? 1
+            : a.agiGain === b.agiGain
+            ? a.name > b.name
+              ? 1
+              : -1
+            : -1
+        );
+        return this.data;
       } else if (entry.vaue === 4) {
-        this.data.sort((a, b) => (a.intGain > b.intGain) ? 1 : (a.intGain === b.intGain) ? ((a.name > b.name) ? 1 : -1) : -1)
-        return this.data
+        this.data.sort((a, b) =>
+          a.intGain > b.intGain
+            ? 1
+            : a.intGain === b.intGain
+            ? a.name > b.name
+              ? 1
+              : -1
+            : -1
+        );
+        return this.data;
       } else {
-        let x = this.$page.allXDOTA.edges
+        let x = this.$page.allXDOTA.edges;
         x.forEach(hero => {
-          this.data.push(hero)
-        })
-        return this.data
+          this.data.push(hero);
+        });
+        return this.data;
       }
-
     },
     sortByAttrGain() {
-      console.log('sortByAttrGain')
-      console.log(this.sortSelected)
+      console.log("sortByAttrGain:", this.sortSelected);
+
+      // let x = this.$page.allXDOTA.edges;
+      // x.forEach(hero => {
+      //   var draw = SVG(hero.node.id).size(30, 10);
+      //   var rect = draw.rect(20, 10).attr({
+      //     fill: "#FF7800"
+      //   });
+      // });
+
+      // var draw = SVG('hero-53').size(30, 10)
+      // var rect = draw.rect(20, 10).attr({
+      //   fill: '#FF7800'
+      // })
+      //       var draw = SVG('hero-52').size(20, 5)
+      //   var line = draw.line(0, 0, 8, 0); //.move(20, 20)
+      //   line.stroke({
+      //     color: '#FF7800',
+      //     width: 5,
+      //     linecap: 'round'
+      //   })
+
       if (this.sortSelected === "2") {
-        return this.attrSortData = this.data.slice().sort(function (a, b) {
-          return a.node.strGain < b.node.strGain
-        });
+        return (this.attrSortData = this.data.slice().sort(function(a, b) {
+          return a.node.strGain < b.node.strGain;
+        }));
       } else if (this.sortSelected === "3") {
-        return this.attrSortData = this.data.slice().sort(function (a, b) {
-          return a.node.agiGain < b.node.agiGain
-        });
+        return (this.attrSortData = this.data.slice().sort(function(a, b) {
+          return a.node.agiGain < b.node.agiGain;
+        }));
       } else if (this.sortSelected === "4") {
-        return this.attrSortData = this.data.slice().sort(function (a, b) {
-          return a.node.intGain < b.node.intGain
-        });
+        return (this.attrSortData = this.data.slice().sort(function(a, b) {
+          return a.node.intGain < b.node.intGain;
+        }));
         // this.data.sort((a, b) => (a.intGain > b.intGain) ? 1 : (a.intGain === b.intGain) ? ((a.name > b.name) ? 1 : -1) : -1)
         // return this.data
       } else {
-        return this.attrSortData = this.data
+        return (this.attrSortData = this.data);
       }
-    },
+    }
   },
   mounted() {
-    let x = this.$page.allXDOTA.edges
+    let x = this.$page.allXDOTA.edges;
     x.forEach(hero => {
-      hero.node.attackIcon = hero.node.attackType == 'Melee' ? 'fas fa-axe-battle' : 'fas fa-bow-arrow'
-      this.data.push(hero)
-    })
-    this.attrSortData = this.data
-    var draw = SVG('drawing').size(300, 300)
-    var rect = draw.rect(100, 100).attr({ fill: '#f06' })
+      hero.node.attackIcon =
+        hero.node.attackType == "Melee"
+          ? "fas fa-axe-battle"
+          : "fas fa-bow-arrow";
+      console.log(
+        `Created hook, ${hero.node.id}, attack range ${hero.node.attackRange}`
+      );
+      this.data.push(hero);
+    });
+    this.attrSortData = this.data;
   },
   computed: {
     searchFilter() {
-      this.searchData = this.attrSortData
-      let searchQueryLower = this.searchQuery.toLowerCase()
+      this.searchData = this.attrSortData;
+      let searchQueryLower = this.searchQuery.toLowerCase();
       if (this.searchQuery) {
         return this.attrSortData.filter(item => {
           return item.node.name.toLowerCase().includes(this.searchQuery);
-        })
+        });
       } else {
         return this.attrSortData;
       }
-    },
+    }
   },
   watch: {
     sortSelected() {
-      this.sortByAttrGain()
+      this.sortByAttrGain();
     }
   },
   metaInfo() {
@@ -284,15 +370,19 @@ export default {
       title: "DOTA.vue", // this.$route.name,
       titleTemplate: "%s | DOTA2 Heroes",
       breadCrumb: this.$route.name,
-      link: [{
-        rel: 'stylesheet',
-        href: './../assets/fontawesome/all.css'
-      }],
-      script: [{
-        href: './../assets/fontawesome/all.js'
-      }]
+      link: [
+        {
+          rel: "stylesheet",
+          href: "./../assets/fontawesome/all.css"
+        }
+      ],
+      script: [
+        {
+          href: "./../assets/fontawesome/all.js"
+        }
+      ]
     };
-  },
+  }
 };
 </script>
 
@@ -398,7 +488,7 @@ export default {
 
   & select {
     margin: 0;
-    font-family: 'Montserrat';
+    font-family: "Montserrat";
     background: grey;
     border: none;
     padding: 8px;
@@ -407,14 +497,14 @@ export default {
     color: white;
 
     & option {
-      font-family: 'Montserrat';
+      font-family: "Montserrat";
       background: grey;
     }
   }
 }
 
 option {
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
 }
 
 .select-heading {
@@ -426,20 +516,20 @@ option {
 }
 
 .select-item {
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
 }
 
 #sort-by-attributes {
   border: 2px solid $primary-blue;
   background: #333;
-  transition: .25s all;
+  transition: 0.25s all;
 
   &:hover {
     border: 2px solid $primary-blue;
     cursor: pointer;
     background: $primary-blue;
     color: #222;
-    transition: .25s all;
+    transition: 0.25s all;
   }
 
   &.select-item {
@@ -480,18 +570,20 @@ button {
     border-radius: 4px;
     // width: 40px;
     color: rgba(255, 255, 255, 0);
-    background: no-repeat center/85% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/dota2-venn-3.png");
-    transition: all .25s;
+    background: no-repeat center/85%
+      url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/dota2-venn-3.png");
+    transition: all 0.25s;
 
     &:hover {
       background-size: 90%;
       color: rgba(255, 255, 255, 0.5);
       box-shadow: 0 0 5px 0px white;
-      transition: all .25s;
+      transition: all 0.25s;
     }
 
     &.active {
-      background: rgba(255, 255, 255, 0.1) no-repeat center/90% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/dota2-venn-3.png");
+      background: rgba(255, 255, 255, 0.1) no-repeat center/90%
+        url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/dota2-venn-3.png");
       box-shadow: 0 0 2px 1px white;
       // color: white;
     }
@@ -510,13 +602,15 @@ button {
 
     &.active {
       box-shadow: 0 0 2px 1px white;
-      background: rgba(255, 255, 255, 0.1) no-repeat center/95% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Strength_attribute_symbol.png");
+      background: rgba(255, 255, 255, 0.1) no-repeat center/95%
+        url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Strength_attribute_symbol.png");
       border-radius: 4px;
     }
   }
 
   &.DOTA_ATTRIBUTE_AGILITY {
-    background: no-repeat center/90% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Agility_attribute_symbol.png");
+    background: no-repeat center/90%
+      url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Agility_attribute_symbol.png");
 
     &:hover {
       border-radius: 40px;
@@ -526,13 +620,15 @@ button {
 
     &.active {
       box-shadow: 0 0 2px 1px white;
-      background: rgba(255, 255, 255, 0.1) no-repeat center/95% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Agility_attribute_symbol.png");
+      background: rgba(255, 255, 255, 0.1) no-repeat center/95%
+        url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Agility_attribute_symbol.png");
       border-radius: 4px;
     }
   }
 
   &.DOTA_ATTRIBUTE_INTELLECT {
-    background: no-repeat center/90% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Intelligence_attribute_symbol.png");
+    background: no-repeat center/90%
+      url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Intelligence_attribute_symbol.png");
 
     &:hover {
       border-radius: 40px;
@@ -542,7 +638,8 @@ button {
 
     &.active {
       box-shadow: 0 0 2px 1px white;
-      background: rgba(255, 255, 255, 0.1) no-repeat center/95% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Intelligence_attribute_symbol.png");
+      background: rgba(255, 255, 255, 0.1) no-repeat center/95%
+        url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Intelligence_attribute_symbol.png");
       border-radius: 4px;
     }
   }
@@ -553,25 +650,28 @@ button {
   height: 20px;
 
   &.DOTA_ATTRIBUTE_STRENGTH {
-    background: no-repeat center/100% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Strength_attribute_symbol.png");
-
+    background: no-repeat center/100%
+      url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Strength_attribute_symbol.png");
   }
 
   &.DOTA_ATTRIBUTE_AGILITY {
-    background: no-repeat center/100% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Agility_attribute_symbol.png");
-
+    background: no-repeat center/100%
+      url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Agility_attribute_symbol.png");
   }
 
   &.DOTA_ATTRIBUTE_INTELLECT {
-    background: no-repeat center/100% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Intelligence_attribute_symbol.png");
+    background: no-repeat center/100%
+      url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Intelligence_attribute_symbol.png");
   }
 
   &.Melee {
-    background: no-repeat center/100% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Intelligence_attribute_symbol.png");
+    background: no-repeat center/100%
+      url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Intelligence_attribute_symbol.png");
   }
 
   &.Ranged {
-    background: no-repeat center/100% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Intelligence_attribute_symbol.png");
+    background: no-repeat center/100%
+      url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Intelligence_attribute_symbol.png");
   }
 }
 
@@ -593,7 +693,7 @@ button {
 }
 
 .attribute-name {
-  color: rgba(white, .5);
+  color: rgba(white, 0.5);
   font-size: 10px;
   text-align: center;
   background: rgba(255, 255, 255, 0.1);
@@ -653,7 +753,7 @@ button {
 }
 
 .attribute-gain-container {
-  border: 1px solid rgba(white, .25)
+  border: 1px solid rgba(white, 0.25);
 }
 
 .attribute-gain-heading {
@@ -661,7 +761,7 @@ button {
   margin: 0;
   padding: 0;
   color: white;
-  border-bottom: 1px solid rgba(white, .25);
+  border-bottom: 1px solid rgba(white, 0.25);
   background: none;
 }
 
@@ -670,7 +770,7 @@ button {
   font-size: 14px;
   background: rgba(255, 255, 255, 0.1);
   padding: 1px;
-  border-top: 1px solid rgba(255, 255, 255, .25);
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
   // border-top: none;
 
   &.DOTA_ATTRIBUTE_STRENGTH {
@@ -774,7 +874,7 @@ button {
 .attack-icon {
   line-height: 1.5em;
   padding: 2px 7px 2px 0;
-  border-right: 1px solid rgba(white, .25);
+  border-right: 1px solid rgba(white, 0.25);
 }
 
 .DOTA_ATTRIBUTE_STRENGTH {
@@ -795,5 +895,20 @@ i.Ranged:before {
 
 i.Melee:before {
   content: "\f6b3";
+}
+
+.bar {
+  height: 20px;
+  background-image: linear-gradient(
+    to right,
+    red,
+    #f06d06,
+    rgb(255, 255, 0),
+    green
+  );
+}
+
+.svg-attack-range {
+  height: 20px;
 }
 </style>
