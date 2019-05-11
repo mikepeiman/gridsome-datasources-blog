@@ -44,10 +44,6 @@
             >{{ entry.text }}</option>
           </select>
 
-<<<<<<< HEAD
-          <!-- </multiselect> -->
-=======
->>>>>>> temp
         </div>
       </div>
     </div>
