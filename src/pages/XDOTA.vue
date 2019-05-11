@@ -40,8 +40,6 @@
             </option>
           </select>
 
-          <!-- </multiselect> -->
-
         </div>
       </div>
     </div>
@@ -68,7 +66,28 @@
             <p class="total-attribute-gain" :class="item.node.primaryAttr">{{ item.node.totalAttrGain.toFixed(1) }}</p>
             <div class="attack-range-container" :class="item.node.primaryAttr">
               <i class="attack-icon" :class="item.node.attackIcon" ></i>
-              <p class="attack-range" :class="item.node.attackRange">Range: </p>
+              <svg class="svg-attack-range" height="20" width="80">
+                <defs>
+                  <linearGradient id="myGradient" x1="0" x2="2">
+                    <stop offset="25%" stop-color="gold"></stop>
+                    <stop offset="75%" stop-color="red"></stop>
+                  </linearGradient>
+
+                  <filter id="fill1" primitiveUnits="objectBoundingBox" x="0%" y="0%" width="100%" height="100%">
+                    <feFlood x="0%" y="0%" width="100%" height="100%" flood-color="red"></feFlood>
+                    <feOffset dx="0.5"></feOffset>
+                  </filter>
+<!-- 
+                  <feMerge>
+                    <feMergeNode in="Rect1" />
+                    <feMergeNode in="Rect2" />
+                  </feMerge> -->
+                </defs>
+                <g class="bar">
+                  <rect filter="url(#fill1)" :width="item.node.attackRange/12" height="7" y="7" fill="url(#myGradient)" result="Rect1"></rect>
+                  <rect filter="url(#fill2)" :width="item.node.attackRange/22" height="7" y="7" fill="blue" result="Rect2"></rect>
+                </g>
+              </svg>
               <p class="attack-range" :class="item.node.attackRange">{{ item.node.attackRange }}</p>
             </div>
 
@@ -112,13 +131,13 @@
 <script>
 import DSLayout from "~/layouts/DSLayout.vue";
 import DSSideBar from "~/components/DSSideBar.vue";
-import Multiselect from 'vue-multiselect';
+// import Multiselect from 'vue-multiselect';
 
 export default {
   components: {
     DSLayout,
     DSSideBar,
-    Multiselect,
+    // Multiselect,
   },
   data: function () {
     return {
@@ -171,17 +190,17 @@ export default {
       e: '',
 
       chartOptions: {
-          chart: {
-            id: 'vuechart-example'
-          },
-          xaxis: {
-            categories: ['|','|','|','|']
-          }
+        chart: {
+          id: 'vuechart-example'
         },
-        series: [{
-          name: 'series-1',
-          data: [30, 40, 35, 50, 49, 60, 70, 91]
-        }]
+        xaxis: {
+          categories: ['|', '|', '|', '|']
+        }
+      },
+      series: [{
+        name: 'series-1',
+        data: [30, 40, 35, 50, 49, 60, 70, 91]
+      }]
     };
   },
   methods: {
@@ -769,5 +788,18 @@ i.Ranged:before {
 
 i.Melee:before {
   content: "\f6b3";
+}
+
+.bar {
+  height: 20px;
+  background-image: linear-gradient(to right,
+    red,
+    #f06d06,
+    rgb(255, 255, 0),
+    green);
+}
+
+.svg-attack-range {
+  height: 20px;
 }
 </style>
