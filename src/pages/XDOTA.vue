@@ -2,9 +2,6 @@
 <DSLayout :pageName="pageName">
   <h1 class="page-title">DOTA2 Heroes</h1>
 
-  <h1>SVG library</h1>
-  <div id="drawing"></div>
-
   <div class="filter-container">
     <div class="search-container">
       <input
@@ -43,8 +40,18 @@
               :value="entry.value"
             >{{ entry.text }}</option>
           </select>
-
         </div>
+
+        <div class="slidecontainer">
+          <label>
+            <input type="checkbox" v-model="filterByRangeCheckbox">
+            Filter By Range
+          </label>
+
+          <input type="range" min="0" max="1000" step="10" class="slider" id="myRange" v-model="rangeFilter">
+          <!-- <span style="color: white;">Min Range: {{ total }}</span> -->
+        </div>
+
       </div>
     </div>
     <ul class="grid-main hero-list">
@@ -116,7 +123,7 @@
                 <g>
                  <rect fill="#252525" :width="1000/12" height="7" y="7" result="Rect2"></rect>
                   <rect class="attack-range-bar" fill="#ccc" :width="(item.node.projectileSpeed)/36" height="5" y="7" result="Rect1"></rect>
-    
+
                 </g>
               </svg>
               <div class="projectile-speed-container">
@@ -229,6 +236,10 @@ export default {
       data: [],
       searchData: [],
       attrSortData: [],
+
+      filterByRangeCheckbox: false,
+      rangeFilter: '500',
+      rangeFilterData: []
     };
   },
   methods: {
@@ -294,6 +305,17 @@ export default {
       } else {
         return (this.attrSortData = this.data);
       }
+    },
+    filterByRange() {
+      let searchQueryLower = this.searchQuery.toLowerCase();
+      if (this.filterByRange) {
+        console.log('inside of total computed property, this.filterByRange = true')
+        return this.rangeFilterData = this.attrSortData.filter(item => {
+          return item.node.attackRange >= this.rangeFilter;
+        });
+      } else {
+        return this.attrSortData;
+      }
     }
   },
   mounted() {
@@ -312,7 +334,7 @@ export default {
   },
   computed: {
     searchFilter() {
-      this.searchData = this.attrSortData;
+      // this.searchData = this.attrSortData;
       let searchQueryLower = this.searchQuery.toLowerCase();
       if (this.searchQuery) {
         return this.attrSortData.filter(item => {
@@ -321,11 +343,17 @@ export default {
       } else {
         return this.attrSortData;
       }
-    }
+    },
   },
   watch: {
     sortSelected() {
       this.sortByAttrGain();
+    },
+    rangeFilter() {
+      console.log('rangeFilter watcher fired')
+      if(this.filterByRangeCheckbox === true) {
+        this.filterByRange();
+      }      
     }
   },
   metaInfo() {
