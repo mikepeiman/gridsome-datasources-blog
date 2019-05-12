@@ -289,32 +289,31 @@ export default {
     sortByAttrGain() {
       console.log("sortByAttrGain:", this.sortSelected);
       if (this.sortSelected === "2") {
-        return (this.attrSortData = this.data.slice().sort(function (a, b) {
+        return (this.attrSortData = this.rangeFilterData.slice().sort(function (a, b) {
           return a.node.strGain < b.node.strGain;
         }));
       } else if (this.sortSelected === "3") {
-        return (this.attrSortData = this.data.slice().sort(function (a, b) {
+        return (this.attrSortData = this.rangeFilterData.slice().sort(function (a, b) {
           return a.node.agiGain < b.node.agiGain;
         }));
       } else if (this.sortSelected === "4") {
-        return (this.attrSortData = this.data.slice().sort(function (a, b) {
+        return (this.attrSortData = this.rangeFilterData.slice().sort(function (a, b) {
           return a.node.intGain < b.node.intGain;
         }));
         // this.data.sort((a, b) => (a.intGain > b.intGain) ? 1 : (a.intGain === b.intGain) ? ((a.name > b.name) ? 1 : -1) : -1)
         // return this.data
       } else {
-        return (this.attrSortData = this.data);
+        return (this.attrSortData = this.rangeFilterData);
       }
     },
     filterByRange() {
       let searchQueryLower = this.searchQuery.toLowerCase();
-      if (this.filterByRange) {
-        console.log('inside of total computed property, this.filterByRange = true')
+      if (this.filterByRangeCheckbox) {
         return this.rangeFilterData = this.attrSortData.filter(item => {
           return item.node.attackRange >= this.rangeFilter;
         });
       } else {
-        return this.attrSortData;
+        return this.rangeFilterData;
       }
     }
   },
@@ -331,17 +330,23 @@ export default {
       this.data.push(hero);
     });
     this.attrSortData = this.data;
+    this.rangeFilterData = this.data;
   },
   computed: {
     searchFilter() {
       // this.searchData = this.attrSortData;
       let searchQueryLower = this.searchQuery.toLowerCase();
       if (this.searchQuery) {
+        // if (this.filterByRangeCheckbox) {
+        //   return this.attrSortData.filter(item => {
+        //   return item.node.name.toLowerCase().includes(this.searchQuery);
+        // });
+        // }
         return this.attrSortData.filter(item => {
           return item.node.name.toLowerCase().includes(this.searchQuery);
         });
       } else {
-        return this.attrSortData;
+        return this.attrSortData; // attrSortData;
       }
     },
   },
@@ -351,9 +356,18 @@ export default {
     },
     rangeFilter() {
       console.log('rangeFilter watcher fired')
-      if(this.filterByRangeCheckbox === true) {
+      if (this.filterByRangeCheckbox === true) {
         this.filterByRange();
-      }      
+      }
+    },
+    filterByRangeCheckbox() {
+      console.log('rangeFilter watcher fired')
+      if (this.filterByRangeCheckbox === true) {
+        this.filterByRange();
+      }
+    },
+    rangeFilterData() {
+      console.log('rangeFilterData changed')
     }
   },
   metaInfo() {
