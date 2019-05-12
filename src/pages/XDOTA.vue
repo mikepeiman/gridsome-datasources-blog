@@ -20,12 +20,12 @@
             :item="entry.dotaName"
             :key="index"
             @click="attrFilter = entry.dotaName;"
-            :class="[ entry.dotaName, {active: entry.dotaName === filter} ]"
+            :class="[ entry.dotaName, {active: entry.dotaName == attrFilter} ]"
             class="filter-item attr-icon attr-icon-large"
           ></button>
           <button
             @click="attrFilter = 'All';"
-            :class="[ 'show-all filter-item', {active: 'All' === attrFilter} ]"
+            :class="[ 'show-all filter-item', {active: 'All' == attrFilter} ]"
           >Show All</button>
         </div>
         <div class="filter-attribute-toggle">
@@ -256,12 +256,11 @@ export default {
         return (this.attrSortData = this.data.slice().sort(function (a, b) {
           return a.node.intGain < b.node.intGain;
         }));
-      } else {
-        return this.attrSortData;
-      }
+      } else if (this.sortSelected === "1") {
+        return this.attrSortData = this.data
+        };
     },
     filterByRange() {
-      let searchQueryLower = this.searchQuery.toLowerCase();
       if (this.filterByRangeCheckbox) {
         return this.rangeFilterData = this.attrSortData.filter(item => {
           return item.node.attackRange >= this.rangeFilter;
