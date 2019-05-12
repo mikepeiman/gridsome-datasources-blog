@@ -98,7 +98,6 @@
                 <g class="bar">
                   <rect fill="#252525" :width="1000/12" height="7" y="7" result="Rect2"></rect>
                   <rect class="attack-range-bar" fill="#ccc" :width="(item.node.attackRange-150)/8.5" height="5" y="7" result="Rect1"></rect>
-                  <!-- <text x="70%" y="14" :fill="item.node.color">{{item.node.attackRange}}</text> -->
                 </g>
 
               </svg>
@@ -110,16 +109,6 @@
             <div class="projectile-speed-container" :class="item.node.primaryAttr" v-if="item.node.attackType !== 'Melee'">
               <i class="attack-icon" :class="item.node.attackIcon" ></i>
               <svg class="svg-attack-range" height="20" width="80">
-                <!-- <defs>
-                  <filter id="fill1" primitiveUnits="objectBoundingBox" x="0%" y="0%" width="100%" height="100%">
-                    <feFlood x="0%" y="0%" width="100%" height="100%" :flood-color="item.node.color"></feFlood>
-                    <feOffset dx="0"></feOffset>
-                  </filter>
-                  <filter id="fill2" primitiveUnits="objectBoundingBox" x="0%" y="0%" width="100%" height="100%">
-                    <feFlood x="0%" y="0%" width="100%" height="100%" flood-color="black"></feFlood>
-                    <feOffset dx="0"></feOffset>
-                  </filter>
-                </defs> -->
                 <g>
                  <rect fill="#252525" :width="1000/12" height="7" y="7" result="Rect2"></rect>
                   <rect class="attack-range-bar" fill="#ccc" :width="(item.node.projectileSpeed)/36" height="5" y="7" result="Rect1"></rect>
@@ -245,7 +234,7 @@ export default {
   methods: {
     filterAll() {
       if (this.filterByRangeCheckbox) {
-        this.attrSortData = sortByAttrGain()
+        this.attrSortData = sortByAttrGain() // yes, checked Vue Tools this works
         return this.rangeFilterData = this.attrSortData.filter(item => {
           return item.node.attackRange >= this.rangeFilter;
         });
@@ -268,7 +257,7 @@ export default {
           return a.node.intGain < b.node.intGain;
         }));
       } else {
-        return (this.attrSortData = this.data);
+        return this.attrSortData;
       }
     },
     filterByRange() {
@@ -291,24 +280,18 @@ export default {
         "fas fa-bow-arrow";
       this.data.push(hero);
     });
+    this.searchData = this.data;
     this.attrSortData = this.data;
     this.rangeFilterData = this.data;
   },
   computed: {
     searchFilter() {
-      // this.searchData = this.attrSortData;
-      let searchQueryLower = this.searchQuery.toLowerCase();
       if (this.searchQuery) {
-        // if (this.filterByRangeCheckbox) {
-        //   return this.attrSortData.filter(item => {
-        //   return item.node.name.toLowerCase().includes(this.searchQuery);
-        // });
-        // }
-        return this.attrSortData.filter(item => {
-          return item.node.name.toLowerCase().includes(this.searchQuery);
+        return this.searchData = this.attrSortData.filter(item => {
+          return item.node.name.toLowerCase().includes(this.searchQuery.toLowerCase());
         });
       } else {
-        return this.attrSortData; // attrSortData;
+        return this.searchData = this.attrSortData;
       }
     },
   },
@@ -330,6 +313,9 @@ export default {
     },
     rangeFilterData() {
       console.log('rangeFilterData changed')
+    },
+    searchQuery() {
+      this.filterAll()
     }
   },
   metaInfo() {
