@@ -19,13 +19,13 @@
             v-for="(entry, index) in filterListAttr"
             :item="entry.dotaName"
             :key="index"
-            @click="filter = entry.dotaName;"
-            :class="[ entry.dotaName, {active: entry.dotaName == filter} ]"
+            @click="attrFilter = entry.dotaName;"
+            :class="[ entry.dotaName, {active: entry.dotaName === filter} ]"
             class="filter-item attr-icon attr-icon-large"
           ></button>
           <button
-            @click="filter = 'All';"
-            :class="[ 'show-all filter-item', {active: 'All' == filter} ]"
+            @click="attrFilter = 'All';"
+            :class="[ 'show-all filter-item', {active: 'All' === attrFilter} ]"
           >Show All</button>
         </div>
         <div class="filter-attribute-toggle">
@@ -55,7 +55,7 @@
       </div>
     </div>
     <ul class="grid-main hero-list">
-      <li v-for="item in searchFilter" :key="item.id" class="item-container grid-item" v-show="item.node.primaryAttr === filter || filter === 'All'">
+      <li v-for="item in searchFilter" :key="item.id" class="item-container grid-item" v-show="item.node.primaryAttr === attrFilter || attrFilter === 'All'">
         <g-link :to="item.node.path">
           <div class="hero-name-container">
             <div class="icon-box attr-icon" :class="item.node.primaryAttr"></div>
@@ -200,7 +200,7 @@ export default {
       sortSelected: "1",
 
       fkey: "primaryAttr",
-      filter: "All",
+      attrFilter: "All",
       filterListAttr: [{
           shortName: "STR",
           dotaName: "DOTA_ATTRIBUTE_STRENGTH"
@@ -243,67 +243,32 @@ export default {
     };
   },
   methods: {
-    checkSelect(entry) {
-      console.log(entry);
-      if (entry.value === "2") {
-        this.data.sort((a, b) =>
-          a.strGain > b.strGain ?
-          1 :
-          a.strGain === b.strGain ?
-          a.name > b.name ?
-          1 :
-          -1 :
-          -1
-        );
-        return this.data;
-      } else if (entry.vaue === 3) {
-        this.data.sort((a, b) =>
-          a.agiGain > b.agiGain ?
-          1 :
-          a.agiGain === b.agiGain ?
-          a.name > b.name ?
-          1 :
-          -1 :
-          -1
-        );
-        return this.data;
-      } else if (entry.vaue === 4) {
-        this.data.sort((a, b) =>
-          a.intGain > b.intGain ?
-          1 :
-          a.intGain === b.intGain ?
-          a.name > b.name ?
-          1 :
-          -1 :
-          -1
-        );
-        return this.data;
-      } else {
-        let x = this.$page.allXDOTA.edges;
-        x.forEach(hero => {
-          this.data.push(hero);
+    filterAll() {
+      if (this.filterByRangeCheckbox) {
+        this.attrSortData = sortByAttrGain()
+        return this.rangeFilterData = this.attrSortData.filter(item => {
+          return item.node.attackRange >= this.rangeFilter;
         });
-        return this.data;
+      } else {
+        return this.attrSortData;
       }
     },
     sortByAttrGain() {
       console.log("sortByAttrGain:", this.sortSelected);
       if (this.sortSelected === "2") {
-        return (this.attrSortData = this.rangeFilterData.slice().sort(function (a, b) {
+        return (this.attrSortData = this.data.slice().sort(function (a, b) {
           return a.node.strGain < b.node.strGain;
         }));
       } else if (this.sortSelected === "3") {
-        return (this.attrSortData = this.rangeFilterData.slice().sort(function (a, b) {
+        return (this.attrSortData = this.data.slice().sort(function (a, b) {
           return a.node.agiGain < b.node.agiGain;
         }));
       } else if (this.sortSelected === "4") {
-        return (this.attrSortData = this.rangeFilterData.slice().sort(function (a, b) {
+        return (this.attrSortData = this.data.slice().sort(function (a, b) {
           return a.node.intGain < b.node.intGain;
         }));
-        // this.data.sort((a, b) => (a.intGain > b.intGain) ? 1 : (a.intGain === b.intGain) ? ((a.name > b.name) ? 1 : -1) : -1)
-        // return this.data
       } else {
-        return (this.attrSortData = this.rangeFilterData);
+        return (this.attrSortData = this.data);
       }
     },
     filterByRange() {
@@ -324,9 +289,6 @@ export default {
         hero.node.attackType == "Melee" ?
         "fas fa-axe-battle" :
         "fas fa-bow-arrow";
-      console.log(
-        `Created hook, ${hero.node.name} ${hero.node.id}, attack range ${hero.node.attackRange}, color ${hero.node.attrHexCode}`
-      );
       this.data.push(hero);
     });
     this.attrSortData = this.data;
