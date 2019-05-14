@@ -292,12 +292,6 @@ export default {
       };
       return this.SortedFilteredData = this.arrayMatch(this.attrSortData, this.SortedFilteredData)
     },
-    filterByRange() {
-      this.rangeFilterData = this.attrSortData.filter(item => {
-        return item.node.attackRange >= this.rangeFilter;
-      });
-      return this.SortedFilteredData = this.arrayMatch(this.rangeFilterData, this.data)
-    },
     sortByRange() {
       console.log('sort by range method')
       // this.tempData = this.SortedFilteredData
@@ -305,10 +299,16 @@ export default {
       this.rangeSortData.sort(function (a, b) {
         return a.node.attackRange < b.node.attackRange;
       });
-      // return this.rangeSortData
       this.generateData()
-      return this.SortedFilteredData = this.arrayMatch(this.rangeSortData, this.data)
+      return this.SortedFilteredData = this.arrayMatch(this.rangeSortData, this.SortedFilteredData)
     },
+    filterByRange() {
+      this.rangeFilterData = this.attrSortData.filter(item => {
+        return item.node.attackRange >= this.rangeFilter;
+      });
+      return this.SortedFilteredData = this.arrayMatch(this.rangeFilterData, this.data)
+    },
+
     arrayMatch(array1, array2) {
       let newArray = []
       for (var i in array1) {
