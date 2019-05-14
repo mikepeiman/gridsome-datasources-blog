@@ -9,125 +9,138 @@
           type="text"
           v-model="searchQuery"
           placeholder="Search"
-        >
-      </div>
+      >
 
-      <div class="attribute-filter-container">
-        <!-- <p class="attribute-filter-heading">Filter By Primary Attribute</p> -->
-        <div class="attribute-filters">
-          <button
-            v-for="(entry, index) in filterListAttr"
-            :item="entry.dotaName"
-            :key="index"
-            @click="attrFilter = entry.dotaName;"
-            :class="[ entry.dotaName, {active: entry.dotaName == attrFilter} ]"
-            class="filter-item attr-icon attr-icon-large"
-          ></button>
-          <button
-            @click="attrFilter = 'All';"
-            :class="[ 'show-all filter-item', {active: 'All' == attrFilter} ]"
-          >Show All</button>
-        </div>
-        <div class="filter-attribute-toggle">
-          <p class="select-heading">Sort By Attribute:</p>
-          <!-- <multiselect v-model="selected" :options="options"  :show-labels="false" :close-on-select="true"> -->
-          <select id="sort-by-attributes">
-            <option
-              class="select-item"
-              v-for="entry in sortByAttrList"
-              @click="sortSelected = entry.value"
-              style="font-family: 'Montserrat'; font-weight: 300; background: #222222; color: #eee;"
-              :value="entry.value"
-            >{{ entry.text }}</option>
-          </select>
-        </div>
+      <div class="attribute-filters">
+        <button
+          @click="attrFilter = 'All';"
+          :class="[ 'filter-item show-all', {active: 'All' == attrFilter} ]"
+        ></button>
+        <!-- <div class="filter-item-spacer">| -->
 
-        <div class="slidecontainer">
-          <label>
-            <input type="checkbox" v-model="filterByRangeCheckbox">
-            Filter By Range
-          </label>
-
-          <input type="range" min="0" max="1000" step="10" class="slider" id="myRange" v-model="rangeFilter">
-          <!-- <span style="color: white;">Min Range: {{ total }}</span> -->
-        </div>
+        <button
+          v-for="(entry, index) in filterListAttr"
+          :item="entry.dotaName"
+          :key="index"
+          @click="attrFilter = entry.dotaName;"
+          :class="[ entry.dotaName, {active: entry.dotaName == attrFilter} ]"
+          class="filter-item"
+        ></button>
+        <!-- </div> -->
 
       </div>
     </div>
-    <ul class="grid-main hero-list">
-      <li v-for="item in searchFilter" :key="item.id" class="item-container grid-item" v-show="item.node.primaryAttr === attrFilter || attrFilter === 'All'">
-        <g-link :to="item.node.path">
-          <div class="hero-name-container">
-            <div class="icon-box attr-icon" :class="item.node.primaryAttr"></div>
-            <h2 class="hero-name">{{ item.node.name }}</h2>
+
+    <div class="attribute-filter-container">
+      <!-- <p class="attribute-filter-heading">Filter By Primary Attribute</p> -->
+
+      <div class="filter-attribute-toggle">
+        <label class="flex-column">
+          Sort By:
+          <div class="radio-container">
+          <input type="radio" name="selectSort" v-model="sortByAttribute">Attribute Gain
           </div>
-          <div class="attribute-gain-container">
-            <p class="attribute-gain-heading">Attribute Gain</p>
-            <div class="attribute-container">
-              <span
+          <div class="radio-container">
+          <input type="radio" name="selectSort" v-model="sortByRange">Attack Range
+          </div>
+        </label>
+        <select id="sort-by-attributes">
+          <option
+            class="select-item"
+            v-for="entry in sortByAttrList"
+            @click="sortSelected = entry.value"
+            style="font-family: 'Montserrat'; font-weight: 300; background: #222222; color: #eee;"
+            :value="entry.value"
+          >{{ entry.text }}</option>
+        </select>
+      </div>
+
+      <div class="slidecontainer">
+        <label>
+            <input type="checkbox" v-model="filterByRangeCheckbox">
+            Filter By Range: {{ rangeFilter }}
+          </label>
+
+        <input type="range" min="0" max="1000" step="10" class="slider" id="myRange" v-model="rangeFilter">
+        <!-- <span style="color: white;">Min Range: {{ total }}</span> -->
+      </div>
+
+    </div>
+  </div>
+  <ul class="grid-main hero-list">
+    <li v-for="item in SortedFilteredData" :key="item.id" class="item-container grid-item" v-show="item.node.primaryAttr === attrFilter || attrFilter === 'All'">
+      <g-link :to="item.node.path">
+        <div class="hero-name-container">
+          <div class="icon-box attr-icon" :class="item.node.primaryAttr"></div>
+          <h2 class="hero-name">{{ item.node.name }}</h2>
+        </div>
+        <div class="attribute-gain-container">
+          <p class="attribute-gain-heading">Attribute Gain</p>
+          <div class="attribute-container">
+            <span
                 class="attribute-name"
                 :class="{'DOTA_ATTRIBUTE_STRENGTH': item.node.primaryAttr == 'DOTA_ATTRIBUTE_STRENGTH'}"
               >STR</span>
-              <span
+            <span
                 class="attribute-name"
                 :class="{'DOTA_ATTRIBUTE_AGILITY': item.node.primaryAttr == 'DOTA_ATTRIBUTE_AGILITY'}"
               >AGI</span>
-              <span
+            <span
                 class="attribute-name"
                 :class="{'DOTA_ATTRIBUTE_INTELLECT': item.node.primaryAttr == 'DOTA_ATTRIBUTE_INTELLECT'}"
               >INT</span>
-            </div>
-            <div class="attribute-container">
-              <span
+          </div>
+          <div class="attribute-container">
+            <span
                 class="attribute"
                 :class="{'DOTA_ATTRIBUTE_STRENGTH': item.node.primaryAttr == 'DOTA_ATTRIBUTE_STRENGTH'}"
               >{{ item.node.strGain }}</span>
-              <span
+            <span
                 class="attribute"
                 :class="{'DOTA_ATTRIBUTE_AGILITY': item.node.primaryAttr == 'DOTA_ATTRIBUTE_AGILITY'}"
               >{{ item.node.agiGain }}</span>
-              <span
+            <span
                 class="attribute"
                 :class="{'DOTA_ATTRIBUTE_INTELLECT': item.node.primaryAttr == 'DOTA_ATTRIBUTE_INTELLECT'}"
               >{{ item.node.intGain }}</span>
-            </div>
-            <p class="total-attribute-gain" :class="item.node.primaryAttr">{{ item.node.totalAttrGain.toFixed(1) }}</p>
-            <div class="attack-range-container" :class="item.node.primaryAttr" v-if="item.node.attackType !== 'Melee'">
-              <i class="attack-icon" :class="item.node.attackIcon" ></i>
-              <svg class="svg-attack-range" height="20" width="80">
+          </div>
+          <p class="total-attribute-gain" :class="item.node.primaryAttr">{{ item.node.totalAttrGain.toFixed(1) }}</p>
+          <div class="attack-range-container" :class="item.node.primaryAttr" v-if="item.node.attackType !== 'Melee'">
+            <i class="attack-icon" :class="item.node.attackIcon" ></i>
+            <svg class="svg-attack-range" height="20" width="80">
                 <g class="bar">
                   <rect fill="#252525" :width="1000/12" height="7" y="7" result="Rect2"></rect>
                   <rect class="attack-range-bar" fill="#ccc" :width="(item.node.attackRange-150)/8.5" height="5" y="7" result="Rect1"></rect>
                 </g>
 
               </svg>
-              <div class="projectile-speed-container">
-                <p class="attack-range" :class="item.node.attackRange">{{ item.node.attackRange }}</p>
-              </div>
-
+            <div class="projectile-speed-container">
+              <p class="attack-range" :class="item.node.attackRange">{{ item.node.attackRange }}</p>
             </div>
-            <div class="projectile-speed-container" :class="item.node.primaryAttr" v-if="item.node.attackType !== 'Melee'">
-              <i class="attack-icon" :class="item.node.attackIcon" ></i>
-              <svg class="svg-attack-range" height="20" width="80">
+
+          </div>
+          <div class="projectile-speed-container" :class="item.node.primaryAttr" v-if="item.node.attackType !== 'Melee'">
+            <i class="attack-icon" :class="item.node.attackIcon" ></i>
+            <svg class="svg-attack-range" height="20" width="80">
                 <g>
                  <rect fill="#252525" :width="1000/12" height="7" y="7" result="Rect2"></rect>
                   <rect class="attack-range-bar" fill="#ccc" :width="(item.node.projectileSpeed)/36" height="5" y="7" result="Rect1"></rect>
 
                 </g>
               </svg>
-              <div class="projectile-speed-container">
-                <p class="projectile-speed" :class="item.node.projectileSpeed">{{ item.node.projectileSpeed }}</p>
-              </div>
+            <div class="projectile-speed-container">
+              <p class="projectile-speed" :class="item.node.projectileSpeed">{{ item.node.projectileSpeed }}</p>
+            </div>
 
-            </div>
-            <div class="projectile-speed-container" :class="item.node.primaryAttr" v-if="item.node.attackType == 'Melee'">
-              <i class="attack-icon" :class="item.node.attackIcon" ></i>
-              <p>MELEE</p>
-            </div>
           </div>
-        </g-link>
-      </li>
-    </ul>
+          <div class="projectile-speed-container" :class="item.node.primaryAttr" v-if="item.node.attackType == 'Melee'">
+            <i class="attack-icon" :class="item.node.attackIcon" ></i>
+            <p>MELEE</p>
+          </div>
+        </div>
+      </g-link>
+    </li>
+  </ul>
 </DSLayout>
 </template>
 
@@ -224,75 +237,116 @@ export default {
       ],
       data: [],
       searchData: [],
+      SortedFilteredData: [],
       attrSortData: [],
 
       filterByRangeCheckbox: false,
-      rangeFilter: '500',
-      rangeFilterData: []
+      sortByRange: false,
+      sortByAttribute: true,
+      rangeFilter: '150',
+      rangeFilterData: [],
+      rangeSortData: []
     };
   },
   methods: {
-    filterAll() {
-      if (this.filterByRangeCheckbox) {
-        this.attrSortData = sortByAttrGain() // yes, checked Vue Tools this works
-        return this.rangeFilterData = this.attrSortData.filter(item => {
-          return item.node.attackRange >= this.rangeFilter;
-        });
-      } else {
-        return this.attrSortData;
-      }
+    generateData() {
+      const x = this.$page.allXDOTA.edges;
+      x.forEach(hero => {
+        hero.node.attackIcon =
+          hero.node.attackType == "Melee" ?
+          "fas fa-axe-battle" :
+          "fas fa-bow-arrow";
+        this.data.push(hero);
+        return this.data
+      });
     },
+    // filterAll() {
+    //   if (this.filterByRangeCheckbox) {
+    //     this.attrSortData = this.sortByAttrGain() // yes, checked Vue Tools this works
+    //     return this.rangeFilterData = this.attrSortData.filter(item => {
+    //       return item.node.attackRange >= this.rangeFilter;
+    //     });
+    //   } else {
+    //     return this.attrSortData;
+    //   }
+    // },
     sortByAttrGain() {
       console.log("sortByAttrGain:", this.sortSelected);
       if (this.sortSelected === "2") {
-        return (this.attrSortData = this.data.slice().sort(function (a, b) {
+        this.attrSortData = this.data.slice().sort(function (a, b) {
           return a.node.strGain < b.node.strGain;
-        }));
+        });
       } else if (this.sortSelected === "3") {
-        return (this.attrSortData = this.data.slice().sort(function (a, b) {
+        this.attrSortData = this.data.slice().sort(function (a, b) {
           return a.node.agiGain < b.node.agiGain;
-        }));
+        });
       } else if (this.sortSelected === "4") {
-        return (this.attrSortData = this.data.slice().sort(function (a, b) {
+        this.attrSortData = this.data.slice().sort(function (a, b) {
           return a.node.intGain < b.node.intGain;
-        }));
-      } else if (this.sortSelected === "1") {
-        return this.attrSortData = this.data
-        };
-    },
-    filterByRange() {
-      if (this.filterByRangeCheckbox) {
-        return this.rangeFilterData = this.attrSortData.filter(item => {
-          return item.node.attackRange >= this.rangeFilter;
         });
       } else {
-        return this.rangeFilterData;
+        this.attrSortData = this.data
+      };
+      return this.SortedFilteredData = this.arrayMatch(this.attrSortData, this.SortedFilteredData)
+    },
+    filterByRange() {
+      this.rangeFilterData = this.attrSortData.filter(item => {
+        return item.node.attackRange >= this.rangeFilter;
+      });
+      return this.SortedFilteredData = this.arrayMatch(this.rangeFilterData, this.data)
+    },
+    sortByRange() {
+      console.log('sort by range method')
+      // this.tempData = this.SortedFilteredData
+      this.rangeSortData = this.data
+      this.rangeSortData.sort(function (a, b) {
+        return a.node.attackRange < b.node.attackRange;
+      });
+      // return this.rangeSortData
+      return this.SortedFilteredData = this.arrayMatch(this.rangeSortData, this.data)
+    },
+    arrayMatch(array1, array2) {
+      let newArray = []
+      for (var i in array1) {
+        if (array2.indexOf(array1[i]) > -1) {
+          newArray.push(array1[i])
+        }
       }
-    }
-  },
-  mounted() {
-    let x = this.$page.allXDOTA.edges;
-    x.forEach(hero => {
-      hero.node.attackIcon =
-        hero.node.attackType == "Melee" ?
-        "fas fa-axe-battle" :
-        "fas fa-bow-arrow";
-      this.data.push(hero);
-    });
-    this.searchData = this.data;
-    this.attrSortData = this.data;
-    this.rangeFilterData = this.data;
-  },
-  computed: {
-    searchFilter() {
+      return newArray
+    },
+    searchFilterMethod() {
       if (this.searchQuery) {
-        return this.searchData = this.attrSortData.filter(item => {
+        this.SortedFilteredData = this.attrSortData.filter(item => {
           return item.node.name.toLowerCase().includes(this.searchQuery.toLowerCase());
         });
       } else {
-        return this.searchData = this.attrSortData;
+        return this.SortedFilteredData = this.attrSortData;
       }
     },
+  },
+  mounted() {
+    this.generateData()
+    // this.searchData = this.data
+    this.attrSortData = this.data
+    this.rangeFilterData = this.data
+    this.SortedFilteredData = this.data
+  },
+  computed: {
+    // searchFilter() {
+    //   if (this.searchQuery) {
+    //     this.SortedFilteredData = this.attrSortData.filter(item => {
+    //       return item.node.name.toLowerCase().includes(this.searchQuery.toLowerCase());
+    //     });
+    //   } else {
+    //     return this.SortedFilteredData = this.attrSortData;
+    //   }
+    // },
+    // SortedFilteredHeroes() {
+    //   if (this.filterByRangeCheckbox) {
+    //     return this.arrayMatch(this.rangeFilterData, this.SortedFilteredData)
+    //   }
+    //   return this.SortedFilteredData
+    // }
   },
   watch: {
     sortSelected() {
@@ -300,21 +354,45 @@ export default {
     },
     rangeFilter() {
       console.log('rangeFilter watcher fired')
-      if (this.filterByRangeCheckbox === true) {
+      if (this.filterByRangeCheckbox) {
         this.filterByRange();
       }
     },
+    sortByAttribute() {
+      console.log('sortByAttribute watcher fired')
+      if (this.sortByAttribute !== true) {
+        console.log('sortByAttribute false/unchecked')
+        return this.data
+      } else {
+        console.log('sortByAttribute now true/checked')
+        // this.SortedFilteredData = this.generateData()
+        this.sortByAttrGain();
+      }
+    },
+    sortByRange() {
+      console.log('sortByRange watcher fired')
+      if (this.sortByRange !== true) {
+        console.log('sortByRange false/unchecked')
+        return this.data
+      } else {
+        console.log('sortByRange now true/checked')
+        // this.SortedFilteredData = this.generateData()
+        this.sortByRange();
+      }
+    },
     filterByRangeCheckbox() {
-      console.log('rangeFilter watcher fired')
+      console.log('filterByRangeCheckbox watcher fired')
       if (this.filterByRangeCheckbox === true) {
         this.filterByRange();
+      } else {
+        return this.attrSortData
       }
     },
     rangeFilterData() {
       console.log('rangeFilterData changed')
     },
     searchQuery() {
-      this.filterAll()
+      this.searchFilterMethod()
     }
   },
   metaInfo() {
@@ -386,6 +464,11 @@ export default {
   margin: 0 0 1em 0;
 }
 
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
 .filter-container {
   // background: rgba(255, 255, 255, 0.1);
   border-bottom: 3px solid $primary-blue;
@@ -396,8 +479,10 @@ export default {
 
 .search-container {
   display: flex;
+  flex-direction: column;
   padding: 5px 0;
-  align-items: center;
+  margin: 0;
+  align-items: flex-start;
 
   &.search-bar {
     padding: 10px;
@@ -407,7 +492,7 @@ export default {
 
 .search-bar {
   padding: 10px;
-  margin-left: 10px;
+  // margin-left: 10px;
   // line-height: 20px;
 }
 
@@ -431,7 +516,9 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  margin-left: 2em;
+  margin-left: 0.5em;
+  // border-left: 3px solid rgba(255,255,255,0.5);
+  padding-left: 0.5em;
   color: white;
 
   & select {
@@ -499,89 +586,98 @@ option {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  width: 200px;
+  // width: 200px;
   margin: 0;
-  padding: 0 0 0 10px;
+  padding: 1em 0 0 0;
 }
 
 button {
   border: none;
 }
 
+.filter-item-spacer {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  color: rgba(0, 0, 0, 0);
+  background-image: linear-gradient(to right, #EC3D06 15%, #26E030 55%, #00D9EC) // border-right: 5px solid rgba(255,255,255,0.5);
+}
+
 .filter-item {
   cursor: pointer;
   width: 40px;
   height: 40px;
+  margin: 0 5px 0 0;
+  padding: 0 5px;
 
   &.show-all {
-    padding: 0;
-    border-radius: 4px;
-    // width: 40px;
-    color: rgba(255, 255, 255, 0);
-    background: no-repeat center/85% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/dota2-venn-3.png");
+    // padding: 10px;
+    color: rgba(0, 0, 0, 0);
+    background: no-repeat center url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/dota2-venn-3.png");
     transition: all 0.25s;
+    background-size: 80%;
 
     &:hover {
-      background-size: 90%;
-      color: rgba(255, 255, 255, 0.5);
-      box-shadow: 0 0 5px 0px white;
       transition: all 0.25s;
+      box-shadow: 0 0 5px 0px white;
+      background-size: 70%;
+      background: rgba(0, 0, 0, 0.85) no-repeat center url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/dota2-venn-3.png");
     }
 
     &.active {
-      background: rgba(255, 255, 255, 0.1) no-repeat center/90% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/dota2-venn-3.png");
-      box-shadow: 0 0 2px 1px white;
-      // color: white;
+      background: rgba(0, 0, 0, 0.85) no-repeat center url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/dota2-venn-3.png");
+      transition: all 0.25s;
+      border-radius: 0;
+      box-shadow: 0 0 3px 0px white;
+      background-size: 70%;
     }
   }
 
   &.DOTA_ATTRIBUTE_STRENGTH {
-    // background: no-repeat center/90% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Strength_attribute_symbol.png");
-    // padding-top: 5px;
-    background-size: 5%;
+    background: no-repeat center url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Strength_attribute_symbol.png");
+    background-size: 80%;
 
     &:hover {
-      background-size: 95%;
-      border-radius: 40px;
       box-shadow: 0 0 5px 0px $dota-str;
+      background-size: 80%;
     }
 
     &.active {
-      box-shadow: 0 0 2px 1px white;
-      background: rgba(255, 255, 255, 0.1) no-repeat center/95% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Strength_attribute_symbol.png");
-      border-radius: 4px;
+      background: rgba(0, 0, 0, 0.85) no-repeat center url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Strength_attribute_symbol.png");
+      box-shadow: 0 0 5px 0px $dota-str;
+      background-size: 80%;
     }
   }
 
   &.DOTA_ATTRIBUTE_AGILITY {
-    background: no-repeat center/90% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Agility_attribute_symbol.png");
+    background: no-repeat center url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Agility_attribute_symbol.png");
+    background-size: 80%;
 
     &:hover {
-      border-radius: 40px;
       box-shadow: 0 0 5px 0px $dota-agi;
-      background-size: 95%;
+      background-size: 80%;
     }
 
     &.active {
-      box-shadow: 0 0 2px 1px white;
-      background: rgba(255, 255, 255, 0.1) no-repeat center/95% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Agility_attribute_symbol.png");
-      border-radius: 4px;
+      background: rgba(0, 0, 0, 0.85) no-repeat center url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Agility_attribute_symbol.png");
+      box-shadow: 0 0 5px 0px $dota-agi;
+      background-size: 80%;
     }
   }
 
   &.DOTA_ATTRIBUTE_INTELLECT {
-    background: no-repeat center/90% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Intelligence_attribute_symbol.png");
+    background: no-repeat center url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Intelligence_attribute_symbol.png");
+    background-size: 80%;
 
     &:hover {
-      border-radius: 40px;
       box-shadow: 0 0 5px 0px $dota-int;
-      background-size: 95%;
+      background-size: 80%;
     }
 
     &.active {
-      box-shadow: 0 0 2px 1px white;
-      background: rgba(255, 255, 255, 0.1) no-repeat center/95% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Intelligence_attribute_symbol.png");
-      border-radius: 4px;
+      background: rgba(0, 0, 0, 0.85) no-repeat center url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Intelligence_attribute_symbol.png");
+      box-shadow: 0 0 5px 0px $dota-int;
+      background-size: 80%;
     }
   }
 }
@@ -617,7 +713,7 @@ button {
 }
 
 .icon-box {
-  padding: 5px 0 5px 0;
+  padding: 5px 0;
   background: $primary-graphite;
   z-index: 2;
   color: rgba($primary-white, 0.5);
@@ -849,5 +945,11 @@ i.Melee:before {
 
 .svg-attack-range {
   height: 20px;
+}
+
+.slidecontainer {
+  display: flex;
+  flex-direction: column;
+  margin-left: 1em;
 }
 </style>

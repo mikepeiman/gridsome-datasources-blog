@@ -15,18 +15,21 @@
         <g-link class="nav__link" :to="{ name: 'starwars' }">StarWars</g-link>
       </li>
       <li @click="mainLink(4)" class="nav-link-container">
-        <g-link class="nav__link" :to="{ name: 'heroes' }">DOTA2 Heroes</g-link>
+        <g-link class="nav__link" :to="{ name: 'heroes' }">DOTA2 (scraped)</g-link>
       </li>
       <li @click="mainLink(5)" class="nav-link-container">
-        <g-link class="nav__link" :to="{ name: 'filesystem' }">Filesystem</g-link>
+        <g-link class="nav__link" :to="{ name: 'xdota' }">DOTA2 (from VDF)</g-link>
       </li>
       <li @click="mainLink(6)" class="nav-link-container">
-        <g-link class="nav__link" :to="{ name: 'airDb' }">Airtable</g-link>
+        <g-link class="nav__link" :to="{ name: 'filesystem' }">Filesystem</g-link>
       </li>
       <li @click="mainLink(7)" class="nav-link-container">
-        <g-link class="nav__link" :to="{ name: 'graph' }">GraphCMS</g-link>
+        <g-link class="nav__link" :to="{ name: 'airDb' }">Airtable</g-link>
       </li>
       <li @click="mainLink(8)" class="nav-link-container">
+        <g-link class="nav__link" :to="{ name: 'graph' }">GraphCMS</g-link>
+      </li>
+      <li @click="mainLink(9)" class="nav-link-container">
         <g-link class="nav__link" :to="{ name: 'strapiCms' }">StrapiCMS</g-link>
       </li>
     </ul>
