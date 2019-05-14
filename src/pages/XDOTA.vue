@@ -362,6 +362,14 @@ export default {
         this.filterByRange();
       } else if(!this.filterByRangeCheckbox) {
         console.log(`Inside filterByRangeCheckbox watcher, else !this.filterByRangeCheckbox`)
+        this.SortedFilteredData = this.data
+              if (this.radioSelectSort == "attributeGain") {
+        console.log('radioSelectSort by attributeGain')
+        return this.sortByAttrGain();
+      } else {
+        console.log('radioSelectSort by attackRange')
+        return this.sortByRange();
+      }
         return this.SortedFilteredData = this.data
       }
     },
