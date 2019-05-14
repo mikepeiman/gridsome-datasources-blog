@@ -2,8 +2,8 @@
 <DSLayout :pageName="pageName">
   <h1 class="page-title">DOTA2 Heroes</h1>
 
-  <div class="filter-container">
-    <div class="search-container">
+  <div class="all-filters-container">
+    <form id="search-container" class="search-container sort-and-filter-container">
       <input
           class="form-control search-bar"
           type="text"
@@ -29,24 +29,16 @@
         <!-- </div> -->
 
       </div>
-    </div>
+    </form>
 
-    <div class="attribute-filter-container">
-      <!-- <p class="attribute-filter-heading">Filter By Primary Attribute</p> -->
-
-      <form class="filter-attribute-toggle">
-        <label class="flex-column">
-          Sort By:
-          <div class="radio-container">
-          <input type="radio" id="radioSortByAttr" name="selectSort" value="attributeGain" v-model="radioSelectSort"  checked>
-          <label for="radioSortByAttr">Attribute Gain</label>
-    </div>
-    <div class="radio-container">
-      <input type="radio" id="radioSortByAttackRange" name="selectSort" value="attackRange" v-model="radioSelectSort">
-      <label for="radioSortByAttackRange">Attack Range</label>
-    </div>
-    </label>
-    <select id="sort-by-attributes">
+    <form class="attribute-sort-form sort-and-filter-container">
+      <!-- <label class="flex-column">
+          Sort By: -->
+      <div class="radio-sort-container">
+        <label for="radioSortByAttr">Sort By Attribute Gain
+            <input type="radio" id="radioSortByAttr" name="selectSort" value="attributeGain" v-model="radioSelectSort" checked>
+          </label>
+        <select id="sort-by-attributes">
           <option
             class="select-item"
             v-for="entry in sortByAttrList"
@@ -55,19 +47,28 @@
             :value="entry.value"
           >{{ entry.text }}</option>
         </select>
+      </div>
     </form>
-
-    <div class="slidecontainer">
-      <label>
+    <form class="attackrange-sort-form sort-and-filter-container">
+      <div class="radio-sort-container">
+        <label for="radioSortByAttackRange">Sort By Attack Range
+            <input type="radio" id="radioSortByAttackRange" name="selectSort" value="attackRange" v-model="radioSelectSort">
+          </label>
+      </div>
+    </form>
+    <form class="attackrange-filter-form sort-and-filter-container">
+      <div class="radio-sort-container">
+        <div class="slidecontainer">
+          <label>
             <input type="checkbox" v-model="filterByRangeCheckbox">
             Filter By Range: {{ rangeFilter }}
           </label>
+          <input type="range" min="0" max="1000" step="10" class="slider" id="myRange" v-model="rangeFilter">
+          </div>
+        </div>
 
-      <input type="range" min="0" max="1000" step="10" class="slider" id="myRange" v-model="rangeFilter">
-      <!-- <span style="color: white;">Min Range: {{ total }}</span> -->
-    </div>
+    </form>
 
-  </div>
   </div>
   <ul class="grid-main hero-list">
     <li v-for="item in SortedFilteredData" :key="item.id" class="item-container grid-item" v-show="item.node.primaryAttr === attrFilter || attrFilter === 'All'">
@@ -320,11 +321,12 @@ export default {
     },
     searchFilterMethod() {
       if (this.searchQuery) {
-        this.SortedFilteredData = this.attrSortData.filter(item => {
+        this.searchData = this.attrSortData.filter(item => {
           return item.node.name.toLowerCase().includes(this.searchQuery.toLowerCase());
         });
+        return this.SortedFilteredData = this.arrayMatch(this.searchData, this.data)
       } else {
-        return this.SortedFilteredData = this.attrSortData;
+        return this.SortedFilteredData;
       }
     },
   },
@@ -360,6 +362,13 @@ export default {
       console.log('rangeFilter watcher fired')
       if (this.filterByRangeCheckbox) {
         this.filterByRange();
+      } else {
+        if (this.radioSelectSort == "attributeGain") {
+          return this.sortByAttrGain();
+        } else {
+          return this.sortByRange();
+        }
+        return this.searchFilterMethod();
       }
     },
     radioSelectSort() {
@@ -487,31 +496,25 @@ export default {
   flex-direction: column;
 }
 
-.filter-container {
-  // background: rgba(255, 255, 255, 0.1);
+.all-filters-container {
+  background: rgba($primary-blue, 0.1);
   border-bottom: 3px solid $primary-blue;
   padding: 10px 0;
   margin: 0;
   display: flex;
 }
 
-.search-container {
+#search-container {
   display: flex;
   flex-direction: column;
-  padding: 5px 0;
-  margin: 0;
+  // padding: 5px 0;
+  // margin: 0;
   align-items: flex-start;
-
-  &.search-bar {
-    padding: 10px;
-    line-height: 20px;
-  }
 }
 
 .search-bar {
   padding: 10px;
-  // margin-left: 10px;
-  // line-height: 20px;
+  width: 20ch;
 }
 
 .attribute-filter-container {
@@ -519,6 +522,22 @@ export default {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+}
+
+.sort-and-filter-container {
+  display: flex;
+  margin-left: 1em;
+  padding: 1em;
+  align-items: flex-start;
+  justify-items: stretch;
+  border-left: 3px solid $primary-blue;
+
+  //   &:nth-child(odd) {
+  //   background: rgba(255, 255, 255, 0.1);
+  // }
+  //   &:nth-child(even) {
+  //   background: rgba(255, 255, 255, 0.2);
+  // }
 }
 
 .checkbox {
@@ -530,14 +549,11 @@ export default {
   margin-left: 2em;
 }
 
-.filter-attribute-toggle {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  margin-left: 0.5em;
-  // border-left: 3px solid rgba(255,255,255,0.5);
-  padding-left: 0.5em;
-  color: white;
+.attackrange-sort-form {}
+
+.attackrange-filter-form {}
+
+.attribute-sort-form {
 
   & select {
     margin: 0;
@@ -588,6 +604,17 @@ option {
   &.select-item {
     background: pink;
   }
+}
+
+.slidecontainer {
+  display: flex;
+  flex-direction: column;
+  // margin-left: 1em;
+}
+
+.radio-sort-container {
+  display: flex;
+  flex-direction: column;
 }
 
 .attribute-filter-heading {
@@ -963,11 +990,5 @@ i.Melee:before {
 
 .svg-attack-range {
   height: 20px;
-}
-
-.slidecontainer {
-  display: flex;
-  flex-direction: column;
-  margin-left: 1em;
 }
 </style>
