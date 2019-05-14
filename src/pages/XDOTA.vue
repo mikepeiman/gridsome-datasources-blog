@@ -34,38 +34,40 @@
     <div class="attribute-filter-container">
       <!-- <p class="attribute-filter-heading">Filter By Primary Attribute</p> -->
 
-      <div class="filter-attribute-toggle">
+      <form class="filter-attribute-toggle">
         <label class="flex-column">
           Sort By:
           <div class="radio-container">
-          <input type="radio" name="selectSort" v-model="sortByAttribute">Attribute Gain
-          </div>
-          <div class="radio-container">
-          <input type="radio" name="selectSort" v-model="sortByRange">Attack Range
-          </div>
-        </label>
-        <select id="sort-by-attributes">
+          <input type="radio" id="radioSortByAttr" name="selectSort" value="attributeGain" v-model="radioSelectSort"  checked>
+          <label for="radioSortByAttr">Attribute Gain</label>
+    </div>
+    <div class="radio-container">
+      <input type="radio" id="radioSortByAttackRange" name="selectSort" value="attackRange" v-model="radioSelectSort">
+      <label for="radioSortByAttackRange">Attack Range</label>
+    </div>
+    </label>
+    <select id="sort-by-attributes">
           <option
             class="select-item"
             v-for="entry in sortByAttrList"
-            @click="sortSelected = entry.value"
+            @click="sortSelectedAttr = entry.value"
             style="font-family: 'Montserrat'; font-weight: 300; background: #222222; color: #eee;"
             :value="entry.value"
           >{{ entry.text }}</option>
         </select>
-      </div>
+    </form>
 
-      <div class="slidecontainer">
-        <label>
+    <div class="slidecontainer">
+      <label>
             <input type="checkbox" v-model="filterByRangeCheckbox">
             Filter By Range: {{ rangeFilter }}
           </label>
 
-        <input type="range" min="0" max="1000" step="10" class="slider" id="myRange" v-model="rangeFilter">
-        <!-- <span style="color: white;">Min Range: {{ total }}</span> -->
-      </div>
-
+      <input type="range" min="0" max="1000" step="10" class="slider" id="myRange" v-model="rangeFilter">
+      <!-- <span style="color: white;">Min Range: {{ total }}</span> -->
     </div>
+
+  </div>
   </div>
   <ul class="grid-main hero-list">
     <li v-for="item in SortedFilteredData" :key="item.id" class="item-container grid-item" v-show="item.node.primaryAttr === attrFilter || attrFilter === 'All'">
@@ -199,7 +201,7 @@ export default {
       strKey: "strGain",
       agiKey: "agiGain",
       intKey: "intGain",
-      sortSelected: "1",
+      sortSelectedAttr: "1",
 
       fkey: "primaryAttr",
       attrFilter: "All",
@@ -239,18 +241,19 @@ export default {
       searchData: [],
       SortedFilteredData: [],
       attrSortData: [],
+      rangeFilterData: [],
+      rangeSortData: [],
 
       filterByRangeCheckbox: false,
-      sortByRange: false,
-      sortByAttribute: true,
+      radioSelectSort: '',
       rangeFilter: '150',
-      rangeFilterData: [],
-      rangeSortData: []
+
     };
   },
   methods: {
     generateData() {
       const x = this.$page.allXDOTA.edges;
+      this.data = []
       x.forEach(hero => {
         hero.node.attackIcon =
           hero.node.attackType == "Melee" ?
@@ -271,16 +274,16 @@ export default {
     //   }
     // },
     sortByAttrGain() {
-      console.log("sortByAttrGain:", this.sortSelected);
-      if (this.sortSelected === "2") {
+      console.log("sortByAttrGain:", this.sortSelectedAttr);
+      if (this.sortSelectedAttr === "2") {
         this.attrSortData = this.data.slice().sort(function (a, b) {
           return a.node.strGain < b.node.strGain;
         });
-      } else if (this.sortSelected === "3") {
+      } else if (this.sortSelectedAttr === "3") {
         this.attrSortData = this.data.slice().sort(function (a, b) {
           return a.node.agiGain < b.node.agiGain;
         });
-      } else if (this.sortSelected === "4") {
+      } else if (this.sortSelectedAttr === "4") {
         this.attrSortData = this.data.slice().sort(function (a, b) {
           return a.node.intGain < b.node.intGain;
         });
@@ -303,6 +306,7 @@ export default {
         return a.node.attackRange < b.node.attackRange;
       });
       // return this.rangeSortData
+      this.generateData()
       return this.SortedFilteredData = this.arrayMatch(this.rangeSortData, this.data)
     },
     arrayMatch(array1, array2) {
@@ -349,7 +353,7 @@ export default {
     // }
   },
   watch: {
-    sortSelected() {
+    sortSelectedAttr() {
       this.sortByAttrGain();
     },
     rangeFilter() {
@@ -358,28 +362,27 @@ export default {
         this.filterByRange();
       }
     },
-    sortByAttribute() {
-      console.log('sortByAttribute watcher fired')
-      if (this.sortByAttribute !== true) {
-        console.log('sortByAttribute false/unchecked')
-        return this.data
+    radioSelectSort() {
+      console.log('radioSelectSort watcher fired')
+      if (this.radioSelectSort == "attributeGain") {
+        console.log('radioSelectSort by attributeGain')
+        return this.sortByAttrGain();
       } else {
-        console.log('sortByAttribute now true/checked')
-        // this.SortedFilteredData = this.generateData()
-        this.sortByAttrGain();
+        console.log('radioSelectSort by attackRange')
+        return this.sortByRange();
       }
     },
-    sortByRange() {
-      console.log('sortByRange watcher fired')
-      if (this.sortByRange !== true) {
-        console.log('sortByRange false/unchecked')
-        return this.data
-      } else {
-        console.log('sortByRange now true/checked')
-        // this.SortedFilteredData = this.generateData()
-        this.sortByRange();
-      }
-    },
+    // radioSortByRange() {
+    //   console.log('sortByRange watcher fired')
+    //   if (this.sortByRange !== true) {
+    //     console.log('sortByRange false/unchecked')
+    //     return this.data
+    //   } else {
+    //     console.log('sortByRange now true/checked')
+    //     // this.SortedFilteredData = this.generateData()
+    //     this.sortByRange();
+    //   }
+    // },
     filterByRangeCheckbox() {
       console.log('filterByRangeCheckbox watcher fired')
       if (this.filterByRangeCheckbox === true) {
@@ -390,6 +393,21 @@ export default {
     },
     rangeFilterData() {
       console.log('rangeFilterData changed')
+    },
+    data() {
+      console.log('data changed')
+    },
+    searchData() {
+      console.log('searchData changed')
+    },
+    SortedFilteredData() {
+      console.log('SortedFilteredData changed')
+    },
+    attrSortData() {
+      console.log('attrSortData changed')
+    },
+    rangeSortData() {
+      console.log('rangeSortData changed')
     },
     searchQuery() {
       this.searchFilterMethod()
