@@ -12,14 +12,14 @@
       >
       <div class="attribute-filters">
         <button
-          @click="attrFilter = 'All';"
+          @click.prevent="attrFilter = 'All';"
           :class="[ 'filter-item show-all', {active: 'All' == attrFilter} ]"
         ></button>
         <button
           v-for="(entry, index) in filterListAttr"
           :item="entry.dotaName"
           :key="index"
-          @click="attrFilter = entry.dotaName;"
+          @click.prevent="attrFilter = entry.dotaName;"
           :class="[ entry.dotaName, {active: entry.dotaName == attrFilter} ]"
           class="filter-item"
         ></button>
@@ -33,7 +33,7 @@
           <option
             class="select-item"
             v-for="entry in sortByAttrList"
-            @click="sortSelectedAttr = entry.value"
+            @click.prevent="sortSelectedAttr = entry.value"
             style="font-family: 'Montserrat'; font-weight: 300; background: #222222; color: #eee;"
             :value="entry.value"
           >{{ entry.text }}</option>
