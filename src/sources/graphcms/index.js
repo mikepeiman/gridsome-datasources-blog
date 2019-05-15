@@ -67,7 +67,6 @@ module.exports = function(api) {
         pData.data.articles.forEach(item => {
           contentType.addNode({
             id: item.id,
-            // path,
             fields: {
               title: item.title, 
               subtitle: item.subtitle,
