@@ -203,24 +203,17 @@ module.exports = function(api) {
             )
               ? "Melee"
               : "Ranged";
-            console.log(
-              `hero ${hero.workshop_guide_name} attack type: ${hero.attackType}`
-            );
 
             if (!hero.ProjectileSpeed) {
-              console.log(`Hero ${hero.workshop_guide_name} projectileSpeed is null`)
               hero.ProjectileSpeed = 0
             }
             if (hero.AttributePrimary.toLowerCase().includes('int')) {
-              console.log(`### Hero ${hero.workshop_guide_name} is an INT hero`)
               hero.color = "#00D9EC"
             }
             if (hero.AttributePrimary.toLowerCase().includes('str')) {
-              console.log(`### Hero ${hero.workshop_guide_name} is an STR hero`)
               hero.color = "#EC3D06"
             }
             if (hero.AttributePrimary.toLowerCase().includes('agi')) {
-              console.log(`### Hero ${hero.workshop_guide_name} is an AGI hero`)
               hero.color = "#26E030"
             }
             contentType.addNode({
