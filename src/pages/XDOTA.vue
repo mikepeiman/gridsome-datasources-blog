@@ -5,7 +5,7 @@
   <div class="all-filters-container">
     <form id="search-container" class="search-container sort-and-filter-container">
       <div class="input-container">
-      <input
+        <input
           class="form-control search-bar"
           type="text"
           id="search-query"
@@ -13,7 +13,7 @@
           placeholder="Search"
           :disabled="filterByRangeCheckbox == 1"
       >
-      <span v-show="searchQuery" @click="clearInput" class="far fa-times-square"></span>
+        <span v-show="searchQuery" @click="clearInput" class="far fa-times-square"></span>
       </div>
       <div class="attribute-filters">
         <button
@@ -102,38 +102,33 @@
               >{{ item.node.intGain }}</span>
           </div>
           <p class="total-attribute-gain" :class="item.node.primaryAttr">{{ item.node.totalAttrGain.toFixed(1) }}</p>
-          <div class="attack-range-container" :class="item.node.primaryAttr" v-if="item.node.attackType !== 'Melee'">
-            <i class="attack-icon" :class="item.node.attackIcon" ></i>
-            <svg class="svg-attack-range" height="20" width="80">
+          <div class="attack-and-projectile-speed-wrapper">
+            <i class="attack-icon" :class="[item.node.attackIcon, item.node.primaryAttr]" v-if="item.node.attackType !== 'Melee'"></i>
+            <div class="attack-range-container" :class="item.node.primaryAttr" v-if="item.node.attackType !== 'Melee'">
+              <svg class="svg-attack-range">
                 <g class="bar">
-                  <rect fill="#252525" :width="1000/12" height="7" y="7" result="Rect2"></rect>
-                  <rect class="attack-range-bar" fill="#ccc" :width="(item.node.attackRange-150)/9" height="5" y="7" result="Rect1"></rect>
+                  <!-- <rect fill="#252525" :width="800/10" height="5" y="7" result="Rect2"></rect> -->
+                  <rect class="attack-range-bar" fill="#ccc" :width="(item.node.attackRange-150)/10.5" height="5" y="7" result="Rect1"></rect>
                 </g>
-
               </svg>
-            <div class="projectile-speed-container">
               <p class="attack-range" :class="item.node.attackRange">{{ item.node.attackRange }}</p>
             </div>
-
-          </div>
-          <div class="projectile-speed-container" :class="item.node.primaryAttr" v-if="item.node.attackType !== 'Melee'">
-            <i class="attack-icon fal fa-tachometer-alt-fast" ></i>
-            <svg class="svg-attack-range" height="20" width="80">
+            <i class="attack-icon fal fa-tachometer-alt-fast" :class="item.node.primaryAttr" v-if="item.node.attackType !== 'Melee'" ></i>
+            <div class="projectile-speed-container" :class="item.node.primaryAttr" v-if="item.node.attackType !== 'Melee'">
+              <svg class="svg-attack-range">
                 <g>
-                 <rect fill="#252525" :width="1000/12" height="7" y="7" result="Rect2"></rect>
+                 <!-- <rect fill="#252525" :width="1000/12" height="7" y="7" result="Rect2"></rect> -->
                   <rect class="attack-range-bar" fill="#ccc" :width="(item.node.projectileSpeed)/36" height="5" y="7" result="Rect1"></rect>
-
                 </g>
               </svg>
-            <div class="projectile-speed-container">
               <p class="projectile-speed" :class="item.node.projectileSpeed">{{ item.node.projectileSpeed }}</p>
             </div>
+            <i class="attack-icon" :class="[item.node.attackIcon, item.node.primaryAttr]" v-if="item.node.attackType == 'Melee'"></i>
+            <div class="melee-text-container" :class="item.node.primaryAttr" v-if="item.node.attackType == 'Melee'">
+              <p class="melee-text">MELEE</p>
+            </div>
+          </div>
 
-          </div>
-          <div class="projectile-speed-container" :class="item.node.primaryAttr" v-if="item.node.attackType == 'Melee'">
-            <i class="attack-icon" :class="item.node.attackIcon" ></i>
-            <p>MELEE</p>
-          </div>
         </div>
       </g-link>
     </li>
@@ -253,8 +248,8 @@ export default {
       x.forEach(hero => {
         hero.node.attackIcon =
           hero.node.attackType == "Melee" ?
-          "fas fa-axe-battle" :
-          "fas fa-bow-arrow";
+          "fal fa-axe-battle" :
+          "fal fa-bow-arrow";
         this.data.push(hero);
         return this.data
       });
@@ -341,10 +336,10 @@ export default {
       this.sortByAttrGain();
     },
     rangeFilter() {
-      
+
       console.log('rangeFilter watcher fired')
       if (this.filterByRangeCheckbox) {
-        
+
         this.filterByRange();
       }
     },
@@ -492,6 +487,7 @@ export default {
 #search-container {
   align-items: flex-start;
 }
+
 .input-container {
   position: relative;
   z-index: 200;
@@ -503,6 +499,7 @@ export default {
   left: 88%;
   color: black;
 }
+
 .search-bar {
   padding: 10px;
   width: 100%;
@@ -930,13 +927,20 @@ button {
   justify-self: center;
 }
 
+.attack-and-projectile-speed-wrapper {
+  display: grid;
+  grid-template-columns: 27px 1fr;
+  align-items: center;
+}
+
 .attack-range-container,
 .projectile-speed-container {
-  display: flex;
+  display: grid;
+  grid-template-columns: 52px 4.5ch;
   color: white;
   font-size: 12px;
-  // padding: 3px 0;
-  justify-content: space-around;
+  padding: 0 10px 0 0;
+  justify-content: flex-start;
 
   p {
     margin: 0;
@@ -952,12 +956,20 @@ button {
   }
 }
 
+.melee-text-container {
+}
 
 .attack-icon {
   line-height: 1.5em;
-  // width: 30px;
-  padding: 2px 7px 2px 5px;
+  width: 20px;
+  padding: 2px 3px 2px 3px;
   border-right: 1px solid rgba(white, 0.25);
+}
+
+.melee-text {
+  text-align: center;
+  font-size: .8em;
+  font-weight: 300;
 }
 
 .DOTA_ATTRIBUTE_STRENGTH {
@@ -987,6 +999,10 @@ i.Melee:before {
     #f06d06,
     rgb(255, 255, 0),
     green);
+}
+.attack-range {
+  padding: 0 0 0 5px;
+  margin: 2px 0 0 0;
 }
 
 .attack-range-bar {
