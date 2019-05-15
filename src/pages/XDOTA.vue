@@ -4,13 +4,17 @@
 
   <div class="all-filters-container">
     <form id="search-container" class="search-container sort-and-filter-container">
+      <div class="input-container">
       <input
           class="form-control search-bar"
           type="text"
+          id="search-query"
           v-model="searchQuery"
           placeholder="Search"
           :disabled="filterByRangeCheckbox == 1"
       >
+      <span v-show="searchQuery" @click="clearInput" class="far fa-times-square"></span>
+      </div>
       <div class="attribute-filters">
         <button
           @click.prevent="attrFilter = 'All';"
@@ -31,7 +35,7 @@
             <input type="radio" id="radioSortByAttr" name="selectSort" :key="radioSelectSort" value="attributeGain" v-model="radioSelectSort" checked>
           Sort By Attribute Gain
           </label>
-                <label for="radioSortByAttackRange">
+      <label for="radioSortByAttackRange">
             <input type="radio" id="radioSortByAttackRange" name="selectSort" :key="radioSelectSort" value="attackRange" v-model="radioSelectSort">
           Sort By Attack Range
           </label>
@@ -103,7 +107,7 @@
             <svg class="svg-attack-range" height="20" width="80">
                 <g class="bar">
                   <rect fill="#252525" :width="1000/12" height="7" y="7" result="Rect2"></rect>
-                  <rect class="attack-range-bar" fill="#ccc" :width="(item.node.attackRange-150)/8.5" height="5" y="7" result="Rect1"></rect>
+                  <rect class="attack-range-bar" fill="#ccc" :width="(item.node.attackRange-150)/9" height="5" y="7" result="Rect1"></rect>
                 </g>
 
               </svg>
@@ -113,7 +117,7 @@
 
           </div>
           <div class="projectile-speed-container" :class="item.node.primaryAttr" v-if="item.node.attackType !== 'Melee'">
-            <i class="attack-icon" :class="item.node.attackIcon" ></i>
+            <i class="attack-icon fal fa-tachometer-alt-fast" ></i>
             <svg class="svg-attack-range" height="20" width="80">
                 <g>
                  <rect fill="#252525" :width="1000/12" height="7" y="7" result="Rect2"></rect>
@@ -255,16 +259,9 @@ export default {
         return this.data
       });
     },
-    // filterAll() {
-    //   if (this.filterByRangeCheckbox) {
-    //     this.attrSortData = this.sortByAttrGain() // yes, checked Vue Tools this works
-    //     return this.rangeFilterData = this.attrSortData.filter(item => {
-    //       return item.node.attackRange >= this.rangeFilter;
-    //     });
-    //   } else {
-    //     return this.attrSortData;
-    //   }
-    // },
+    clearInput() {
+      this.searchQuery = ''
+    },
     sortByAttrGain() {
       console.log("sortByAttrGain:", this.sortSelectedAttr);
       if (this.sortSelectedAttr === "2") {
@@ -295,6 +292,7 @@ export default {
       return this.SortedFilteredData = this.arrayMatch(this.rangeSortData, this.SortedFilteredData)
     },
     filterByRange() {
+      this.searchQuery = ''
       this.rangeFilterData = this.attrSortData.filter(item => {
         return item.node.attackRange >= this.rangeFilter;
       });
@@ -343,8 +341,10 @@ export default {
       this.sortByAttrGain();
     },
     rangeFilter() {
+      
       console.log('rangeFilter watcher fired')
       if (this.filterByRangeCheckbox) {
+        
         this.filterByRange();
       }
     },
@@ -363,16 +363,16 @@ export default {
       // this.generateData()
       if (this.filterByRangeCheckbox) {
         this.filterByRange();
-      } else if(!this.filterByRangeCheckbox) {
+      } else if (!this.filterByRangeCheckbox) {
         console.log(`Inside filterByRangeCheckbox watcher, else !this.filterByRangeCheckbox`)
         this.SortedFilteredData = this.data
-              if (this.radioSelectSort == "attributeGain") {
-        console.log('radioSelectSort by attributeGain')
-        return this.sortByAttrGain();
-      } else {
-        console.log('radioSelectSort by attackRange')
-        return this.sortByRange();
-      }
+        if (this.radioSelectSort == "attributeGain") {
+          console.log('radioSelectSort by attributeGain')
+          return this.sortByAttrGain();
+        } else {
+          console.log('radioSelectSort by attackRange')
+          return this.sortByRange();
+        }
         return this.SortedFilteredData = this.data
       }
     },
@@ -395,6 +395,14 @@ export default {
       console.log('rangeSortData changed')
     },
     searchQuery() {
+      let el = document.getElementById('search-query')
+      if (this.searchQuery && el.className.includes('active')) {
+        console.log(`'it appears there is a search term (${this.searchQuery}) and the class 'active' is already assigned`)
+      } else if (this.searchQuery) {
+        el.classList.add('active')
+      } else if (!this.searchQuery) {
+        el.classList.remove('active')
+      }
       this.searchFilterMethod()
     }
   },
@@ -484,9 +492,24 @@ export default {
 #search-container {
   align-items: flex-start;
 }
+.input-container {
+  position: relative;
+  z-index: 200;
+}
 
+.input-container .fa-times-square {
+  position: absolute;
+  top: 11px;
+  left: 88%;
+  color: black;
+}
 .search-bar {
   padding: 10px;
+  width: 100%;
+  max-width: 90%;
+  min-width: 80%;
+  position: relative;
+
   &:disabled {
     color: grey;
     background: #252525;
@@ -537,6 +560,7 @@ export default {
   flex-direction: column;
   // align-self: center;
   justify-self: center;
+
   & select {
     margin: 0;
     font-family: "Montserrat";
@@ -928,9 +952,11 @@ button {
   }
 }
 
+
 .attack-icon {
   line-height: 1.5em;
-  padding: 2px 7px 2px 0;
+  // width: 30px;
+  padding: 2px 7px 2px 5px;
   border-right: 1px solid rgba(white, 0.25);
 }
 
