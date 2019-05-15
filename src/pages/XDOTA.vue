@@ -9,6 +9,7 @@
           type="text"
           v-model="searchQuery"
           placeholder="Search"
+          :disabled="filterByRangeCheckbox == 1"
       >
       <div class="attribute-filters">
         <button
@@ -26,9 +27,16 @@
       </div>
     </form>
     <form class="attribute-sort-form sort-and-filter-container">
-      <label for="radioSortByAttr">Sort By Attribute Gain
-            <input type="radio" id="radioSortByAttr" name="selectSort" value="attributeGain" v-model="radioSelectSort" checked>
+      <label for="radioSortByAttr">
+            <input type="radio" id="radioSortByAttr" name="selectSort" :key="radioSelectSort" value="attributeGain" v-model="radioSelectSort" checked>
+          Sort By Attribute Gain
           </label>
+                <label for="radioSortByAttackRange">
+            <input type="radio" id="radioSortByAttackRange" name="selectSort" :key="radioSelectSort" value="attackRange" v-model="radioSelectSort">
+          Sort By Attack Range
+          </label>
+    </form>
+    <form class="attribute-sort-form sort-and-filter-container">
       <select id="sort-by-attributes">
           <option
             class="select-item"
@@ -38,11 +46,6 @@
             :value="entry.value"
           >{{ entry.text }}</option>
         </select>
-    </form>
-    <form class="attackrange-sort-form sort-and-filter-container">
-      <label for="radioSortByAttackRange">Sort By Attack Range
-            <input type="radio" id="radioSortByAttackRange" name="selectSort" value="attackRange" v-model="radioSelectSort">
-          </label>
     </form>
     <form class="attackrange-filter-form sort-and-filter-container">
       <label>
@@ -233,7 +236,7 @@ export default {
       rangeSortData: [],
 
       filterByRangeCheckbox: false,
-      radioSelectSort: '',
+      radioSelectSort: 'attributeGain',
       rangeFilter: '150',
 
     };
@@ -323,7 +326,7 @@ export default {
         });
         return this.SortedFilteredData = this.arrayMatch(this.searchData, this.data)
       } else {
-        return this.SortedFilteredData;
+        return this.SortedFilteredData = this.data;
       }
     },
   },
@@ -484,7 +487,10 @@ export default {
 
 .search-bar {
   padding: 10px;
-  width: 20ch;
+  &:disabled {
+    color: grey;
+    background: #252525;
+  }
 }
 
 .attribute-filter-container {
@@ -500,6 +506,7 @@ export default {
   padding: 1em;
   grid-template-columns: minmax(100px, 1fr);
   border-left: 3px solid $primary-blue;
+  width: 100%;
 
   //   &:nth-child(odd) {
   //   background: rgba(255, 255, 255, 0.1);
@@ -526,7 +533,10 @@ export default {
 .attackrange-filter-form {}
 
 .attribute-sort-form {
-
+  display: flex;
+  flex-direction: column;
+  // align-self: center;
+  justify-self: center;
   & select {
     margin: 0;
     font-family: "Montserrat";
@@ -608,6 +618,7 @@ option {
 
 button {
   border: none;
+  margin: 0;
 }
 
 .filter-item-spacer {
@@ -622,26 +633,24 @@ button {
   cursor: pointer;
   width: 40px;
   height: 40px;
-  margin: 0 5px 0 0;
+  // margin: 0 5px 0 0;
   padding: 0 5px;
 
   &.show-all {
     // padding: 10px;
     color: rgba(0, 0, 0, 0);
     background: no-repeat center url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/dota2-venn-3.png");
-    transition: all 0.25s;
+    // transition: all 0.25s;
     background-size: 80%;
 
     &:hover {
-      transition: all 0.25s;
+      // transition: all 0.25s;
       box-shadow: 0 0 5px 0px white;
-      background-size: 70%;
-      background: rgba(0, 0, 0, 0.85) no-repeat center url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/dota2-venn-3.png");
     }
 
     &.active {
       background: rgba(0, 0, 0, 0.85) no-repeat center url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/dota2-venn-3.png");
-      transition: all 0.25s;
+      // transition: all 0.25s;
       border-radius: 0;
       box-shadow: 0 0 3px 0px white;
       background-size: 70%;
