@@ -1,0 +1,12 @@
+{
+  "name": "Mike-Peiman",
+  "alias": "alias1", // or ["aliasOne", "aliasTwo"]
+  "version": 2,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@now/static-build",
+      "config": { "distDir": "dist" }
+    }
+  ]
+}

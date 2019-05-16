@@ -4,7 +4,8 @@
   "scripts": {
     "build": "gridsome build",
     "develop": "gridsome develop",
-    "explore": "gridsome explore"
+    "explore": "gridsome explore",
+    "now-build": "npm run build"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.8.2",
