@@ -1,6 +1,6 @@
 {
   "name": "Mike-Peiman",
-  "alias": "alias1", // or ["aliasOne", "aliasTwo"]
+  "alias": "alias1",
   "version": 2,
   "builds": [
     {
