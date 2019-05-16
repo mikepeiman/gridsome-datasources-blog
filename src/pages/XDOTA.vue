@@ -660,7 +660,7 @@ button {
   &.show-all {
     // padding: 10px;
     color: rgba(0, 0, 0, 0);
-    background: no-repeat center url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/dota2-venn-3.png");
+    background: no-repeat center url("./../assets/dota2-venn-3.png");
     // transition: all 0.25s;
     background-size: 80%;
 
@@ -670,7 +670,7 @@ button {
     }
 
     &.active {
-      background: rgba(0, 0, 0, 0.85) no-repeat center url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/dota2-venn-3.png");
+      background: rgba(0, 0, 0, 0.85) no-repeat center url("./../assets/dota2-venn-3.png");
       // transition: all 0.25s;
       border-radius: 0;
       box-shadow: 0 0 3px 0px white;
@@ -679,7 +679,7 @@ button {
   }
 
   &.DOTA_ATTRIBUTE_STRENGTH {
-    background: no-repeat center url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Strength_attribute_symbol.png");
+    background: no-repeat center url("./../assets/Strength_attribute_symbol.png");
     background-size: 80%;
 
     &:hover {
@@ -688,14 +688,14 @@ button {
     }
 
     &.active {
-      background: rgba(0, 0, 0, 0.85) no-repeat center url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Strength_attribute_symbol.png");
+      background: rgba(0, 0, 0, 0.85) no-repeat center url("./../assets/Strength_attribute_symbol.png");
       box-shadow: 0 0 5px 0px $dota-str;
       background-size: 80%;
     }
   }
 
   &.DOTA_ATTRIBUTE_AGILITY {
-    background: no-repeat center url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Agility_attribute_symbol.png");
+    background: no-repeat center url("./../assets/Agility_attribute_symbol.png");
     background-size: 80%;
 
     &:hover {
@@ -704,14 +704,14 @@ button {
     }
 
     &.active {
-      background: rgba(0, 0, 0, 0.85) no-repeat center url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Agility_attribute_symbol.png");
+      background: rgba(0, 0, 0, 0.85) no-repeat center url("./../assets/Agility_attribute_symbol.png");
       box-shadow: 0 0 5px 0px $dota-agi;
       background-size: 80%;
     }
   }
 
   &.DOTA_ATTRIBUTE_INTELLECT {
-    background: no-repeat center url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Intelligence_attribute_symbol.png");
+    background: no-repeat center url("./../assets/Intelligence_attribute_symbol.png");
     background-size: 80%;
 
     &:hover {
@@ -720,7 +720,7 @@ button {
     }
 
     &.active {
-      background: rgba(0, 0, 0, 0.85) no-repeat center url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Intelligence_attribute_symbol.png");
+      background: rgba(0, 0, 0, 0.85) no-repeat center url("./../assets/Intelligence_attribute_symbol.png");
       box-shadow: 0 0 5px 0px $dota-int;
       background-size: 80%;
     }
@@ -732,23 +732,23 @@ button {
   height: 20px;
 
   &.DOTA_ATTRIBUTE_STRENGTH {
-    background: no-repeat center/100% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Strength_attribute_symbol.png");
+    background: no-repeat center/100% url("./../assets/Strength_attribute_symbol.png");
   }
 
   &.DOTA_ATTRIBUTE_AGILITY {
-    background: no-repeat center/100% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Agility_attribute_symbol.png");
+    background: no-repeat center/100% url("./../assets/Agility_attribute_symbol.png");
   }
 
   &.DOTA_ATTRIBUTE_INTELLECT {
-    background: no-repeat center/100% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Intelligence_attribute_symbol.png");
+    background: no-repeat center/100% url("./../assets/Intelligence_attribute_symbol.png");
   }
 
   &.Melee {
-    background: no-repeat center/100% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Intelligence_attribute_symbol.png");
+    background: no-repeat center/100% url("./../assets/Intelligence_attribute_symbol.png");
   }
 
   &.Ranged {
-    background: no-repeat center/100% url("C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/Intelligence_attribute_symbol.png");
+    background: no-repeat center/100% url("./../assets/Intelligence_attribute_symbol.png");
   }
 }
 
