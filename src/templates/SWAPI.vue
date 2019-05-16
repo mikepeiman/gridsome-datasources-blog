@@ -2,7 +2,7 @@
 <DSLayout>
 
     <h1 class="page-title">Starship Name: {{$page.post.name}}</h1>
-    <h3>Starship Class: {{$page.post.starshipClass}}</h3>
+    <h3>Starship Class: {{$page.post.starship_class}}</h3>
     <p>Today's date: {{ formatDate($page.post.date)}}</p>
     
 </DSLayout>
