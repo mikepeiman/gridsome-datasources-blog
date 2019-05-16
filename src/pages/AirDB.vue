@@ -1,16 +1,19 @@
 <template>
 <DSLayout pageName="Airtable">
 
-      <h1 class="page-title">Airtable</h1>
-      <ul class="posts-container">
-        <li class="single-post" v-for="(lesson, index) in $page.allAirtable.edges" :key="index">
-          <g-link :to="lesson.node.path">
-          <h2 class="post-title">{{ lesson.node.resort }}</h2>
-          <p class="lesson-price">${{ lesson.node.price }}</p>
-          <p>{{ lesson.node.private }}</p>
-          </g-link>
-        </li>
-      </ul>
+  <h1 class="page-title">Airtable</h1>
+  <ul class="posts-container">
+    <li class="single-post" v-for="(lesson, index) in $page.allAirtable.edges" :key="index">
+      <g-link :to="lesson.node.path">
+        <a :href="lesson.node.URL">
+          <h2 class="post-title">{{ lesson.node.Resort }}</h2>
+          </a>
+        <p class="lesson-price">${{ lesson.node.Price }}</p>
+        <p>Lesson Type: {{ lesson.node.Private_ }}</p>
+        <p>Lesson Length: {{ lesson.node.Length}}</p>
+      </g-link>
+    </li>
+  </ul>
 
 </DSLayout>
 </template>
@@ -39,7 +42,7 @@ import DSSideBar from '~/components/DSSideBar.vue';
 export default {
   components: {
     DSLayout,
-    DSSideBar,  
+    DSSideBar,
   }
 }
 </script>
@@ -52,7 +55,6 @@ export default {
   height: calc(100vh - 70px);
 }
 
-
 .page-title {
   line-height: 1.5em;
   border-bottom: 3px solid $primary-blue;
@@ -62,6 +64,9 @@ export default {
 .content {
   grid-area: main-content;
   color: white;
+}
+a {
+  text-decoration: none;
 }
 
 .posts-container {
@@ -85,6 +90,7 @@ export default {
 
 .posts-container li {
   width: 100%;
+
   .post-title {
     padding-left: 0em;
     transition: .25s all ease-in-out;
@@ -92,16 +98,17 @@ export default {
 }
 
 .posts-container li:hover {
+
   // width: calc(100% - 1em);
   .post-title {
     padding-left: .5em;
     transition: .25s all ease-in-out;
   }
+
   .post-body {
-  color: rgba($primary-white, 1);
+    color: rgba($primary-white, 1);
   }
 }
-
 
 .single-post a {
   color: white;
@@ -121,7 +128,7 @@ export default {
 .single-post .lesson-price {
   font-size: .8em;
   margin-bottom: .5em;
-  color: rgba($primary-white,.5);
+  color: rgba($primary-white, .5);
   border-bottom: 1px solid $primary-green;
 }
 

@@ -9,7 +9,7 @@
             <p class="post-date">Published: {{ formatDate(post.node.date) }}</p>
             <p class="post-excerpt">{{ post.node.excerpt }}</p>
             <p class="post-description">{{ post.node.description }}</p>
-            <!-- <p class="post-body">{{ post.node.body }}</p> -->
+            <!-- <p class="post-body">{{ post.node.content }}</p> -->
           </g-link>
         </li>
       </ul>
@@ -26,11 +26,10 @@ allPost {
       title
       excerpt
       description
-      content
-      timeToRead
-      date
       slug
       path
+      date
+
     }
   }
 }

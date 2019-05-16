@@ -1,36 +1,36 @@
 <template>
 <div id="datasources-sidebar">
-  <g-link class="nav__link" :to="{ name: 'dataSources' }">
+  <g-link class="nav__link" to="/dataSources">
     <h1 class="page-title">Data Sources</h1>
   </g-link>
   <div class="content">
     <ul class="page-link-listing">
       <li @click="mainLink(1)" class="nav-link-container">
-        <g-link class="nav__link" :to="{ name: 'fakerPosts' }">Faker</g-link>
+        <g-link class="nav__link" to="/fakerPosts">Faker</g-link>
       </li>
       <li @click="mainLink(2)" class="nav-link-container">
-        <g-link class="nav__link" :to="{ name: 'placeholder' }">Placeholder</g-link>
+        <g-link class="nav__link" to="/placeholder">Placeholder</g-link>
       </li>
       <li @click="mainLink(3)" class="nav-link-container">
-        <g-link class="nav__link" :to="{ name: 'starwars' }">StarWars</g-link>
+        <g-link class="nav__link" to="/starwars">StarWars</g-link>
       </li>
       <li @click="mainLink(4)" class="nav-link-container">
-        <g-link class="nav__link" :to="{ name: 'heroes' }">DOTA2 (scraped)</g-link>
+        <g-link class="nav__link" to="/heroes">DOTA2 (scraped)</g-link>
       </li>
       <li @click="mainLink(5)" class="nav-link-container">
-        <g-link class="nav__link" :to="{ name: 'xdota' }">DOTA2 (from VDF)</g-link>
+        <g-link class="nav__link" to="/xdota">DOTA2 (from VDF)</g-link>
       </li>
       <li @click="mainLink(6)" class="nav-link-container">
-        <g-link class="nav__link" :to="{ name: 'filesystem' }">Filesystem</g-link>
+        <g-link class="nav__link" to="/filesystem">Filesystem</g-link>
       </li>
       <li @click="mainLink(7)" class="nav-link-container">
-        <g-link class="nav__link" :to="{ name: 'airDb' }">Airtable</g-link>
+        <g-link class="nav__link" to="/airDb">Airtable</g-link>
       </li>
       <li @click="mainLink(8)" class="nav-link-container">
-        <g-link class="nav__link" :to="{ name: 'graph' }">GraphCMS</g-link>
+        <g-link class="nav__link" to="/graph">GraphCMS</g-link>
       </li>
       <li @click="mainLink(9)" class="nav-link-container">
-        <g-link class="nav__link" :to="{ name: 'strapiCms' }">StrapiCMS</g-link>
+        <g-link class="nav__link" to="/strapiCms">StrapiCMS</g-link>
       </li>
     </ul>
   </div>

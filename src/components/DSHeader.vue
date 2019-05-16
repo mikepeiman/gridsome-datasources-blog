@@ -1,21 +1,21 @@
 <template>
 <header id="header">
-  <g-link id="site-logo" class="page-title" :to="{ name: 'home' }">
+  <g-link id="site-logo" class="page-title" to="/">
     <g-image alt="logo" src="../assets/LifeIQ.svg" width="60" />
   </g-link>
   <nav id="topnav" role="navigation">
     <ul class="nav-items">
       <li @click="mainLink(1)" class="nav-link-container">
-        <g-link class="nav__link" :to="{ name: 'home' }">Home</g-link>
+        <g-link class="nav__link" to="/">Home</g-link>
       </li>
       <li @click="mainLink(2)" class="nav-link-container">
-        <g-link class="nav__link" :to="{ name: 'about' }">About</g-link>
+        <g-link class="nav__link" to="/about">About</g-link>
       </li>
       <li @click="mainLink(3)" id="DataSources" class="nav-link-container">
-        <g-link class="nav__link" :to="{ name: 'dataSources' }" focus>Data Source: {{ pageName }} </g-link>
+        <g-link class="nav__link" to="/dataSources" focus>Data Source: {{ pageName }} </g-link>
       </li>
       <li @click="mainLink(4)" class="nav-link-container">
-        <g-link class="nav__link" :to="{ name: 'contact' }">Contact</g-link>
+        <g-link class="nav__link" to="/contact">Contact</g-link>
       </li>
     </ul>
   </nav>

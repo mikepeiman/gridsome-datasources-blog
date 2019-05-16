@@ -1,6 +1,6 @@
 <template>
 <header id="header">
-  <g-link id="site-logo" class="page-title" :to="{ name: 'home' }">
+  <g-link id="site-logo" class="page-title" to="/">
     <g-image alt="logo" src="../assets/LifeIQ.svg" width="60" />
   </g-link>
   <!-- <div id="nav-filler">
@@ -26,36 +26,36 @@
         <g-link class="nav__link" to="/about">About</g-link>
       </li>
       <li @click="mainLink(3)" class="nav-link-container">
-        <g-link class="nav__link" to="/">Data Sources</g-link>
+        <g-link class="nav__link" to="/data-sources">Data Sources</g-link>
         <ul class="dropdown" aria-label="submenu">
           <li @click="subLink(4)" class="nav-link-container">
-            <g-link class="nav__link" to="/">Faker</g-link>
+            <g-link class="nav__link" to="/faker-posts">Faker</g-link>
           </li>
           <li @click="subLink(5)" class="nav-link-container">
-            <g-link class="nav__link" to="/">Placeholder</g-link>
+            <g-link class="nav__link" to="/placeholder">Placeholder</g-link>
           </li>
           <li @click="subLink(6)" class="nav-link-container">
-            <g-link class="nav__link" to="/">StarWars</g-link>
+            <g-link class="nav__link" to="/starwars">StarWars</g-link>
           </li>
           <li @click="subLink(7)" class="nav-link-container">
-            <g-link class="nav__link" to="/">DOTA2 (scraped)</g-link>
+            <g-link class="nav__link" to="/heroes">DOTA2 (scraped)</g-link>
           </li>
           <li @click="subLink(8)" class="nav-link-container">
-            <g-link class="nav__link" to="/">DOTA2 (from VDF)</g-link>
+            <g-link class="nav__link" to="/xdota">DOTA2 (from VDF)</g-link>
           </li>
           <li @click="subLink(9)" class="nav-link-container">
-            <g-link class="nav__link" to="/">Filesystem</g-link>
+            <g-link class="nav__link" to="/filesystem">Filesystem</g-link>
           </li>
           <li @click="subLink(10)" class="nav-link-container">
-            <g-link class="nav__link" to="/">Airtable</g-link>
+            <g-link class="nav__link" to="/air-db">Airtable</g-link>
           </li>
           <li @click="subLink(11)" class="nav-link-container">
-            <g-link class="nav__link" to="/">GraphCMS</g-link>
+            <g-link class="nav__link" to="/graph">GraphCMS</g-link>
           </li>
         </ul>
       </li>
       <li @click="mainLink(12)" class="nav-link-container">
-        <g-link class="nav__link" to="/">Contact</g-link>
+        <g-link class="nav__link" to="/contact">Contact</g-link>
       </li>
     </ul>
   </nav>
