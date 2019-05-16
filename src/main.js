@@ -5,13 +5,13 @@ import DefaultLayout from '~/layouts/Default.vue'
 import '~/assets/styles.scss'
 import '~/assets/wtf-forms.scss'
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faUserSecret } from "@fortawesome/pro-solid-svg-icons";
-import { faAxeBattle } from "@fortawesome/pro-solid-svg-icons";
+// import { faUserSecret } from "@fortawesome/pro-solid-svg-icons";
+// import { faAxeBattle } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 // import VueApexCharts from 'vue-apexcharts';
 
 
-library.add(faUserSecret, faAxeBattle);
+// library.add(faUserSecret, faAxeBattle);
 // library.add(faAxeBattle);
 
 
