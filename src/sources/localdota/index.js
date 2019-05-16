@@ -13,7 +13,7 @@ const {
 let filepath = "C:/Users/Mike/Desktop/gridsome-datasources-blog/src/assets/";
 let dir = process.cwd();
 console.log(`current directory process.cwd(): ${dir}`);
-dir = `${dir}\\src\\assets\\`;
+dir = `${dir}/src/assets/`;
 
 module.exports = function(api) {
   api.loadSource(async store => {
