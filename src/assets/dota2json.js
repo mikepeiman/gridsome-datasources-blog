@@ -21,9 +21,6 @@ function dotaParse(dir, filename) {
         console.log("The file was saved!");
       }
     );
-    // data = JSON.parse(data)
-    //   console.log(`testing data object`)
-    //   console.log(data.DOTAHeroes.npc_dota_hero_axe)
   });
 }
 

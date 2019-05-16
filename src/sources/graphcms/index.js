@@ -2,43 +2,79 @@ const axios = require("axios");
 
 module.exports = function(api) {
   api.loadSource(async store => {
-    console.log('Datasource loading: graphcms')
+    console.log("Datasource loading: graphcms");
     // Use the Data store API here: https://gridsome.org/docs/data-store-api
     const contentType = store.addContentType({
-      typeName: 'GraphCMS',
-      route: '/graph/:slug'
+      typeName: "GraphCMS",
+      route: "/graph/:slug"
     });
-    contentType.addSchemaField('body', ({ graphql }) => ({
+    contentType.addSchemaField("body", ({ graphql }) => ({
       type: graphql.GraphQLString,
       allowNull: false,
       resolve(node) {
-        return node.fields.body;
+        return node.body;
       }
     }));
-    contentType.addSchemaField('subtitle', ({ graphql }) => ({
+    contentType.addSchemaField("title", ({ graphql }) => ({
       type: graphql.GraphQLString,
       resolve(node) {
-        return node.fields.subtitle;
+        return node.title;
       }
     }));
-    contentType.addSchemaField('imageUrl', ({ graphql }) => ({
+    contentType.addSchemaField("path", ({ graphql }) => ({
       type: graphql.GraphQLString,
       resolve(node) {
-        return node.fields.imageUrl;
+        return node.path;
       }
     }));
-    contentType.addSchemaField('datePublished', ({ graphql }) => ({
+    contentType.addSchemaField("date", ({ graphql }) => ({
       type: graphql.GraphQLString,
       resolve(node) {
-        return node.fields.datePublished;
+        return node.date;
+      }
+    }));
+    contentType.addSchemaField("content", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.content;
+      }
+    }));
+    contentType.addSchemaField("excerpt", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.excerpt;
+      }
+    }));
+    contentType.addSchemaField("slug", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.slug;
+      }
+    }));
+    contentType.addSchemaField("subtitle", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.subtitle;
+      }
+    }));
+    contentType.addSchemaField("imageUrl", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.imageUrl;
+      }
+    }));
+    contentType.addSchemaField("datePublished", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.datePublished;
       }
     }));
 
     const baseUrl =
-      'https://api-uswest.graphcms.com/v1/cjry7p9c42zcv01i63qwszhh9/master';
+      "https://api-uswest.graphcms.com/v1/cjry7p9c42zcv01i63qwszhh9/master";
     axios({
       url: baseUrl,
-      method: 'post',
+      method: "post",
       data: {
         query: `
         query {
@@ -62,19 +98,16 @@ module.exports = function(api) {
       .then(result => {
         const sData = JSON.stringify(result.data);
         const pData = JSON.parse(sData);
-        const baseUrl = 'https://media.graphcms.com/';
+        const baseUrl = "https://media.graphcms.com/";
 
         pData.data.articles.forEach(item => {
           contentType.addNode({
             id: item.id,
-            // path,
-            fields: {
-              title: item.title, 
-              subtitle: item.subtitle,
-              body: item.body.markdown,
-              imageUrl: baseUrl + item.featuredImage.handle,
-              datePublished: item.datePublished,
-            }
+            title: item.title,
+            subtitle: item.subtitle,
+            body: item.body.markdown,
+            imageUrl: baseUrl + item.featuredImage.handle,
+            datePublished: item.datePublished
           });
         });
       })

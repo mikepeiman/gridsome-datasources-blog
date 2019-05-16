@@ -23,135 +23,172 @@ module.exports = function(api) {
       route: "/xdota/:id"
     });
 
+    contentType.addSchemaField("title", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.title;
+      }
+    }));
+    contentType.addSchemaField("path", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.path;
+      }
+    }));
+    contentType.addSchemaField("date", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.date;
+      }
+    }));
+    contentType.addSchemaField("content", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.content;
+      }
+    }));
+    contentType.addSchemaField("excerpt", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.excerpt;
+      }
+    }));
+    contentType.addSchemaField("slug", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.slug;
+      }
+    }));
+
     contentType.addSchemaField("name", ({ graphql }) => ({
       type: graphql.GraphQLString,
       allowNull: false,
       resolve(node) {
-        return node.fields.name;
+        return node.name;
       }
     }));
     contentType.addSchemaField("attackType", ({ graphql }) => ({
       type: graphql.GraphQLString,
       allowNull: false,
       resolve(node) {
-        return node.fields.attackType;
+        return node.attackType;
       }
     }));
     contentType.addSchemaField("primaryAttr", ({ graphql }) => ({
       type: graphql.GraphQLString,
       allowNull: false,
       resolve(node) {
-        return node.fields.primaryAttr;
+        return node.primaryAttr;
       }
     }));
     contentType.addSchemaField("strBase", ({ graphql }) => ({
       type: graphql.GraphQLFloat,
       resolve(node) {
-        return node.fields.strBase;
+        return node.strBase;
       }
     }));
     contentType.addSchemaField("strGain", ({ graphql }) => ({
       type: graphql.GraphQLFloat,
       resolve(node) {
-        return node.fields.strGain;
+        return node.strGain;
       }
     }));
     contentType.addSchemaField("agiBase", ({ graphql }) => ({
       type: graphql.GraphQLFloat,
       resolve(node) {
-        return node.fields.agiBase;
+        return node.agiBase;
       }
     }));
     contentType.addSchemaField("agiGain", ({ graphql }) => ({
       type: graphql.GraphQLFloat,
       resolve(node) {
-        return node.fields.agiGain;
+        return node.agiGain;
       }
     }));
     contentType.addSchemaField("intBase", ({ graphql }) => ({
       type: graphql.GraphQLFloat,
       resolve(node) {
-        return node.fields.intBase;
+        return node.intBase;
       }
     }));
     contentType.addSchemaField("intGain", ({ graphql }) => ({
       type: graphql.GraphQLFloat,
       resolve(node) {
-        return node.fields.intGain;
+        return node.intGain;
       }
     }));
     contentType.addSchemaField("totalAttrGain", ({ graphql }) => ({
       type: graphql.GraphQLFloat,
       resolve(node) {
-        return node.fields.totalAttrGain;
+        return node.totalAttrGain;
       }
     }));
     contentType.addSchemaField("armor", ({ graphql }) => ({
       type: graphql.GraphQLFloat,
       resolve(node) {
-        return node.fields.armor;
+        return node.armor;
       }
     }));
 
     contentType.addSchemaField("attackType", ({ graphql }) => ({
       type: graphql.GraphQLString,
       resolve(node) {
-        return node.fields.attackType;
+        return node.attackType;
       }
     }));
 
     contentType.addSchemaField("attackDamageMin", ({ graphql }) => ({
       type: graphql.GraphQLString,
       resolve(node) {
-        return node.fields.attackDamageMin;
+        return node.attackDamageMin;
       }
     }));
 
     contentType.addSchemaField("attackDamageMax", ({ graphql }) => ({
       type: graphql.GraphQLString,
       resolve(node) {
-        return node.fields.attackDamageMax;
+        return node.attackDamageMax;
       }
     }));
 
     contentType.addSchemaField("attackRate", ({ graphql }) => ({
       type: graphql.GraphQLString,
       resolve(node) {
-        return node.fields.attackRate;
+        return node.attackRate;
       }
     }));
 
     contentType.addSchemaField("attackRange", ({ graphql }) => ({
       type: graphql.GraphQLFloat,
       resolve(node) {
-        return node.fields.attackRange;
+        return node.attackRange;
       }
     }));
 
     contentType.addSchemaField("projectileSpeed", ({ graphql }) => ({
       type: graphql.GraphQLFloat,
       resolve(node) {
-        return node.fields.projectileSpeed;
+        return node.projectileSpeed;
       }
     }));
 
     contentType.addSchemaField("movementSpeed", ({ graphql }) => ({
       type: graphql.GraphQLFloat,
       resolve(node) {
-        return node.fields.movementSpeed;
+        return node.movementSpeed;
       }
     }));
 
     contentType.addSchemaField("turnRate", ({ graphql }) => ({
       type: graphql.GraphQLFloat,
       resolve(node) {
-        return node.fields.turnRate;
+        return node.turnRate;
       }
     }));
     contentType.addSchemaField("color", ({ graphql }) => ({
       type: graphql.GraphQLString,
       resolve(node) {
-        return node.fields.color;
+        return node.color;
       }
     }));
 
@@ -188,7 +225,7 @@ module.exports = function(api) {
           projectileSpeed,
           movementSpeed,
           turnRate,
-          color
+          color;
 
         for (var i in data) {
           hero = data[i];
@@ -205,40 +242,39 @@ module.exports = function(api) {
               : "Ranged";
 
             if (!hero.ProjectileSpeed) {
-              hero.ProjectileSpeed = 0
+              hero.ProjectileSpeed = 0;
             }
-            if (hero.AttributePrimary.toLowerCase().includes('int')) {
-              hero.color = "#00D9EC"
+            if (hero.AttributePrimary.toLowerCase().includes("int")) {
+              hero.color = "#00D9EC";
             }
-            if (hero.AttributePrimary.toLowerCase().includes('str')) {
-              hero.color = "#EC3D06"
+            if (hero.AttributePrimary.toLowerCase().includes("str")) {
+              hero.color = "#EC3D06";
             }
-            if (hero.AttributePrimary.toLowerCase().includes('agi')) {
-              hero.color = "#26E030"
+            if (hero.AttributePrimary.toLowerCase().includes("agi")) {
+              hero.color = "#26E030";
             }
             contentType.addNode({
               id: hero.HeroID,
-              fields: {
-                name: hero.workshop_guide_name,
-                strBase: hero.AttributeBaseStrength,
-                strGain: hero.AttributeStrengthGain,
-                agiBase: hero.AttributeBaseAgility,
-                agiGain: hero.AttributeAgilityGain,
-                intBase: hero.AttributeBaseIntelligence,
-                intGain: hero.AttributeIntelligenceGain,
-                totalAttrGain: totalAttrGain,
-                primaryAttr: hero.AttributePrimary,
-                armor: hero.ArmorPhysical,
-                attackType: hero.attackType,
-                attackDamageMin: hero.AttackDamageMin,
-                attackDamageMax: hero.AttackDamageMax,
-                attackRate: hero.AttackRate,
-                attackRange: hero.AttackRange,
-                projectileSpeed: hero.ProjectileSpeed,
-                movementSpeed: hero.MovementSpeed,
-                turnRate: hero.MovementTurnRate,
-                color: hero.color
-              }
+              name: hero.workshop_guide_name,
+              strBase: hero.AttributeBaseStrength,
+              strGain: hero.AttributeStrengthGain,
+              agiBase: hero.AttributeBaseAgility,
+              agiGain: hero.AttributeAgilityGain,
+              intBase: hero.AttributeBaseIntelligence,
+              intGain: hero.AttributeIntelligenceGain,
+              totalAttrGain: totalAttrGain,
+              primaryAttr: hero.AttributePrimary,
+              armor: hero.ArmorPhysical,
+              attackType: hero.attackType,
+              attackDamageMin: hero.AttackDamageMin,
+              attackDamageMax: hero.AttackDamageMax,
+              attackRate: hero.AttackRate,
+              attackRange: hero.AttackRange,
+              projectileSpeed: hero.ProjectileSpeed,
+              movementSpeed: hero.MovementSpeed,
+              turnRate: hero.MovementTurnRate,
+              color: hero.color,
+              path: hero.path
             });
           }
 

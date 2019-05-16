@@ -7,13 +7,48 @@ const Airtable = require('airtable');
         api.loadSource(async store => {
             const contentType = store.addContentType({
                 typeName: 'Airtable',
-                route: '/air-db/:slug',
+                route: '/air-db/:id',
             });
-            
+            contentType.addSchemaField("title", ({ graphql }) => ({
+              type: graphql.GraphQLString,
+              resolve(node) {
+                return node.title;
+              }
+            }));
+            contentType.addSchemaField("path", ({ graphql }) => ({
+              type: graphql.GraphQLString,
+              resolve(node) {
+                return node.path;
+              }
+            }));
+            contentType.addSchemaField("date", ({ graphql }) => ({
+              type: graphql.GraphQLString,
+              resolve(node) {
+                return node.date;
+              }
+            }));
+            contentType.addSchemaField("content", ({ graphql }) => ({
+              type: graphql.GraphQLString,
+              resolve(node) {
+                return node.content;
+              }
+            }));
+            contentType.addSchemaField("excerpt", ({ graphql }) => ({
+              type: graphql.GraphQLString,
+              resolve(node) {
+                return node.excerpt;
+              }
+            }));
+            contentType.addSchemaField("slug", ({ graphql }) => ({
+              type: graphql.GraphQLString,
+              resolve(node) {
+                return node.slug;
+              }
+            }));
             contentType.addSchemaField('price', ({ graphql }) => ({
                     type: graphql.GraphQLFloat,
                     resolve (node) {
-                        return node.fields.price;
+                        return node.price;
                     }
                 }));
                 

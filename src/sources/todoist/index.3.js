@@ -115,14 +115,14 @@ module.exports = function(api) {
       type: graphql.GraphQLString,
       allowNull: false,
       resolve(node) {
-        return node.fields.name;
+        return node.name;
       }
     }));
     ProjectsQL.addSchemaField("parent_id", ({ graphql }) => ({
       type: graphql.GraphQLString,
       allowNull: true,
       resolve(node) {
-        return node.fields.parent_id;
+        return node.parent_id;
       }
     }));
 
@@ -130,47 +130,47 @@ module.exports = function(api) {
       type: graphql.GraphQLString,
       allowNull: false,
       resolve(node) {
-        return node.fields.name;
+        return node.name;
       }
     }));
     TasksQL.addSchemaField("src", ({ graphql }) => ({
       type: graphql.GraphQLString,
       allowNull: false,
       resolve(node) {
-        return node.fields.src;
+        return node.src;
       }
     }));
     TasksQL.addSchemaField("desc", ({ graphql }) => ({
       type: graphql.GraphQLString,
       allowNull: false,
       resolve(node) {
-        return node.fields.desc;
+        return node.desc;
       }
     }));
     TasksQL.addSchemaField("project_id", ({ graphql }) => ({
       type: graphql.GraphQLString,
       allowNull: false,
       resolve(node) {
-        return node.fields.project_id;
+        return node.project_id;
       }
     }));
     TasksQL.addSchemaField("path", ({ graphql }) => ({
       type: graphql.GraphQLString,
       allowNull: false,
       resolve(node) {
-        return node.fields.path;
+        return node.path;
       }
     }));
     TasksQL.addSchemaField("labels", ({ graphql }) => ({
       type: graphql.GraphQLList(GraphQLInt),
       resolve(node) {
-        return node.fields.labels;
+        return node.labels;
       }
     }));
     TasksQL.addSchemaField("comments", ({ graphql }) => ({
       type: graphql.GraphQLList(CommentType),
       resolve(node) {
-        return node.fields.comments;
+        return node.comments;
       }
     }));
 
@@ -178,14 +178,14 @@ module.exports = function(api) {
       type: graphql.GraphQLString,
       allowNull: false,
       resolve(node) {
-        return node.fields.taskId;
+        return node.taskId;
       }
     }));
 
     LabelsQL.addSchemaField("name", ({ graphql }) => ({
       type: graphql.GraphQLString,
       resolve(node) {
-        return node.fields.name;
+        return node.name;
       }
     }));
 

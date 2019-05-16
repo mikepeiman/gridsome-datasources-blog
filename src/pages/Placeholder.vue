@@ -22,10 +22,7 @@ allBlogPost {
     node {
       id
       title
-      excerpt
-      content
       body
-      slug
       path
       date
     }

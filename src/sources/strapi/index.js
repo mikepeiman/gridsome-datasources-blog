@@ -72,27 +72,56 @@ module.exports = function(api) {
 
     contentType.addSchemaField("title", ({ graphql }) => ({
       type: graphql.GraphQLString,
-      allowNull: false,
       resolve(node) {
-        return node.fields.title;
+        return node.title;
+      }
+    }));
+    contentType.addSchemaField("path", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.path;
+      }
+    }));
+    contentType.addSchemaField("date", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.date;
+      }
+    }));
+    contentType.addSchemaField("content", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.content;
+      }
+    }));
+    contentType.addSchemaField("excerpt", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.excerpt;
+      }
+    }));
+    contentType.addSchemaField("slug", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.slug;
       }
     }));
     contentType.addSchemaField("subtitle", ({ graphql }) => ({
       type: graphql.GraphQLString,
       resolve(node) {
-        return node.fields.subtitle;
+        return node.subtitle;
       }
     }));
     contentType.addSchemaField("body", ({ graphql }) => ({
       type: graphql.GraphQLString,
       resolve(node) {
-        return node.fields.body;
+        return node.body;
       }
     }));
     contentType.addSchemaField("categories", ({ graphql }) => ({
       type: graphql.GraphQLList(Category),
       resolve(node) {
-        return node.fields.categories;
+        return node.categories;
       }
     }));
 

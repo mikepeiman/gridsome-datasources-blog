@@ -12,7 +12,7 @@
 query SWAPI ($path: String!){
   post: swapi (path: $path){
     name
-    starshipClass
+    starship_class
     date
     path
     id

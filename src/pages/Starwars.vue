@@ -21,9 +21,8 @@ allSWAPI {
     node {
       id
       name
-      starshipClass
+      starship_class
       path
-      slug
     }
   }
 }

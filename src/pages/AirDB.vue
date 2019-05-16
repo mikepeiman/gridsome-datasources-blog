@@ -20,13 +20,12 @@
   {
   edges {
     node {
-      private
-      price
-      length
-      url
-      resort
+      Private_
+      Price
+      Length
+      URL
+      Resort
       path
-
     }
   }
 }

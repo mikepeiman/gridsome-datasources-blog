@@ -20,42 +20,42 @@
   <nav id="topnav" role="navigation">
     <ul class="nav-items">
       <li @click="mainLink(1)" class="nav-link-container">
-        <g-link class="nav__link" :to="{ name: 'home' }">Home</g-link>
+        <g-link class="nav__link" to="/">Home</g-link>
       </li>
       <li @click="mainLink(2)" class="nav-link-container">
-        <g-link class="nav__link" :to="{ name: 'about' }">About</g-link>
+        <g-link class="nav__link" to="/about">About</g-link>
       </li>
       <li @click="mainLink(3)" class="nav-link-container">
-        <g-link class="nav__link" :to="{ name: 'dataSources' }">Data Sources</g-link>
+        <g-link class="nav__link" to="/">Data Sources</g-link>
         <ul class="dropdown" aria-label="submenu">
           <li @click="subLink(4)" class="nav-link-container">
-            <g-link class="nav__link" :to="{ name: 'fakerPosts' }">Faker</g-link>
+            <g-link class="nav__link" to="/">Faker</g-link>
           </li>
           <li @click="subLink(5)" class="nav-link-container">
-            <g-link class="nav__link" :to="{ name: 'placeholder' }">Placeholder</g-link>
+            <g-link class="nav__link" to="/">Placeholder</g-link>
           </li>
           <li @click="subLink(6)" class="nav-link-container">
-            <g-link class="nav__link" :to="{ name: 'starwars' }">StarWars</g-link>
+            <g-link class="nav__link" to="/">StarWars</g-link>
           </li>
           <li @click="subLink(7)" class="nav-link-container">
-            <g-link class="nav__link" :to="{ name: 'heroes' }">DOTA2 (scraped)</g-link>
+            <g-link class="nav__link" to="/">DOTA2 (scraped)</g-link>
           </li>
           <li @click="subLink(8)" class="nav-link-container">
-            <g-link class="nav__link" :to="{ name: 'xdota' }">DOTA2 (from VDF)</g-link>
+            <g-link class="nav__link" to="/">DOTA2 (from VDF)</g-link>
           </li>
           <li @click="subLink(9)" class="nav-link-container">
-            <g-link class="nav__link" :to="{ name: 'filesystem' }">Filesystem</g-link>
+            <g-link class="nav__link" to="/">Filesystem</g-link>
           </li>
           <li @click="subLink(10)" class="nav-link-container">
-            <g-link class="nav__link" :to="{ name: 'airDb' }">Airtable</g-link>
+            <g-link class="nav__link" to="/">Airtable</g-link>
           </li>
           <li @click="subLink(11)" class="nav-link-container">
-            <g-link class="nav__link" :to="{ name: 'graph' }">GraphCMS</g-link>
+            <g-link class="nav__link" to="/">GraphCMS</g-link>
           </li>
         </ul>
       </li>
       <li @click="mainLink(12)" class="nav-link-container">
-        <g-link class="nav__link" :to="{ name: 'contact' }">Contact</g-link>
+        <g-link class="nav__link" to="/">Contact</g-link>
       </li>
     </ul>
   </nav>

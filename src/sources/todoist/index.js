@@ -117,18 +117,54 @@ module.exports = function(api) {
       })
     });
 
+    ProjectsQL.addSchemaField("title", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.title;
+      }
+    }));
+    ProjectsQL.addSchemaField("path", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.path;
+      }
+    }));
+    ProjectsQL.addSchemaField("date", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.date;
+      }
+    }));
+    ProjectsQL.addSchemaField("content", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.content;
+      }
+    }));
+    ProjectsQL.addSchemaField("excerpt", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.excerpt;
+      }
+    }));
+    ProjectsQL.addSchemaField("slug", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.slug;
+      }
+    }));
     ProjectsQL.addSchemaField("name", ({ graphql }) => ({
       type: graphql.GraphQLString,
       allowNull: false,
       resolve(node) {
-        return node.fields.name;
+        return node.name;
       }
     }));
     ProjectsQL.addSchemaField("parent", ({ graphql }) => ({
       type: graphql.GraphQLString,
       allowNull: true,
       resolve(node) {
-        return node.fields.parent;
+        return node.parent;
       }
     }));
 
@@ -136,82 +172,176 @@ module.exports = function(api) {
       type: graphql.GraphQLString,
       allowNull: false,
       resolve(node) {
-        return node.fields.name;
+        return node.name;
       }
     }));
     TasksQL.addSchemaField("created", ({ graphql }) => ({
       type: graphql.GraphQLString,
       allowNull: false,
       resolve(node) {
-        return node.fields.created;
+        return node.created;
       }
     }));
     TasksQL.addSchemaField("src", ({ graphql }) => ({
       type: graphql.GraphQLString,
       allowNull: false,
       resolve(node) {
-        return node.fields.src;
+        return node.src;
       }
     }));
     TasksQL.addSchemaField("desc", ({ graphql }) => ({
       type: graphql.GraphQLString,
       allowNull: false,
       resolve(node) {
-        return node.fields.desc;
+        return node.desc;
       }
     }));
     TasksQL.addSchemaField("project", ({ graphql }) => ({
       type: graphql.GraphQLString,
       allowNull: false,
       resolve(node) {
-        return node.fields.project;
+        return node.project;
+      }
+    }));
+    TasksQL.addSchemaField("title", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.title;
       }
     }));
     TasksQL.addSchemaField("path", ({ graphql }) => ({
       type: graphql.GraphQLString,
-      allowNull: false,
       resolve(node) {
-        return node.fields.path;
+        return node.path;
+      }
+    }));
+    TasksQL.addSchemaField("date", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.date;
+      }
+    }));
+    TasksQL.addSchemaField("content", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.content;
+      }
+    }));
+    TasksQL.addSchemaField("excerpt", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.excerpt;
+      }
+    }));
+    TasksQL.addSchemaField("slug", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.slug;
       }
     }));
     TasksQL.addSchemaField("labels", ({ graphql }) => ({
       type: graphql.GraphQLList(LabelType),
       resolve(node) {
-        return node.fields.labels;
+        return node.labels;
       }
     }));
     TasksQL.addSchemaField("comments", ({ graphql }) => ({
       type: graphql.GraphQLList(CommentType),
       resolve(node) {
-        return node.fields.comments;
+        return node.comments;
       }
     }));
     TasksQL.addSchemaField("test", ({ graphql }) => ({
       type: graphql.GraphQLString,
       resolve(node) {
-        return node.fields.test;
+        return node.test;
       }
     }));
 
-    CommentsQL.addSchemaField("test", ({ graphql }) => ({
+    CommentsQL.addSchemaField("title", ({ graphql }) => ({
       type: graphql.GraphQLString,
-      allowNull: false,
       resolve(node) {
-        return node.fields.test;
+        return node.title;
+      }
+    }));
+    CommentsQL.addSchemaField("path", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.path;
+      }
+    }));
+    CommentsQL.addSchemaField("date", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.date;
+      }
+    }));
+    CommentsQL.addSchemaField("content", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.content;
+      }
+    }));
+    CommentsQL.addSchemaField("excerpt", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.excerpt;
+      }
+    }));
+    CommentsQL.addSchemaField("slug", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.slug;
       }
     }));
     CommentsQL.addSchemaField("task", ({ graphql }) => ({
       type: graphql.GraphQLString,
       allowNull: false,
       resolve(node) {
-        return node.fields.task;
+        return node.task;
       }
     }));
 
     LabelsQL.addSchemaField("name", ({ graphql }) => ({
       type: graphql.GraphQLString,
       resolve(node) {
-        return node.fields.name;
+        return node.name;
+      }
+    }));
+    LabelsQL.addSchemaField("title", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.title;
+      }
+    }));
+    LabelsQL.addSchemaField("path", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.path;
+      }
+    }));
+    LabelsQL.addSchemaField("date", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.date;
+      }
+    }));
+    LabelsQL.addSchemaField("content", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.content;
+      }
+    }));
+    LabelsQL.addSchemaField("excerpt", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.excerpt;
+      }
+    }));
+    LabelsQL.addSchemaField("slug", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.slug;
       }
     }));
 
@@ -272,10 +402,8 @@ module.exports = function(api) {
             ProjectsQL.addNode({
               id: project.id,
               parent: project.parent_id,
-              fields: {
-                parent: project.parent_id,
-                name: project.name
-              }
+              parent: project.parent_id,
+              name: project.name
             });
           });
 
@@ -285,38 +413,36 @@ module.exports = function(api) {
             LabelsQL.addNode({
               id: label.id,
               name: label.name,
-              fields: {
-                id: label.id,
-                name: label.name,
-                path: label.path
-              }
+              id: label.id,
+              name: label.name,
+              path: label.path
             });
           });
 
           for (let i = 150; i < 190; i++) {
             let task = tasks[i];
-            let labelArray = []
+            let labelArray = [];
             labels.forEach(label => {
               // console.log(`label from labels: ${label}`)
               // console.log(label.id)
 
               task.labels.forEach(taskLabel => {
-                if(label.id == taskLabel) {
+                if (label.id == taskLabel) {
                   // console.log(`Found a label match at ${label} and i: ${i} and task: ${task.id}`)
                   // console.log(label)
                   // console.log(`Task snippet: ${task.content.slice(0, 50)}`)
-                  labelName = changeCase.lower(slugify(label.name))
-                  label.path = `/todoist/labels/${label.name}`
-                  labelArray.push(label)
+                  labelName = changeCase.lower(slugify(label.name));
+                  label.path = `/todoist/labels/${label.name}`;
+                  labelArray.push(label);
                 } else {
                   // console.log(`no label match`)
                 }
-              })
-              return labelArray
-            })
+              });
+              return labelArray;
+            });
             // console.log(`Task snippet: ${task.content.slice(0, 50)}`);
             // console.log(`Task id: ${task.id} | task labels: ${task.labels}`);
-            
+
             let taskComments = getComments(url, task);
             taskComments
               .then(comments => {
@@ -324,27 +450,23 @@ module.exports = function(api) {
                   comments.forEach(comment => {
                     CommentsQL.addNode({
                       id: comment.id,
-                      fields: {
-                        id: comment.id,
-                        task: task.id,
-                        posted: comment.posted,
-                        date: comment.posted,
-                        content: comment.content
-                      }
+                      id: comment.id,
+                      task: task.id,
+                      posted: comment.posted,
+                      date: comment.posted,
+                      content: comment.content
                     });
                   });
                 }
                 TasksQL.addNode({
                   id: task.id,
-                  fields: {
-                    id: task.id,
-                    project: task.project_id,
-                    created: task.date_added,
-                    date: task.date_added,
-                    labels: labelArray, // task.labels,//store.createReference(task.labels),
-                    content: task.content,
-                    comments: comments
-                  }
+                  id: task.id,
+                  project: task.project_id,
+                  created: task.date_added,
+                  date: task.date_added,
+                  labels: labelArray, // task.labels,//store.createReference(task.labels),
+                  content: task.content,
+                  comments: comments
                 });
               })
               .catch(err => {

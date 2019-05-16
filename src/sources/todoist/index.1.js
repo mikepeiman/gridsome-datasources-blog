@@ -146,35 +146,35 @@ module.exports = function(api) {
       type: graphql.GraphQLString,
       allowNull: false,
       resolve(node) {
-        return node.fields.name;
+        return node.name;
       }
     }));
     TasksType.addSchemaField("src", ({ graphql }) => ({
       type: graphql.GraphQLString,
       allowNull: false,
       resolve(node) {
-        return node.fields.src;
+        return node.src;
       }
     }));
     TasksType.addSchemaField("desc", ({ graphql }) => ({
       type: graphql.GraphQLString,
       allowNull: false,
       resolve(node) {
-        return node.fields.desc;
+        return node.desc;
       }
     }));
     TasksType.addSchemaField("project", ({ graphql }) => ({
       type: graphql.GraphQLString,
       allowNull: false,
       resolve(node) {
-        return node.fields.project;
+        return node.project;
       }
     }));
     TasksType.addSchemaField("path", ({ graphql }) => ({
       type: graphql.GraphQLString,
       allowNull: false,
       resolve(node) {
-        return node.fields.path;
+        return node.path;
       }
     }));
 
@@ -182,32 +182,32 @@ module.exports = function(api) {
       type: graphql.GraphQLString,
       allowNull: false,
       resolve(node) {
-        return node.fields.name;
+        return node.name;
       }
     }));
     ProjectsType.addSchemaField("num", ({ graphql }) => ({
       type: graphql.GraphQLInt,
       allowNull: false,
       resolve(node) {
-        return node.fields.num;
+        return node.num;
       }
     }));
     ProjectsType.addSchemaField("url", ({ graphql }) => ({
       type: graphql.GraphQLString,
       resolve(node) {
-        return node.fields.url;
+        return node.url;
       }
     }));
     ProjectsType.addSchemaField("projectImgSrc", ({ graphql }) => ({
       type: graphql.GraphQLString,
       resolve(node) {
-        return node.fields.projectImgSrc;
+        return node.projectImgSrc;
       }
     }));
     ProjectsType.addSchemaField("tasks", ({ graphql }) => ({
       type: graphql.GraphQLList(TaskType),
       resolve(node) {
-        return node.fields.tasks;
+        return node.tasks;
       }
     }));
   });

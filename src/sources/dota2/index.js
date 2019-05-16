@@ -19,50 +19,85 @@ const heroesUrl = "http://www.dota2.com/heroes/";
 // heroParse('http://www.dota2.com/hero/earthshaker/')
 module.exports = function(api) {
   api.loadSource(async store => {
-    console.log('Datasource loading: dota2')
+    console.log("Datasource loading: dota2");
     const contentType = store.addContentType({
       typeName: "DOTA2",
       route: "/dota2/:name"
     });
 
-
     contentType.addSchemaField("name", ({ graphql }) => ({
       type: graphql.GraphQLString,
       allowNull: false,
       resolve(node) {
-        return node.fields.name;
+        return node.name;
       }
     }));
     contentType.addSchemaField("num", ({ graphql }) => ({
       type: graphql.GraphQLInt,
       allowNull: false,
       resolve(node) {
-        return node.fields.num;
+        return node.num;
       }
     }));
     contentType.addSchemaField("url", ({ graphql }) => ({
       type: graphql.GraphQLString,
       resolve(node) {
-        return node.fields.url;
+        return node.url;
       }
     }));
     contentType.addSchemaField("heroImgSrc", ({ graphql }) => ({
       type: graphql.GraphQLString,
       resolve(node) {
-        return node.fields.heroImgSrc;
+        return node.heroImgSrc;
       }
     }));
     contentType.addSchemaField("abilities", ({ graphql }) => ({
       type: graphql.GraphQLList(GraphQLString),
       resolve(node) {
-        return node.fields.abilities;
+        return node.abilities;
+      }
+    }));
+    contentType.addSchemaField("title", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.title;
+      }
+    }));
+    contentType.addSchemaField("path", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.path;
+      }
+    }));
+    contentType.addSchemaField("date", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.date;
+      }
+    }));
+    contentType.addSchemaField("content", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.content;
+      }
+    }));
+    contentType.addSchemaField("excerpt", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.excerpt;
+      }
+    }));
+    contentType.addSchemaField("slug", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.slug;
       }
     }));
 
     rp(heroesUrl)
       .then(html => {
         let heroesList = [];
-        
+
         const listLength = $(".heroIcons > a", html).length;
         // console.log("heros list length: ", listLength);
 
@@ -98,7 +133,7 @@ module.exports = function(api) {
             // console.log(`Promise calling heroParse with individual hero URL: ${hero.url}`)
             return heroParse(hero.num, hero.name, hero.url, hero.heroImgSrc);
           })
-        )
+        );
         // console.log('heroesList: ', heroesList)
         // return heroesList
       })
@@ -107,12 +142,10 @@ module.exports = function(api) {
           // console.log(`Inside final .then, heroes length: ${heroes.length}`)
           // console.log(`Inside final .then, heroes.forEach: ${hero.num}: ${hero.name}`)
           contentType.addNode({
-            fields: {
-              num: hero.num,
-              name: hero.name,
-              abilities: hero.abilities,
-              heroImgSrc: hero.heroImgSrc
-            }
+            num: hero.num,
+            name: hero.name,
+            abilities: hero.abilities,
+            heroImgSrc: hero.heroImgSrc
           });
         });
       })

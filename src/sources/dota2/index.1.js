@@ -28,32 +28,32 @@ module.exports = function(api) {
       type: graphql.GraphQLString,
       allowNull: false,
       resolve(node) {
-        return node.fields.name;
+        return node.name;
       }
     }));
     contentType.addSchemaField("num", ({ graphql }) => ({
       type: graphql.GraphQLInt,
       allowNull: false,
       resolve(node) {
-        return node.fields.num;
+        return node.num;
       }
     }));
     contentType.addSchemaField("url", ({ graphql }) => ({
       type: graphql.GraphQLString,
       resolve(node) {
-        return node.fields.url;
+        return node.url;
       }
     }));
     contentType.addSchemaField("heroImgSrc", ({ graphql }) => ({
       type: graphql.GraphQLString,
       resolve(node) {
-        return node.fields.heroImgSrc;
+        return node.heroImgSrc;
       }
     }));
     contentType.addSchemaField("abilities", ({ graphql }) => ({
       type: graphql.GraphQLList(GraphQLString),
       resolve(node) {
-        return node.fields.abilities;
+        return node.abilities;
       }
     }));
 

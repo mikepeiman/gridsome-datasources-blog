@@ -16,7 +16,7 @@ const heroesUrl = "http://www.dota2.com/heroes/";
 
 module.exports = function(api) {
   api.loadSource(store => {
-    console.log('Datasource loading: DOTA2 heroes')
+    console.log("Datasource loading: DOTA2 heroes");
 
     const DOTA2Heroes = store.addContentType({
       typeName: "DOTA2Heroes",
@@ -27,8 +27,8 @@ module.exports = function(api) {
       route: "/heroes/:hero/:name"
     });
     const AbilityType = new GraphQLObjectType({
-      name: 'Ability',
-      description: 'An ability of a hero',
+      name: "Ability",
+      description: "An ability of a hero",
       fields: () => ({
         id: {
           type: GraphQLString,
@@ -49,84 +49,155 @@ module.exports = function(api) {
         path: {
           type: GraphQLString,
           resolve: ability => ability.path
-        },
+        }
       })
-    })
+    });
 
     Abilities.addSchemaField("name", ({ graphql }) => ({
       type: graphql.GraphQLString,
       allowNull: false,
       resolve(node) {
-        return node.fields.name;
+        return node.name;
       }
     }));
     Abilities.addSchemaField("root", ({ graphql }) => ({
       type: graphql.GraphQLString,
       allowNull: false,
       resolve(node) {
-        return node.fields.root;
+        return node.root;
       }
     }));
     Abilities.addSchemaField("src", ({ graphql }) => ({
       type: graphql.GraphQLString,
       allowNull: false,
       resolve(node) {
-        return node.fields.src;
+        return node.src;
       }
     }));
     Abilities.addSchemaField("desc", ({ graphql }) => ({
       type: graphql.GraphQLString,
       allowNull: false,
       resolve(node) {
-        return node.fields.desc;
+        return node.desc;
       }
     }));
     Abilities.addSchemaField("hero", ({ graphql }) => ({
       type: graphql.GraphQLString,
       allowNull: false,
       resolve(node) {
-        return node.fields.hero;
+        return node.hero;
       }
     }));
     Abilities.addSchemaField("path", ({ graphql }) => ({
       type: graphql.GraphQLString,
       allowNull: false,
       resolve(node) {
-        return node.fields.path;
+        return node.path;
       }
     }));
-    
+    Abilities.addSchemaField("title", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.title;
+      }
+    }));
+    Abilities.addSchemaField("path", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.path;
+      }
+    }));
+    Abilities.addSchemaField("date", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.date;
+      }
+    }));
+    Abilities.addSchemaField("content", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.content;
+      }
+    }));
+    Abilities.addSchemaField("excerpt", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.excerpt;
+      }
+    }));
+    Abilities.addSchemaField("slug", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.slug;
+      }
+    }));
 
+    DOTA2Heroes.addSchemaField("title", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.title;
+      }
+    }));
+    DOTA2Heroes.addSchemaField("path", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.path;
+      }
+    }));
+    DOTA2Heroes.addSchemaField("date", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.date;
+      }
+    }));
+    DOTA2Heroes.addSchemaField("content", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.content;
+      }
+    }));
+    DOTA2Heroes.addSchemaField("excerpt", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.excerpt;
+      }
+    }));
+    DOTA2Heroes.addSchemaField("slug", ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      resolve(node) {
+        return node.slug;
+      }
+    }));
     DOTA2Heroes.addSchemaField("name", ({ graphql }) => ({
       type: graphql.GraphQLString,
       allowNull: false,
       resolve(node) {
-        return node.fields.name;
+        return node.name;
       }
     }));
     DOTA2Heroes.addSchemaField("num", ({ graphql }) => ({
       type: graphql.GraphQLInt,
       allowNull: false,
       resolve(node) {
-        return node.fields.num;
+        return node.num;
       }
     }));
     DOTA2Heroes.addSchemaField("url", ({ graphql }) => ({
       type: graphql.GraphQLString,
       resolve(node) {
-        return node.fields.url;
+        return node.url;
       }
     }));
     DOTA2Heroes.addSchemaField("heroImgSrc", ({ graphql }) => ({
       type: graphql.GraphQLString,
       resolve(node) {
-        return node.fields.heroImgSrc;
+        return node.heroImgSrc;
       }
     }));
     DOTA2Heroes.addSchemaField("abilities", ({ graphql }) => ({
       type: graphql.GraphQLList(AbilityType),
       resolve(node) {
-        return node.fields.abilities;
+        return node.abilities;
       }
     }));
 
@@ -136,7 +207,7 @@ module.exports = function(api) {
     rp(heroesUrl)
       .then(html => {
         let heroesList = [];
-        
+
         const listLength = $(".heroIcons > a", html).length;
         // console.log("heros list length: ", listLength);
 
@@ -171,23 +242,22 @@ module.exports = function(api) {
         }
 
         // now we take the complete heroes list scraped from the main page, and we map through it
-        // invoking the heroParse() function, which returns more details for each hero (like abilities) 
+        // invoking the heroParse() function, which returns more details for each hero (like abilities)
 
         return Promise.all(
           heroesList.map(hero => {
             return heroParse(hero.num, hero.name, hero.url, hero.heroImgSrc);
           })
-        )
+        );
       })
       .then(async heroes => {
         let i = 0;
         heroes.forEach(hero => {
-
           // Now we add each hero node to the GraphQL schema
           // Note that 'abilities' is an array of objects containing ability name, src, and other
           // attributes
           // console.log('Datasource loading: DOTA2Heroes.addNode')
-          
+
           DOTA2Heroes.addNode({
             title: hero.name,
             path: hero.path,
@@ -195,39 +265,34 @@ module.exports = function(api) {
               num: hero.num,
               name: hero.name,
               heroImgSrc: hero.heroImgSrc,
-              abilities: hero.abilities,              
+              abilities: hero.abilities
             }
           });
           hero.abilities.forEach(ability => {
-            let path = `/heroes/${hero.name}/${ability.name}`
+            let path = `/heroes/${hero.name}/${ability.name}`;
             // let i = 0
-            
-            ability.path = `/heroes${ability.path}`
+
+            ability.path = `/heroes${ability.path}`;
             // hero.abilities[i].path = `/heroes${ability.path}`
             // i++
-            
+
             Abilities.addNode({
               id: ability.id,
               title: ability.name,
-              fields: {
-                src: ability.src,
-                name: ability.name,
-                desc: ability.desc,
-                hero: hero.name,
-                path: ability.path
-              }
-            })
-            // hero.abilities[i].push(i)
-            // i++
-            // console.log(`abilities path ${path}, ${ability.path}`)
-          })
+              src: ability.src,
+              name: ability.name,
+              desc: ability.desc,
+              hero: hero.name,
+              path: ability.path
+            });
+          });
         });
       })
       .catch(err => {
         console.log("error! ", err);
       })
       .then(err => {
-        console.log(`Final .then in heroes datasource index.js`)
-      })
+        console.log(`Final .then in heroes datasource index.js`);
+      });
   });
 };

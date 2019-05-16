@@ -14,8 +14,8 @@
 </template>
 
 <page-query>
-query GraphCMS ($path: String!){
-  post: graphCms (path: $path){
+query GraphCMS ($id: String!){
+  post: graphCms (id: $id){
     title
     date
     body

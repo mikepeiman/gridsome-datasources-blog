@@ -11,10 +11,10 @@
 <page-query>
 query Airtable ($path: String!){
   post: airtable (path: $path){
-    resort
-    price
-    currency
-    length
+    Resort
+    Price
+    Currency
+    Length
   }
 }
 </page-query>
