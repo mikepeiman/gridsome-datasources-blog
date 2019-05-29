@@ -82,7 +82,7 @@ module.exports = function(api) {
       let path = `/starwars/${id}`;
       contentType.addNode({
         date: item.date,
-        path,
+        path: path,
         id: id,
         name: item.name,
         starship_class: item.starship_class,
