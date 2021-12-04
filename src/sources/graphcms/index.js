@@ -71,7 +71,7 @@ module.exports = function(api) {
     }));
 
     const baseUrl =
-      "https://api-uswest.graphcms.com/v1/cjry7p9c42zcv01i63qwszhh9/master";
+      "https://api-ca-central-1.graphcms.com/v2/ckvzva8ls471g01yyc87l3lz8/master";
     axios({
       url: baseUrl,
       method: "post",

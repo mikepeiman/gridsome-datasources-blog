@@ -15,7 +15,6 @@ query SWAPI ($path: String!){
     starship_class
     date
     path
-    id
   }
 }
 </page-query>

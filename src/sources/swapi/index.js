@@ -18,13 +18,13 @@ module.exports = function(api) {
         return node.name;
       }
     }));
-    contentType.addSchemaField("id", ({ graphql }) => ({
-      type: graphql.GraphQLString,
-      allowNull: false,
-      resolve(node) {
-        return node.id;
-      }
-    }));
+    // contentType.addSchemaField("id", ({ graphql }) => ({
+    //   type: graphql.GraphQLString,
+    //   allowNull: false,
+    //   resolve(node) {
+    //     return node.id;
+    //   }
+    // }));
     contentType.addSchemaField("starship_class", ({ graphql }) => ({
       type: graphql.GraphQLString,
       resolve(node) {
@@ -74,8 +74,9 @@ module.exports = function(api) {
       }
     }));
 
-    const { data } = await axios.get("https://swapi.co/api/starships");
+    const { data } = await axios.get("https://swapi.dev/api/starships");
     data.results.forEach(item => {
+    console.log(`🚀 ~ file: index.js ~ line 79 ~ item`, item)
       let pathArray = item.url.split("/");
       let id = pathArray[5];
       item.id = id;
